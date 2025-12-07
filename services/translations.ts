@@ -1,10 +1,14 @@
 
+
 import { Language, TranslationKey } from '../types';
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   [Language.EN]: {
     app_title: 'DesignMate',
     app_desc: 'Essential free tools for modern designers, enhanced with AI.',
+    hero_title: 'Smart Tools',
+    hero_desc: 'AI-powered tools to accelerate your design workflow.',
+    tokens_remaining: 'Tokens Remaining',
     qr_tool: 'QR Generator',
     color_tool: 'Color Palette',
     text_tool: 'Copywriter',
@@ -133,6 +137,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
   [Language.AR]: {
     app_title: 'رفيق المصمم',
     app_desc: 'أدوات مجانية أساسية للمصممين العصريين، مدعومة بالذكاء الاصطناعي.',
+    hero_title: 'الأدوات الذكية',
+    hero_desc: 'أدوات ذكية مدعومة بالذكاء الاصطناعي لمساعدتك في تجارتك وأعمالك.',
+    tokens_remaining: 'التوكنز المتبقية',
     qr_tool: 'منشئ الباركود',
     color_tool: 'لوحات الألوان',
     text_tool: 'صانع النصوص',

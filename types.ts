@@ -1,4 +1,5 @@
 
+
 export enum Language {
   EN = 'en',
   AR = 'ar'
@@ -37,11 +38,15 @@ export interface Tool {
   descEn: string;
   descAr: string;
   gradient: string;
+  colorTheme: 'blue' | 'purple' | 'emerald' | 'orange' | 'indigo' | 'rose' | 'slate' | 'cyan';
 }
 
 export type TranslationKey = 
   | 'app_title'
   | 'app_desc'
+  | 'hero_title'
+  | 'hero_desc'
+  | 'tokens_remaining'
   | 'qr_tool'
   | 'color_tool'
   | 'text_tool'
@@ -176,7 +181,8 @@ export const TOOLS_DATA: Tool[] = [
     titleAr: 'منشئ الباركود (QR)',
     descEn: 'Create custom QR codes for your links instantly.',
     descAr: 'أنشئ رموز استجابة سريعة لروابطك بسهولة.',
-    gradient: 'from-blue-500 to-cyan-500'
+    gradient: 'from-blue-500 to-cyan-500',
+    colorTheme: 'blue'
   },
   {
     id: 'color',
@@ -186,7 +192,8 @@ export const TOOLS_DATA: Tool[] = [
     titleAr: 'مستشار الألوان الذكي',
     descEn: 'Generate beautiful color schemes based on mood using AI.',
     descAr: 'ولد لوحات ألوان متناسقة بناءً على المزاج باستخدام الذكاء الاصطناعي.',
-    gradient: 'from-purple-500 to-pink-500'
+    gradient: 'from-purple-500 to-pink-500',
+    colorTheme: 'purple'
   },
   {
     id: 'text',
@@ -196,7 +203,8 @@ export const TOOLS_DATA: Tool[] = [
     titleAr: 'صانع النصوص العبقري',
     descEn: 'Generate professional copy for marketing and UX.',
     descAr: 'أنشئ نصوصاً احترافية للتسويق وواجهات المستخدم.',
-    gradient: 'from-emerald-500 to-green-500'
+    gradient: 'from-emerald-500 to-green-500',
+    colorTheme: 'emerald'
   },
   {
     id: 'pms',
@@ -206,7 +214,8 @@ export const TOOLS_DATA: Tool[] = [
     titleAr: 'محول بانتون',
     descEn: 'Find the closest matching PMS color for any hex code.',
     descAr: 'احصل على رقم Pantone المطابق لأي لون بدقة عالية.',
-    gradient: 'from-orange-500 to-red-500'
+    gradient: 'from-orange-500 to-red-500',
+    colorTheme: 'orange'
   },
   {
     id: 'resize',
@@ -216,7 +225,8 @@ export const TOOLS_DATA: Tool[] = [
     titleAr: 'تغيير مقاسات الصور',
     descEn: 'Resize up to 10 images at once with high quality.',
     descAr: 'غيّر مقاسات الصور بسهولة (حتى 10 صور) مع الحفاظ على الجودة.',
-    gradient: 'from-indigo-500 to-violet-500'
+    gradient: 'from-indigo-500 to-violet-500',
+    colorTheme: 'indigo'
   },
   {
     id: 'units',
@@ -226,7 +236,8 @@ export const TOOLS_DATA: Tool[] = [
     titleAr: 'محول المقاسات',
     descEn: 'Convert between pixels, rem, cm, and more.',
     descAr: 'حول بين جميع وحدات القياس بسهولة (طول، وزن، حجم، درجة حرارة).',
-    gradient: 'from-rose-500 to-orange-400'
+    gradient: 'from-rose-500 to-orange-400',
+    colorTheme: 'rose'
   },
   {
     id: 'nutri',
@@ -236,6 +247,7 @@ export const TOOLS_DATA: Tool[] = [
     titleAr: 'صانع القيم الغذائية',
     descEn: 'Create professional FDA-style nutrition labels.',
     descAr: 'صمم ملصق الحقائق الغذائية الاحترافي لمنتجاتك بسهولة.',
-    gradient: 'from-slate-700 to-slate-500'
+    gradient: 'from-slate-600 to-teal-500',
+    colorTheme: 'slate'
   }
 ];
