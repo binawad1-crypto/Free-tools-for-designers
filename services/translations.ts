@@ -19,6 +19,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     nutri_tool: 'Nutrition Label',
     pdf_tool: 'PDF Manager',
     social_tool: 'Social Media Sizes',
+    logo_tool: 'Logo Maker',
     footer_text: '© 2024 DesignMate. Built for designers.',
     input_placeholder: 'Enter your prompt or value here...',
     generate_btn: 'Generate',
@@ -161,7 +162,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     social_format_header: 'Header',
     social_format_thumbnail: 'Thumbnail',
     social_format_profile: 'Profile Picture',
-    social_copy_dims: 'Copy Dimensions'
+    social_copy_dims: 'Copy Dimensions',
+    logo_prompt_label: 'Describe your brand or logo idea (e.g., "A fox holding a coffee cup")',
+    logo_style_label: 'Logo Style',
+    logo_style_minimal: 'Minimalist',
+    logo_style_vintage: 'Vintage/Retro',
+    logo_style_3d: '3D Modern',
+    logo_style_abstract: 'Abstract',
+    logo_style_mascot: 'Mascot/Character',
+    logo_generated_title: 'Your Generated Logo'
   },
   [Language.AR]: {
     app_title: 'رفيق المصمم',
@@ -179,6 +188,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     nutri_tool: 'ملصق غذائي',
     pdf_tool: 'مدير PDF',
     social_tool: 'مقاسات التصميم',
+    logo_tool: 'صانع الشعارات',
     footer_text: '© 2024 رفيق المصمم. صنع بحب للمصممين.',
     input_placeholder: 'أدخل النص أو القيمة هنا...',
     generate_btn: 'توليد',
@@ -321,6 +331,14 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     social_format_header: 'ترويسة (Header)',
     social_format_thumbnail: 'صورة مصغرة',
     social_format_profile: 'صورة شخصية',
-    social_copy_dims: 'نسخ الأبعاد'
+    social_copy_dims: 'نسخ الأبعاد',
+    logo_prompt_label: 'صف فكرة الشعار (مثلاً: "ثعلب يحمل كوب قهوة")',
+    logo_style_label: 'نمط الشعار',
+    logo_style_minimal: 'بسيط (Minimalist)',
+    logo_style_vintage: 'كلاسيكي / ريترو',
+    logo_style_3d: 'ثلاثي الأبعاد (3D)',
+    logo_style_abstract: 'تجريدي',
+    logo_style_mascot: 'شخصية (Mascot)',
+    logo_generated_title: 'الشعار المولد'
   }
 };

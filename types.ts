@@ -38,7 +38,7 @@ export interface Tool {
   descEn: string;
   descAr: string;
   gradient: string;
-  colorTheme: 'blue' | 'purple' | 'emerald' | 'orange' | 'indigo' | 'rose' | 'slate' | 'cyan' | 'red';
+  colorTheme: 'blue' | 'purple' | 'emerald' | 'orange' | 'indigo' | 'rose' | 'slate' | 'cyan' | 'red' | 'gold';
 }
 
 export type TranslationKey = 
@@ -57,6 +57,7 @@ export type TranslationKey =
   | 'nutri_tool'
   | 'pdf_tool'
   | 'social_tool'
+  | 'logo_tool'
   | 'footer_text'
   | 'input_placeholder'
   | 'generate_btn'
@@ -199,9 +200,28 @@ export type TranslationKey =
   | 'social_format_header'
   | 'social_format_thumbnail'
   | 'social_format_profile'
-  | 'social_copy_dims';
+  | 'social_copy_dims'
+  | 'logo_prompt_label'
+  | 'logo_style_label'
+  | 'logo_style_minimal'
+  | 'logo_style_vintage'
+  | 'logo_style_3d'
+  | 'logo_style_abstract'
+  | 'logo_style_mascot'
+  | 'logo_generated_title';
 
 export const TOOLS_DATA: Tool[] = [
+  {
+    id: 'logo',
+    icon: 'Hexagon',
+    path: '/logo',
+    titleEn: 'AI Logo Maker',
+    titleAr: 'صانع الشعارات',
+    descEn: 'Design unique, professional logos instantly with AI.',
+    descAr: 'صمم شعارات مميزة واحترافية فوراً باستخدام الذكاء الاصطناعي.',
+    gradient: 'from-amber-400 to-yellow-600',
+    colorTheme: 'gold'
+  },
   {
     id: 'qr',
     icon: 'QrCode',

@@ -1,4 +1,5 @@
 
+
 import { GoogleGenAI, Type } from "@google/genai";
 import { ColorPalette, PantoneMatch } from "../types";
 
@@ -114,6 +115,44 @@ export const findPantoneMatch = async (hex: string): Promise<PantoneMatch> => {
     return JSON.parse(text) as PantoneMatch;
   } catch (error) {
     console.error("Gemini Pantone Error:", error);
+    throw error;
+  }
+};
+
+// Helper to generate a logo using image generation model
+export const generateLogo = async (prompt: string, style: string): Promise<string | null> => {
+  try {
+    const model = 'gemini-2.5-flash-image';
+    
+    // Construct a specific prompt for logo generation
+    const fullPrompt = `Design a professional, high-quality vector-style logo. 
+    Subject: ${prompt}.
+    Style: ${style}. 
+    Requirements: Clean lines, centered, white background, suitable for branding. 
+    Ensure it looks like a finished logo asset.`;
+
+    const response = await ai.models.generateContent({
+      model,
+      contents: {
+        parts: [{ text: fullPrompt }],
+      },
+      config: {
+         imageConfig: {
+            aspectRatio: "1:1"
+         }
+      }
+    });
+
+    // Check for inline data in response parts
+    for (const part of response.candidates?.[0]?.content?.parts || []) {
+      if (part.inlineData && part.inlineData.data) {
+         return `data:image/png;base64,${part.inlineData.data}`;
+      }
+    }
+    
+    return null;
+  } catch (error) {
+    console.error("Gemini Logo Generation Error:", error);
     throw error;
   }
 };

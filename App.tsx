@@ -14,6 +14,7 @@ import UnitConverterTool from './pages/UnitConverterTool';
 import NutritionTool from './pages/NutritionTool';
 import PDFTool from './pages/PDFTool';
 import SocialSizesTool from './pages/SocialSizesTool';
+import LogoMakerTool from './pages/LogoMakerTool';
 
 const App: React.FC = () => {
   return (
@@ -31,6 +32,7 @@ const App: React.FC = () => {
             <Route path="/nutrition" element={<NutritionTool />} />
             <Route path="/pdf" element={<PDFTool />} />
             <Route path="/social-sizes" element={<SocialSizesTool />} />
+            <Route path="/logo" element={<LogoMakerTool />} />
           </Routes>
         </Layout>
       </HashRouter>
