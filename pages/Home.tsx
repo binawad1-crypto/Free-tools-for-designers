@@ -1,217 +1,112 @@
-
-
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
-import { TOOLS_DATA, Language } from '../types';
-import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, Sparkles, Infinity as InfinityIcon, FileStack, LayoutGrid, Hexagon } from 'lucide-react';
-
-const iconMap: Record<string, React.ReactNode> = {
-  QrCode: <QrCode size={28} />,
-  Palette: <Palette size={28} />,
-  Type: <Type size={28} />,
-  Pipette: <Pipette size={28} />,
-  Scaling: <Scaling size={28} />,
-  Ruler: <Ruler size={28} />,
-  ScrollText: <ScrollText size={28} />,
-  FileStack: <FileStack size={28} />,
-  LayoutGrid: <LayoutGrid size={28} />,
-  Hexagon: <Hexagon size={28} />,
-};
-
-// Map themes to Tailwind classes
-const themeStyles: Record<string, {
-  border: string;
-  shadow: string;
-  bgIcon: string;
-  text: string;
-  hoverBorder: string;
-  glow: string;
-}> = {
-  blue: {
-    border: 'border-blue-100 dark:border-blue-900/30',
-    hoverBorder: 'group-hover:border-blue-500/50',
-    shadow: 'shadow-blue-500/5',
-    bgIcon: 'bg-blue-500',
-    text: 'text-blue-600 dark:text-blue-400',
-    glow: 'from-blue-500/20 to-cyan-500/20'
-  },
-  purple: {
-    border: 'border-purple-100 dark:border-purple-900/30',
-    hoverBorder: 'group-hover:border-purple-500/50',
-    shadow: 'shadow-purple-500/5',
-    bgIcon: 'bg-purple-500',
-    text: 'text-purple-600 dark:text-purple-400',
-    glow: 'from-purple-500/20 to-pink-500/20'
-  },
-  emerald: {
-    border: 'border-emerald-100 dark:border-emerald-900/30',
-    hoverBorder: 'group-hover:border-emerald-500/50',
-    shadow: 'shadow-emerald-500/5',
-    bgIcon: 'bg-emerald-500',
-    text: 'text-emerald-600 dark:text-emerald-400',
-    glow: 'from-emerald-500/20 to-green-500/20'
-  },
-  orange: {
-    border: 'border-orange-100 dark:border-orange-900/30',
-    hoverBorder: 'group-hover:border-orange-500/50',
-    shadow: 'shadow-orange-500/5',
-    bgIcon: 'bg-orange-500',
-    text: 'text-orange-600 dark:text-orange-400',
-    glow: 'from-orange-500/20 to-red-500/20'
-  },
-  indigo: {
-    border: 'border-indigo-100 dark:border-indigo-900/30',
-    hoverBorder: 'group-hover:border-indigo-500/50',
-    shadow: 'shadow-indigo-500/5',
-    bgIcon: 'bg-indigo-500',
-    text: 'text-indigo-600 dark:text-indigo-400',
-    glow: 'from-indigo-500/20 to-violet-500/20'
-  },
-  rose: {
-    border: 'border-rose-100 dark:border-rose-900/30',
-    hoverBorder: 'group-hover:border-rose-500/50',
-    shadow: 'shadow-rose-500/5',
-    bgIcon: 'bg-rose-500',
-    text: 'text-rose-600 dark:text-rose-400',
-    glow: 'from-rose-500/20 to-orange-500/20'
-  },
-  slate: {
-    border: 'border-slate-200 dark:border-slate-800',
-    hoverBorder: 'group-hover:border-slate-400',
-    shadow: 'shadow-slate-500/5',
-    bgIcon: 'bg-slate-600',
-    text: 'text-slate-700 dark:text-slate-300',
-    glow: 'from-slate-500/20 to-gray-500/20'
-  },
-  red: {
-    border: 'border-red-100 dark:border-red-900/30',
-    hoverBorder: 'group-hover:border-red-500/50',
-    shadow: 'shadow-red-500/5',
-    bgIcon: 'bg-red-500',
-    text: 'text-red-600 dark:text-red-400',
-    glow: 'from-red-500/20 to-rose-500/20'
-  },
-  cyan: {
-    border: 'border-cyan-100 dark:border-cyan-900/30',
-    hoverBorder: 'group-hover:border-cyan-500/50',
-    shadow: 'shadow-cyan-500/5',
-    bgIcon: 'bg-cyan-500',
-    text: 'text-cyan-600 dark:text-cyan-400',
-    glow: 'from-cyan-500/20 to-teal-500/20'
-  },
-  gold: {
-    border: 'border-amber-100 dark:border-amber-900/30',
-    hoverBorder: 'group-hover:border-amber-500/50',
-    shadow: 'shadow-amber-500/5',
-    bgIcon: 'bg-amber-500',
-    text: 'text-amber-600 dark:text-amber-400',
-    glow: 'from-amber-500/20 to-yellow-500/20'
-  }
-};
+import { Sparkles, Infinity as InfinityIcon, FolderOpen, Clock, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
-  const { language, t, isRTL } = useApp();
+  const { t, language } = useApp();
 
   return (
-    <div className="space-y-12 py-8 lg:py-10">
+    <div className="space-y-8">
       
-      {/* New Dashboard Banner Hero */}
-      <div className="max-w-7xl mx-auto">
-        <div className="relative w-full bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-500 rounded-[2rem] p-8 md:p-12 overflow-hidden shadow-2xl shadow-purple-500/30 flex flex-col md:flex-row items-center justify-between gap-8 group">
+      {/* Welcome Banner */}
+      <div className="relative w-full bg-gradient-to-r from-teal-500 via-emerald-500 to-green-500 rounded-[2rem] p-8 md:p-12 overflow-hidden shadow-2xl shadow-emerald-500/20">
+          {/* Decor */}
+          <div className="absolute top-0 left-0 w-full h-full opacity-10" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}></div>
           
-          {/* Noise & Glow Background Effects */}
-          <div className="absolute top-0 left-0 w-full h-full opacity-20 brightness-125 mix-blend-overlay pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
-          <div className="absolute -right-20 -top-20 w-80 h-80 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors duration-500 pointer-events-none"></div>
-
-          {/* Content Side (Title) */}
-          <div className="relative z-10 flex items-center gap-6 text-center md:text-start flex-col md:flex-row w-full md:w-auto">
-             <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 shadow-inner shrink-0">
-                <Sparkles size={32} className="text-white fill-white/20" />
-             </div>
-             <div>
-                <h1 className="text-3xl md:text-5xl font-black text-white font-cairo mb-2 tracking-wide leading-tight">
-                   {t('hero_title')}
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+             <div className="text-center md:text-start text-white">
+                <h1 className="text-3xl md:text-4xl font-bold mb-2 flex items-center justify-center md:justify-start gap-3">
+                   {t('dash_welcome')} <span className="text-4xl">👋</span>
                 </h1>
-                <p className="text-purple-100 text-lg font-medium opacity-90 leading-relaxed max-w-lg">
+                <p className="text-emerald-50 font-medium opacity-90 text-lg">
                    {t('hero_desc')}
                 </p>
+                <Link to="/tools" className="mt-6 inline-flex items-center gap-2 bg-white text-emerald-600 px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-emerald-50 transition-colors">
+                   <Zap size={20} fill="currentColor" />
+                   {t('nav_tools')}
+                </Link>
+             </div>
+             
+             {/* Stats Cards in Banner (Mobile Only or Condensed) */}
+             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 text-white min-w-[200px] text-center">
+                 <p className="text-sm font-medium opacity-80 mb-1">{t('dash_stat_tokens')}</p>
+                 <div className="text-3xl font-black font-mono">99,970</div>
+                 <div className="text-xs opacity-60 mt-1">/ 100,000</div>
              </div>
           </div>
-
-          {/* Pill Side (Tokens/Status) */}
-          <div className="relative z-10 w-full md:w-auto flex justify-center md:justify-end">
-             <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/25 transition-colors cursor-default min-w-[240px] justify-center md:justify-start">
-                 <span className="text-purple-100 font-bold text-sm uppercase tracking-wider whitespace-nowrap">{t('tokens_remaining')}:</span>
-                 <div className="flex items-center gap-2">
-                   <InfinityIcon size={20} className="text-white" />
-                   <span className="text-white font-black text-xl font-cairo tracking-tight">
-                     {language === Language.EN ? 'Free' : 'مجاني'}
-                   </span>
-                 </div>
-             </div>
-          </div>
-
-        </div>
       </div>
 
-      {/* Tools Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
-        {TOOLS_DATA.map((tool, index) => {
-          const style = themeStyles[tool.colorTheme] || themeStyles.blue;
-          
-          return (
-            <Link
-              key={tool.id}
-              to={tool.path}
-              className={`
-                group relative overflow-hidden rounded-[2rem] p-6 transition-all duration-300 hover:-translate-y-1
-                bg-white dark:bg-[#151925]/80 backdrop-blur-md 
-                border ${style.border} ${style.hoverBorder}
-                hover:shadow-2xl hover:shadow-${tool.colorTheme}-500/10
-                ${index === 0 ? 'lg:col-span-2' : ''}
-              `}
-            >
-              {/* Dynamic Glow Background */}
-              <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${tool.gradient} opacity-50 group-hover:opacity-100 transition-opacity`} />
-              <div className={`absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br ${style.glow} opacity-0 group-hover:opacity-100 rounded-full blur-3xl transition-all duration-500`} />
-              
-              <div className="relative z-10 flex flex-col h-full gap-6">
-                
-                {/* Header with Colored Icon Container */}
-                <div className="flex items-center justify-between">
-                  <div className={`
-                    w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg transform group-hover:scale-110 transition-transform duration-500
-                    bg-gradient-to-br ${tool.gradient}
-                  `}>
-                    {iconMap[tool.icon]}
-                  </div>
-                  
-                  {/* Subtle Arrow */}
-                  <div className={`
-                    w-10 h-10 rounded-full border border-slate-100 dark:border-white/5 flex items-center justify-center 
-                    text-slate-300 group-hover:${style.text} transition-colors bg-slate-50 dark:bg-white/5
-                  `}>
-                     {isRTL ? <ArrowLeft size={20} /> : <ArrowRight size={20} />}
-                  </div>
-                </div>
+      {/* Dashboard Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+         
+         {/* Recent Activity (Left Column - 2 Spans) */}
+         <div className="lg:col-span-2 space-y-6">
+             <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold dark:text-white flex items-center gap-2">
+                    <Clock size={20} className="text-slate-400" />
+                    {t('dash_recent_activity')}
+                </h3>
+             </div>
+             
+             <div className="bg-white dark:bg-[#151925] rounded-[2rem] p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                 {[1, 2, 3, 4].map((i) => (
+                     <div key={i} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group cursor-pointer">
+                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-md ${
+                             i === 1 ? 'bg-indigo-500' : i === 2 ? 'bg-purple-500' : i === 3 ? 'bg-amber-500' : 'bg-rose-500'
+                         }`}>
+                             {i === 1 ? <Sparkles size={20} /> : <FolderOpen size={20} />}
+                         </div>
+                         <div className="flex-1">
+                             <h4 className="font-bold dark:text-white group-hover:text-purple-500 transition-colors">Project Alpha Design</h4>
+                             <p className="text-xs text-slate-500">Edited 2 hours ago • AI Color Palette</p>
+                         </div>
+                         <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400">
+                             <ArrowRight size={16} className={language === 'ar' ? 'rotate-180' : ''} />
+                         </div>
+                     </div>
+                 ))}
+             </div>
+         </div>
 
-                {/* Content */}
-                <div>
-                  <h3 className={`text-2xl font-bold text-slate-900 dark:text-white mb-2 font-cairo group-hover:${style.text} transition-colors`}>
-                    {language === Language.EN ? tool.titleEn : tool.titleAr}
-                  </h3>
-                  <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm font-medium">
-                    {language === Language.EN ? tool.descEn : tool.descAr}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
+         {/* Right Column Stats */}
+         <div className="space-y-6">
+             <h3 className="text-xl font-bold dark:text-white flex items-center gap-2">
+                <Sparkles size={20} className="text-slate-400" />
+                {t('dash_stats_title')}
+             </h3>
+
+             <div className="grid grid-cols-1 gap-4">
+                 <div className="bg-slate-900 text-white rounded-[2rem] p-6 shadow-xl relative overflow-hidden">
+                     <div className="relative z-10">
+                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mb-4 text-blue-400">
+                            <FolderOpen size={20} />
+                        </div>
+                        <h4 className="text-3xl font-bold mb-1">12</h4>
+                        <p className="text-sm text-slate-400">{t('dash_stat_projects')}</p>
+                     </div>
+                     <div className="absolute right-0 bottom-0 opacity-10">
+                         <FolderOpen size={100} />
+                     </div>
+                 </div>
+
+                 <div className="bg-white dark:bg-[#151925] rounded-[2rem] p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+                     <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center mb-4 text-purple-600 dark:text-purple-400">
+                         <Zap size={20} />
+                     </div>
+                     <h4 className="text-3xl font-bold mb-1 dark:text-white">84</h4>
+                     <p className="text-sm text-slate-500 dark:text-slate-400">{t('dash_stat_completed')}</p>
+                 </div>
+             </div>
+         </div>
       </div>
     </div>
   );
 };
+
+// Simple Arrow icon helper
+const ArrowRight = ({ size, className }: { size: number, className?: string }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m9 18 6-6-6-6"/></svg>
+);
 
 export default Home;

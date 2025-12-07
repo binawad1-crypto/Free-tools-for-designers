@@ -3,6 +3,9 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { ColorPalette, PantoneMatch } from "../types";
 
+// Note: For video generation with Veo, we re-instantiate GoogleGenAI 
+// inside the function to pick up the user-selected key from process.env.API_KEY
+
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
 
@@ -155,4 +158,50 @@ export const generateLogo = async (prompt: string, style: string): Promise<strin
     console.error("Gemini Logo Generation Error:", error);
     throw error;
   }
+};
+
+interface VideoConfig {
+  aspectRatio: '16:9' | '9:16';
+  resolution: '720p' | '1080p';
+}
+
+// Helper to generate Video using Veo
+export const generateVideo = async (prompt: string, config: VideoConfig): Promise<string | null> => {
+    // IMPORTANT: Create a new instance to capture the latest API Key from window.aistudio selection
+    const veoAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    
+    try {
+        let operation = await veoAi.models.generateVideos({
+            model: 'veo-3.1-fast-generate-preview',
+            prompt: prompt,
+            config: {
+                numberOfVideos: 1,
+                resolution: config.resolution,
+                aspectRatio: config.aspectRatio
+            }
+        });
+
+        // Polling loop
+        while (!operation.done) {
+            await new Promise(resolve => setTimeout(resolve, 5000)); // Poll every 5s
+            operation = await veoAi.operations.getVideosOperation({ operation: operation });
+        }
+
+        const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
+        if (!downloadLink) return null;
+
+        // Fetch with API Key to get actual bytes (or URL)
+        // Note: For display, we might need to proxy or use the blob directly if CORS allows.
+        // The instructions say: "The response.body contains the MP4 bytes."
+        // We will fetch it and convert to Blob URL for playback.
+        
+        const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
+        if (!response.ok) throw new Error("Failed to fetch video bytes");
+        
+        const blob = await response.blob();
+        return URL.createObjectURL(blob);
+    } catch (error) {
+        console.error("Veo Video Generation Error:", error);
+        throw error;
+    }
 };

@@ -208,7 +208,32 @@ export type TranslationKey =
   | 'logo_style_3d'
   | 'logo_style_abstract'
   | 'logo_style_mascot'
-  | 'logo_generated_title';
+  | 'logo_generated_title'
+  | 'nav_dashboard'
+  | 'nav_tools'
+  | 'nav_studio'
+  | 'nav_settings'
+  | 'nav_support'
+  | 'dash_welcome'
+  | 'dash_stats_title'
+  | 'dash_recent_activity'
+  | 'dash_stat_projects'
+  | 'dash_stat_completed'
+  | 'dash_stat_tokens'
+  | 'dash_upgrade'
+  | 'dash_plan_name'
+  | 'dash_plan_pro'
+  | 'studio_title'
+  | 'studio_desc'
+  | 'studio_prompt_label'
+  | 'studio_btn_generate'
+  | 'studio_select_key'
+  | 'studio_key_required'
+  | 'studio_generating'
+  | 'studio_projects_title'
+  | 'studio_no_projects'
+  | 'studio_aspect_ratio'
+  | 'studio_resolution';
 
 export const TOOLS_DATA: Tool[] = [
   {
