@@ -1,5 +1,3 @@
-
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { ColorPalette, PantoneMatch } from "../types";
 
@@ -165,21 +163,54 @@ interface VideoConfig {
   resolution: '720p' | '1080p';
 }
 
-// Helper to generate Video using Veo
-export const generateVideo = async (prompt: string, config: VideoConfig): Promise<string | null> => {
+// Updated generateVideo to support Image-to-Video
+export const generateVideo = async (
+    prompt: string, 
+    config: VideoConfig, 
+    image?: { data: string, mimeType: string }
+): Promise<string | null> => {
     // IMPORTANT: Create a new instance to capture the latest API Key from window.aistudio selection
+    // Note: window.aistudio.openSelectKey updates process.env.API_KEY in the environment
     const veoAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     try {
-        let operation = await veoAi.models.generateVideos({
+        // Prepare request parameters with strict validation
+        const params: any = {
             model: 'veo-3.1-fast-generate-preview',
-            prompt: prompt,
             config: {
                 numberOfVideos: 1,
-                resolution: config.resolution,
-                aspectRatio: config.aspectRatio
+                // Ensure defaults to valid enum values if undefined
+                resolution: config.resolution || '720p',
+                aspectRatio: config.aspectRatio || '16:9'
             }
-        });
+        };
+
+        // If prompt is provided and valid, add it
+        if (prompt && prompt.trim().length > 0) {
+            params.prompt = prompt.trim();
+        }
+
+        // If image is provided, add it (Image-to-Video)
+        if (image) {
+            params.image = {
+                imageBytes: image.data,
+                mimeType: image.mimeType
+            };
+        }
+
+        // Veo requires at least a prompt OR an image.
+        // If image is provided but no prompt, we provide a generic one to be safe, 
+        // as some variations of the API require a prompt string.
+        if (image && !params.prompt) {
+            params.prompt = "Animate this image";
+        }
+        
+        // Final check
+        if (!params.image && !params.prompt) {
+            throw new Error("A text prompt is required for video generation when no image is uploaded.");
+        }
+
+        let operation = await veoAi.models.generateVideos(params);
 
         // Polling loop
         while (!operation.done) {
@@ -189,11 +220,6 @@ export const generateVideo = async (prompt: string, config: VideoConfig): Promis
 
         const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
         if (!downloadLink) return null;
-
-        // Fetch with API Key to get actual bytes (or URL)
-        // Note: For display, we might need to proxy or use the blob directly if CORS allows.
-        // The instructions say: "The response.body contains the MP4 bytes."
-        // We will fetch it and convert to Blob URL for playback.
         
         const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
         if (!response.ok) throw new Error("Failed to fetch video bytes");
@@ -202,6 +228,42 @@ export const generateVideo = async (prompt: string, config: VideoConfig): Promis
         return URL.createObjectURL(blob);
     } catch (error) {
         console.error("Veo Video Generation Error:", error);
+        throw error;
+    }
+};
+
+// New Helper for Image Editing (Remove BG, Product Shot, etc.)
+export const editImage = async (
+    imageData: string, 
+    mimeType: string, 
+    prompt: string
+): Promise<string | null> => {
+    try {
+        const model = 'gemini-2.5-flash-image';
+        
+        const response = await ai.models.generateContent({
+            model,
+            contents: {
+                parts: [
+                    {
+                        inlineData: {
+                            data: imageData,
+                            mimeType: mimeType
+                        }
+                    },
+                    { text: prompt }
+                ]
+            }
+        });
+
+        for (const part of response.candidates?.[0]?.content?.parts || []) {
+            if (part.inlineData && part.inlineData.data) {
+                return `data:image/png;base64,${part.inlineData.data}`;
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error("Gemini Image Edit Error:", error);
         throw error;
     }
 };

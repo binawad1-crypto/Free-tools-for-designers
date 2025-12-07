@@ -195,7 +195,22 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     studio_projects_title: 'My Projects',
     studio_no_projects: 'No videos generated yet. Start creating!',
     studio_aspect_ratio: 'Aspect Ratio',
-    studio_resolution: 'Resolution'
+    studio_resolution: 'Resolution',
+    studio_tool_upload: 'Upload Image',
+    studio_tool_img2vid: 'Image to Video',
+    studio_tool_audio: 'Add Audio',
+    studio_tool_character: 'Character / Producer',
+    studio_section_pro: 'Professional Tools',
+    studio_tool_remove_bg: 'Remove Background',
+    studio_tool_replace_bg: 'Replace Background',
+    studio_tool_product: 'Product Photography',
+    studio_tool_consistency: 'Character Consistency',
+    studio_tool_faceswap: 'Face Swap',
+    studio_tool_3d: 'Convert to 3D',
+    studio_tool_upscale: 'Enhance Quality',
+    studio_drop_image: 'Drop an image here to start',
+    studio_processing_image: 'Processing Image...',
+    studio_result_image: 'Generated Image'
   },
   [Language.AR]: {
     app_title: 'رفيق المصمم',
@@ -389,6 +404,21 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     studio_projects_title: 'مشاريعي',
     studio_no_projects: 'لم يتم إنشاء أي فيديوهات بعد. ابدأ الإبداع!',
     studio_aspect_ratio: 'نسبة الأبعاد',
-    studio_resolution: 'الدقة'
+    studio_resolution: 'الدقة',
+    studio_tool_upload: 'رفع صورة',
+    studio_tool_img2vid: 'صورة إلى فيديو',
+    studio_tool_audio: 'إضافة صوت',
+    studio_tool_character: 'شخصية / منتج',
+    studio_section_pro: 'أدوات احترافية',
+    studio_tool_remove_bg: 'إزالة الخلفية',
+    studio_tool_replace_bg: 'استبدال الخلفية',
+    studio_tool_product: 'تصوير منتجات',
+    studio_tool_consistency: 'ثبات الشخصية',
+    studio_tool_faceswap: 'تبديل الوجه',
+    studio_tool_3d: 'تحويل إلى 3D',
+    studio_tool_upscale: 'تحسين الجودة',
+    studio_drop_image: 'أسقط صورة هنا للبدء',
+    studio_processing_image: 'جاري معالجة الصورة...',
+    studio_result_image: 'الصورة الناتجة'
   }
 };

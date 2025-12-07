@@ -233,7 +233,22 @@ export type TranslationKey =
   | 'studio_projects_title'
   | 'studio_no_projects'
   | 'studio_aspect_ratio'
-  | 'studio_resolution';
+  | 'studio_resolution'
+  | 'studio_tool_upload'
+  | 'studio_tool_img2vid'
+  | 'studio_tool_audio'
+  | 'studio_tool_character'
+  | 'studio_section_pro'
+  | 'studio_tool_remove_bg'
+  | 'studio_tool_replace_bg'
+  | 'studio_tool_product'
+  | 'studio_tool_consistency'
+  | 'studio_tool_faceswap'
+  | 'studio_tool_3d'
+  | 'studio_tool_upscale'
+  | 'studio_drop_image'
+  | 'studio_processing_image'
+  | 'studio_result_image';
 
 export const TOOLS_DATA: Tool[] = [
   {
