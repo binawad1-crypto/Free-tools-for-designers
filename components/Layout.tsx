@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { useApp } from '../contexts/AppContext';
-import { Moon, Sun, Languages, Command, Wrench, Palette, Settings, LifeBuoy, Menu, X, ChevronRight, ChevronLeft, Crown } from 'lucide-react';
+import { Moon, Sun, Languages, Command, Wrench, Palette, Settings, LifeBuoy, Menu, X, ChevronRight, ChevronLeft, Crown, Sparkles } from 'lucide-react';
 import { Theme, Language } from '../types';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -11,9 +12,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const navItems = [
     { id: 'tools', label: 'nav_tools', icon: Wrench, path: '/' },
-    { id: 'studio', label: 'nav_studio', icon: Palette, path: '/studio' }, // Placeholder
-    { id: 'support', label: 'nav_support', icon: LifeBuoy, path: '/support' }, // Placeholder
-    { id: 'settings', label: 'nav_settings', icon: Settings, path: '/settings' }, // Placeholder
+    { id: 'special', label: 'nav_special', icon: Sparkles, path: '/special' },
+    { id: 'studio', label: 'nav_studio', icon: Palette, path: '/studio' },
+    { id: 'support', label: 'nav_support', icon: LifeBuoy, path: '/support' },
+    { id: 'settings', label: 'nav_settings', icon: Settings, path: '/settings' },
   ];
 
   return (

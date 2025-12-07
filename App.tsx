@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
@@ -15,6 +16,11 @@ import PDFTool from './pages/PDFTool';
 import SocialSizesTool from './pages/SocialSizesTool';
 import LogoMakerTool from './pages/LogoMakerTool';
 import CreativeStudio from './pages/CreativeStudio';
+import SpecialToolsHub from './pages/SpecialToolsHub';
+import SmartChatTool from './pages/special/SmartChatTool';
+import VisionTool from './pages/special/VisionTool';
+import AudioTool from './pages/special/AudioTool';
+import LiveTool from './pages/special/LiveTool';
 
 const App: React.FC = () => {
   return (
@@ -39,6 +45,13 @@ const App: React.FC = () => {
             
             {/* Creative Studio */}
             <Route path="/studio" element={<CreativeStudio />} />
+
+            {/* Special Tools Hub & Sub-pages */}
+            <Route path="/special" element={<SpecialToolsHub />} />
+            <Route path="/special/chat" element={<SmartChatTool />} />
+            <Route path="/special/vision" element={<VisionTool />} />
+            <Route path="/special/audio" element={<AudioTool />} />
+            <Route path="/special/live" element={<LiveTool />} />
             
             {/* Placeholders for sidebar items */}
             <Route path="/support" element={<div className="p-10 text-center text-slate-500">Support Center Coming Soon</div>} />

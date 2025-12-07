@@ -248,7 +248,42 @@ export type TranslationKey =
   | 'studio_tool_upscale'
   | 'studio_drop_image'
   | 'studio_processing_image'
-  | 'studio_result_image';
+  | 'studio_result_image'
+  | 'nav_special'
+  | 'special_hub_title'
+  | 'special_hub_desc'
+  | 'tool_smart_chat'
+  | 'tool_vision'
+  | 'tool_audio'
+  | 'tool_live'
+  | 'tool_search'
+  | 'tool_maps'
+  | 'tool_thinking'
+  | 'desc_smart_chat'
+  | 'desc_vision'
+  | 'desc_audio'
+  | 'desc_live'
+  | 'chat_mode_pro'
+  | 'chat_mode_flash'
+  | 'chat_mode_search'
+  | 'chat_mode_maps'
+  | 'chat_mode_think'
+  | 'chat_input_placeholder'
+  | 'chat_thinking'
+  | 'chat_sources'
+  | 'vision_tab_image'
+  | 'vision_tab_video'
+  | 'vision_analyze_btn'
+  | 'vision_upload_label'
+  | 'audio_tab_tts'
+  | 'audio_tab_transcribe'
+  | 'audio_input_text'
+  | 'audio_btn_speak'
+  | 'audio_btn_record'
+  | 'audio_recording'
+  | 'live_start'
+  | 'live_listening'
+  | 'live_end';
 
 export const TOOLS_DATA: Tool[] = [
   {
@@ -360,5 +395,52 @@ export const TOOLS_DATA: Tool[] = [
     descAr: 'صمم ملصق الحقائق الغذائية الاحترافي لمنتجاتك بسهولة.',
     gradient: 'from-slate-600 to-teal-500',
     colorTheme: 'slate'
+  }
+];
+
+export const SPECIAL_TOOLS_DATA: Tool[] = [
+  {
+    id: 'live',
+    icon: 'AudioWaveform',
+    path: '/special/live',
+    titleEn: 'Live Conversation',
+    titleAr: 'المحادثة الحية',
+    descEn: 'Real-time voice interaction with Gemini 2.5.',
+    descAr: 'تحدث مع الذكاء الاصطناعي صوتياً في الوقت الفعلي.',
+    gradient: 'from-red-500 to-rose-600',
+    colorTheme: 'red'
+  },
+  {
+    id: 'chat',
+    icon: 'Bot',
+    path: '/special/chat',
+    titleEn: 'Super Chat',
+    titleAr: 'الشات الخارق',
+    descEn: 'Access Search, Maps, and Deep Thinking modes.',
+    descAr: 'شات مدعوم ببحث جوجل، الخرائط، والتفكير العميق.',
+    gradient: 'from-blue-600 to-indigo-600',
+    colorTheme: 'indigo'
+  },
+  {
+    id: 'vision',
+    icon: 'ScanEye',
+    path: '/special/vision',
+    titleEn: 'Visual Analyst',
+    titleAr: 'المحلل البصري',
+    descEn: 'Deep understanding of images and videos using Gemini 3 Pro.',
+    descAr: 'فهم وتحليل عميق للصور والفيديوهات.',
+    gradient: 'from-amber-500 to-orange-600',
+    colorTheme: 'gold'
+  },
+  {
+    id: 'audio',
+    icon: 'Mic2',
+    path: '/special/audio',
+    titleEn: 'Audio Lab',
+    titleAr: 'مختبر الصوتيات',
+    descEn: 'Professional Text-to-Speech and Audio Transcription.',
+    descAr: 'تحويل النص إلى كلام وتفريغ التسجيلات الصوتية.',
+    gradient: 'from-teal-500 to-emerald-600',
+    colorTheme: 'emerald'
   }
 ];

@@ -1,4 +1,5 @@
-import { GoogleGenAI, Type } from "@google/genai";
+
+import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { ColorPalette, PantoneMatch } from "../types";
 
 // Note: For video generation with Veo, we re-instantiate GoogleGenAI 
@@ -170,7 +171,6 @@ export const generateVideo = async (
     image?: { data: string, mimeType: string }
 ): Promise<string | null> => {
     // IMPORTANT: Create a new instance to capture the latest API Key from window.aistudio selection
-    // Note: window.aistudio.openSelectKey updates process.env.API_KEY in the environment
     const veoAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     try {
@@ -199,8 +199,6 @@ export const generateVideo = async (
         }
 
         // Veo requires at least a prompt OR an image.
-        // If image is provided but no prompt, we provide a generic one to be safe, 
-        // as some variations of the API require a prompt string.
         if (image && !params.prompt) {
             params.prompt = "Animate this image";
         }
@@ -264,6 +262,131 @@ export const editImage = async (
         return null;
     } catch (error) {
         console.error("Gemini Image Edit Error:", error);
+        throw error;
+    }
+};
+
+// --- SPECIAL TOOLS FUNCTIONS ---
+
+export interface ChatConfig {
+  mode: 'pro' | 'flash' | 'search' | 'maps' | 'think';
+}
+
+export const sendChatMessage = async (message: string, config: ChatConfig, history: any[] = []) => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
+  let model = 'gemini-3-pro-preview';
+  let requestConfig: any = {};
+  let tools: any[] = [];
+
+  switch (config.mode) {
+    case 'flash':
+      model = 'gemini-2.5-flash-lite-latest'; // Fast
+      break;
+    case 'search':
+      model = 'gemini-2.5-flash';
+      tools = [{ googleSearch: {} }];
+      break;
+    case 'maps':
+      model = 'gemini-2.5-flash';
+      tools = [{ googleMaps: {} }];
+      break;
+    case 'think':
+      model = 'gemini-3-pro-preview';
+      requestConfig.thinkingConfig = { thinkingBudget: 16000 }; // Budget for thinking
+      break;
+    case 'pro':
+    default:
+      model = 'gemini-3-pro-preview';
+      break;
+  }
+
+  if (tools.length > 0) {
+    requestConfig.tools = tools;
+  }
+
+  try {
+    const chatSession = ai.chats.create({
+      model: model,
+      history: history,
+      config: requestConfig
+    });
+
+    const response = await chatSession.sendMessage({ message });
+    return response; // Return full response object to access grounding metadata
+  } catch (error) {
+    console.error("Chat Error:", error);
+    throw error;
+  }
+};
+
+export const analyzeMedia = async (fileBase64: string, mimeType: string, prompt: string, isVideo: boolean) => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const model = 'gemini-3-pro-preview'; // Powerful model for vision/video
+
+  try {
+    const response = await ai.models.generateContent({
+      model,
+      contents: {
+        parts: [
+          {
+            inlineData: {
+              data: fileBase64,
+              mimeType: mimeType
+            }
+          },
+          { text: prompt || (isVideo ? "Analyze this video in detail." : "Analyze this image in detail.") }
+        ]
+      }
+    });
+    return response.text;
+  } catch (error) {
+    console.error("Media Analysis Error:", error);
+    throw error;
+  }
+};
+
+export const generateSpeech = async (text: string) => {
+    // Note: Re-instantiate to ensure key is fresh
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash-preview-tts",
+            contents: { parts: [{ text }] },
+            config: {
+                responseModalities: [Modality.AUDIO],
+                speechConfig: {
+                    voiceConfig: {
+                        prebuiltVoiceConfig: { voiceName: 'Kore' },
+                    },
+                },
+            },
+        });
+        
+        // Extract base64 audio
+        const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+        return base64Audio;
+    } catch (error) {
+        console.error("TTS Error:", error);
+        throw error;
+    }
+};
+
+export const transcribeAudio = async (audioBase64: string, mimeType: string) => {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: {
+                parts: [
+                    { inlineData: { data: audioBase64, mimeType: mimeType } },
+                    { text: "Transcribe this audio exactly as spoken." }
+                ]
+            }
+        });
+        return response.text;
+    } catch (error) {
+        console.error("Transcription Error:", error);
         throw error;
     }
 };
