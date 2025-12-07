@@ -11,6 +11,7 @@ import PantoneTool from './pages/PantoneTool';
 import ResizeTool from './pages/ResizeTool';
 import UnitConverterTool from './pages/UnitConverterTool';
 import NutritionTool from './pages/NutritionTool';
+import PDFTool from './pages/PDFTool';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             <Route path="/resize" element={<ResizeTool />} />
             <Route path="/units" element={<UnitConverterTool />} />
             <Route path="/nutrition" element={<NutritionTool />} />
+            <Route path="/pdf" element={<PDFTool />} />
           </Routes>
         </Layout>
       </HashRouter>

@@ -38,7 +38,7 @@ export interface Tool {
   descEn: string;
   descAr: string;
   gradient: string;
-  colorTheme: 'blue' | 'purple' | 'emerald' | 'orange' | 'indigo' | 'rose' | 'slate' | 'cyan';
+  colorTheme: 'blue' | 'purple' | 'emerald' | 'orange' | 'indigo' | 'rose' | 'slate' | 'cyan' | 'red';
 }
 
 export type TranslationKey = 
@@ -55,6 +55,7 @@ export type TranslationKey =
   | 'contrast_tool'
   | 'unit_tool'
   | 'nutri_tool'
+  | 'pdf_tool'
   | 'footer_text'
   | 'input_placeholder'
   | 'generate_btn'
@@ -170,7 +171,19 @@ export type TranslationKey =
   | 'nutri_settings'
   | 'nutri_label_lang'
   | 'nutri_input_values'
-  | 'nutri_export_png';
+  | 'nutri_export_png'
+  | 'pdf_tab_merge'
+  | 'pdf_tab_img2pdf'
+  | 'pdf_tab_split'
+  | 'pdf_tab_compress'
+  | 'pdf_drop_pdfs'
+  | 'pdf_drop_imgs'
+  | 'pdf_btn_merge'
+  | 'pdf_btn_convert'
+  | 'pdf_btn_split'
+  | 'pdf_btn_compress'
+  | 'pdf_files_count'
+  | 'pdf_processing';
 
 export const TOOLS_DATA: Tool[] = [
   {
@@ -227,6 +240,17 @@ export const TOOLS_DATA: Tool[] = [
     descAr: 'غيّر مقاسات الصور بسهولة (حتى 10 صور) مع الحفاظ على الجودة.',
     gradient: 'from-indigo-500 to-violet-500',
     colorTheme: 'indigo'
+  },
+  {
+    id: 'pdf',
+    icon: 'FileStack',
+    path: '/pdf',
+    titleEn: 'PDF Manager',
+    titleAr: 'مدير ملفات PDF',
+    descEn: 'Merge, split, and convert images to PDF easily.',
+    descAr: 'دمج، تقسيم، وتحويل الصور إلى ملفات PDF باحترافية.',
+    gradient: 'from-red-500 to-rose-500',
+    colorTheme: 'red'
   },
   {
     id: 'units',

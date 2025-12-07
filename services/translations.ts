@@ -15,6 +15,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     contrast_tool: 'Contrast Checker',
     unit_tool: 'Unit Converter',
     nutri_tool: 'Nutrition Label',
+    pdf_tool: 'PDF Manager',
     footer_text: '© 2024 DesignMate. Built for designers.',
     input_placeholder: 'Enter your prompt or value here...',
     generate_btn: 'Generate',
@@ -130,7 +131,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     nutri_settings: 'Label Settings',
     nutri_label_lang: 'Label Language',
     nutri_input_values: 'Nutrient Values',
-    nutri_export_png: 'Export as Image'
+    nutri_export_png: 'Export as Image',
+    pdf_tab_merge: 'Merge PDF',
+    pdf_tab_img2pdf: 'Images to PDF',
+    pdf_tab_split: 'Split PDF',
+    pdf_tab_compress: 'Compress PDF',
+    pdf_drop_pdfs: 'Drop PDF files here',
+    pdf_drop_imgs: 'Drop images (JPG, PNG) here',
+    pdf_btn_merge: 'Merge PDFs',
+    pdf_btn_convert: 'Create PDF',
+    pdf_btn_split: 'Extract Pages',
+    pdf_btn_compress: 'Compress & Optimize',
+    pdf_files_count: 'Files Selected',
+    pdf_processing: 'Processing...'
   },
   [Language.AR]: {
     app_title: 'رفيق المصمم',
@@ -146,6 +159,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     contrast_tool: 'فاحص التباين',
     unit_tool: 'محول المقاسات',
     nutri_tool: 'ملصق غذائي',
+    pdf_tool: 'مدير PDF',
     footer_text: '© 2024 رفيق المصمم. صنع بحب للمصممين.',
     input_placeholder: 'أدخل النص أو القيمة هنا...',
     generate_btn: 'توليد',
@@ -261,6 +275,18 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     nutri_settings: 'إعدادات الملصق',
     nutri_label_lang: 'لغة الملصق',
     nutri_input_values: 'القيم الغذائية',
-    nutri_export_png: 'تصدير كصورة'
+    nutri_export_png: 'تصدير كصورة',
+    pdf_tab_merge: 'دمج PDF',
+    pdf_tab_img2pdf: 'صور إلى PDF',
+    pdf_tab_split: 'تقسيم PDF',
+    pdf_tab_compress: 'ضغط PDF',
+    pdf_drop_pdfs: 'أسقط ملفات PDF هنا',
+    pdf_drop_imgs: 'أسقط الصور (JPG, PNG) هنا',
+    pdf_btn_merge: 'دمج الملفات',
+    pdf_btn_convert: 'إنشاء PDF',
+    pdf_btn_split: 'استخراج الصفحات',
+    pdf_btn_compress: 'ضغط وتحسين الملف',
+    pdf_files_count: 'ملفات محددة',
+    pdf_processing: 'جاري المعالجة...'
   }
 };

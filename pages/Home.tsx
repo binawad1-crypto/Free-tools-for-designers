@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
 import { TOOLS_DATA, Language } from '../types';
-import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, Sparkles, Infinity as InfinityIcon } from 'lucide-react';
+import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, Sparkles, Infinity as InfinityIcon, FileStack } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   QrCode: <QrCode size={28} />,
@@ -12,6 +12,7 @@ const iconMap: Record<string, React.ReactNode> = {
   Scaling: <Scaling size={28} />,
   Ruler: <Ruler size={28} />,
   ScrollText: <ScrollText size={28} />,
+  FileStack: <FileStack size={28} />,
 };
 
 // Map themes to Tailwind classes
@@ -78,6 +79,14 @@ const themeStyles: Record<string, {
     bgIcon: 'bg-slate-600',
     text: 'text-slate-700 dark:text-slate-300',
     glow: 'from-slate-500/20 to-gray-500/20'
+  },
+  red: {
+    border: 'border-red-100 dark:border-red-900/30',
+    hoverBorder: 'group-hover:border-red-500/50',
+    shadow: 'shadow-red-500/5',
+    bgIcon: 'bg-red-500',
+    text: 'text-red-600 dark:text-red-400',
+    glow: 'from-red-500/20 to-rose-500/20'
   }
 };
 
