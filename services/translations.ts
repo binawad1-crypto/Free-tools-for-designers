@@ -1,11 +1,9 @@
-
-
 import { Language, TranslationKey } from '../types';
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   [Language.EN]: {
-    app_title: 'DesignMate',
-    app_desc: 'Essential free tools for modern designers, enhanced with AI.',
+    app_title: 'Zamam',
+    app_desc: 'The power to control your business',
     hero_title: 'For Designers & Creatives',
     hero_desc: 'Professional smart tools designed specifically to help you create, innovate, and excel in your work.',
     tokens_remaining: 'Service Status',
@@ -20,7 +18,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     pdf_tool: 'PDF Manager',
     social_tool: 'Social Media Sizes',
     logo_tool: 'Logo Maker',
-    footer_text: '© 2024 DesignMate. Built for designers.',
+    footer_text: '© 2024 Zamam. Built for business.',
     input_placeholder: 'Enter your prompt or value here...',
     generate_btn: 'Generate',
     download_btn: 'Download',
@@ -248,8 +246,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     live_end: 'End Session'
   },
   [Language.AR]: {
-    app_title: 'رفيق المصمم',
-    app_desc: 'أدوات مجانية أساسية للمصممين العصريين، مدعومة بالذكاء الاصطناعي.',
+    app_title: 'زمام',
+    app_desc: 'قوة التحكم في تجارتك',
     hero_title: 'أدوات المصممين والمبدعين',
     hero_desc: 'مجموعة أدوات احترافية صُممت خصيصاً للمصممين وصناع المحتوى لتسهيل أعمالهم وإطلاق العنان لإبداعهم.',
     tokens_remaining: 'حالة الخدمة',
@@ -264,7 +262,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     pdf_tool: 'مدير PDF',
     social_tool: 'مقاسات التصميم',
     logo_tool: 'صانع الشعارات',
-    footer_text: '© 2024 رفيق المصمم. صنع بحب للمصممين.',
+    footer_text: '© 2024 زمام. قوة التحكم في تجارتك.',
     input_placeholder: 'أدخل النص أو القيمة هنا...',
     generate_btn: 'توليد',
     download_btn: 'تحميل',

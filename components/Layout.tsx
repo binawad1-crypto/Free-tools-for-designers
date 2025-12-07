@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { Moon, Sun, Languages, Command, Wrench, Palette, Settings, LifeBuoy, Menu, X, ChevronRight, ChevronLeft, Crown, Sparkles } from 'lucide-react';
@@ -37,13 +36,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         lg:translate-x-0 lg:static lg:shrink-0 flex flex-col
       `}>
         {/* Logo Area */}
-        <div className="h-20 flex items-center gap-3 px-6 border-b border-white/5">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-purple-500/20">
-                <Command size={20} />
+        <div className="h-24 flex items-center gap-3 px-6 border-b border-white/5">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-purple-500/20 shrink-0">
+                <Command size={24} />
             </div>
-            <div>
-                <h1 className="text-xl font-bold font-cairo">{t('app_title')}</h1>
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest">Designer Suite</p>
+            <div className="flex flex-col justify-center">
+                <h1 className="text-2xl font-black font-cairo leading-none mb-1">{t('app_title')}</h1>
+                <p className="text-[10px] text-slate-400 font-medium leading-tight opacity-80">{t('app_desc')}</p>
             </div>
         </div>
 
