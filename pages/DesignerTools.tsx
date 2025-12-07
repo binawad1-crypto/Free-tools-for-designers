@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
@@ -109,7 +108,7 @@ const themeStyles: Record<string, {
   }
 };
 
-const DesignerTools: React.FC = () => {
+const DesignerTools = () => {
   const { language, t, isRTL } = useApp();
 
   return (

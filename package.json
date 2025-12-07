@@ -16,7 +16,8 @@
     "react-router-dom": "^7.10.1",
     "qrcode": "^1.5.3",
     "html2canvas": "^1.4.1",
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "firebase": "^12.6.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

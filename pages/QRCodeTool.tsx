@@ -5,7 +5,7 @@ import QRCode from 'qrcode';
 
 type QRType = 'url' | 'text' | 'email' | 'phone' | 'sms' | 'wifi' | 'vcard';
 
-const QRCodeTool: React.FC = () => {
+const QRCodeTool = () => {
   const { t, isRTL } = useApp();
   const [activeTab, setActiveTab] = useState<QRType>('url');
   const [qrData, setQrData] = useState<string>('');

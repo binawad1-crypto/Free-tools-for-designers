@@ -283,7 +283,19 @@ export type TranslationKey =
   | 'audio_recording'
   | 'live_start'
   | 'live_listening'
-  | 'live_end';
+  | 'live_end'
+  | 'auth_login'
+  | 'auth_logout'
+  | 'auth_admin'
+  | 'auth_guest'
+  | 'auth_login_desc'
+  | 'auth_email'
+  | 'auth_password'
+  | 'auth_signin_btn'
+  | 'auth_error_generic'
+  | 'auth_error_invalid'
+  | 'auth_email_in_use'
+  | 'auth_weak_password';
 
 export const TOOLS_DATA: Tool[] = [
   {

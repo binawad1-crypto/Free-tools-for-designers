@@ -1,6 +1,8 @@
+
+
 import { Language, TranslationKey } from '../types';
 
-export const translations: Record<Language, Record<TranslationKey, string>> = {
+export const translations: Record<Language, Record<TranslationKey | string, string>> = {
   [Language.EN]: {
     app_title: 'Zamam',
     app_desc: 'The power to control your business',
@@ -243,7 +245,19 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     audio_recording: 'Recording...',
     live_start: 'Start Conversation',
     live_listening: 'Listening...',
-    live_end: 'End Session'
+    live_end: 'End Session',
+    auth_login: 'Sign In',
+    auth_logout: 'Sign Out',
+    auth_admin: 'Admin',
+    auth_guest: 'Guest',
+    auth_login_desc: 'This area is restricted. Please sign in.',
+    auth_email: 'Email Address',
+    auth_password: 'Password',
+    auth_signin_btn: 'Login securely',
+    auth_error_generic: 'Failed to sign in. Please check your credentials.',
+    auth_error_invalid: 'Invalid email or password.',
+    auth_email_in_use: 'This email is already registered.',
+    auth_weak_password: 'Password should be at least 6 characters.'
   },
   [Language.AR]: {
     app_title: 'زمام',
@@ -487,6 +501,18 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     audio_recording: 'جاري التسجيل...',
     live_start: 'بدء المحادثة',
     live_listening: 'جاري الاستماع...',
-    live_end: 'إنهاء الجلسة'
+    live_end: 'إنهاء الجلسة',
+    auth_login: 'تسجيل الدخول',
+    auth_logout: 'تسجيل الخروج',
+    auth_admin: 'مسؤول',
+    auth_guest: 'زائر',
+    auth_login_desc: 'هذه المنطقة محمية. يرجى تسجيل الدخول للمتابعة.',
+    auth_email: 'البريد الإلكتروني',
+    auth_password: 'كلمة المرور',
+    auth_signin_btn: 'دخول آمن',
+    auth_error_generic: 'فشل تسجيل الدخول. يرجى التحقق من البيانات.',
+    auth_error_invalid: 'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
+    auth_email_in_use: 'البريد الإلكتروني مسجل مسبقاً.',
+    auth_weak_password: 'كلمة المرور ضعيفة (6 أحرف على الأقل).'
   }
 };

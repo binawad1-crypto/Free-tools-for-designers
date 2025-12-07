@@ -1,13 +1,61 @@
-import React, { useState } from 'react';
+
+import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
-import { Moon, Sun, Languages, Command, Wrench, Palette, Settings, LifeBuoy, Menu, X, ChevronRight, ChevronLeft, Crown, Sparkles } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { Moon, Sun, Languages, Command, Wrench, Palette, Settings, LifeBuoy, Menu, X, ChevronRight, ChevronLeft, Crown, Sparkles, LogOut, LogIn } from 'lucide-react';
 import { Theme, Language } from '../types';
 import { Link, useLocation } from 'react-router-dom';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { theme, toggleTheme, language, toggleLanguage, t, isRTL } = useApp();
+  const { currentUser, isAdmin, logout } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  // User Menu State
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Handle click outside to close user menu
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const isAuthPage = location.pathname === '/login';
+
+  if (isAuthPage) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 transition-colors duration-500 font-cairo relative">
+          {/* Simple Theme/Lang Controls for Login Page */}
+          <div className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} z-50 flex gap-3`}>
+               <button 
+                onClick={toggleTheme} 
+                className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+               >
+                  {theme === Theme.LIGHT ? <Moon size={18} /> : <Sun size={18} />}
+               </button>
+               <button 
+                onClick={toggleLanguage} 
+                className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+               >
+                  {language === Language.EN ? 'AR' : 'EN'}
+               </button>
+          </div>
+          
+          <main className="w-full min-h-screen flex items-center justify-center p-4">
+              {children}
+          </main>
+      </div>
+    );
+  }
 
   const navItems = [
     { id: 'tools', label: 'nav_tools', icon: Wrench, path: '/' },
@@ -120,13 +168,59 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
              {/* User Profile Snippet */}
              <div className="flex items-center gap-4">
-                <div className="text-end hidden md:block">
-                    <p className="text-sm font-bold dark:text-white">binawad alraiany</p>
-                    <p className="text-xs text-slate-500">binawad1@gmail.com</p>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center text-white font-bold">
-                    B
-                </div>
+                {currentUser ? (
+                  <>
+                    <div className="text-end hidden md:block">
+                        <p className="text-sm font-bold dark:text-white flex items-center justify-end gap-2">
+                           {currentUser.displayName || t('auth_guest')}
+                           {isAdmin && <Crown size={14} className="text-yellow-500" fill="currentColor" />}
+                        </p>
+                        <p className="text-xs text-slate-500">{isAdmin ? t('auth_admin') : 'User'}</p>
+                    </div>
+                    
+                    {/* User Menu Dropdown */}
+                    <div className="relative" ref={userMenuRef}>
+                        <button 
+                            onClick={() => setUserMenuOpen(!userMenuOpen)}
+                            className="focus:outline-none transition-transform active:scale-95"
+                        >
+                            {currentUser.photoURL ? (
+                                <img src={currentUser.photoURL} alt="Profile" className="w-10 h-10 rounded-full border-2 border-slate-200 dark:border-slate-700" />
+                            ) : (
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center text-white font-bold">
+                                    {currentUser.displayName ? currentUser.displayName[0] : 'U'}
+                                </div>
+                            )}
+                        </button>
+                        
+                        {/* Dropdown */}
+                        {userMenuOpen && (
+                            <div className={`absolute top-full mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200 ${isRTL ? 'left-0' : 'right-0'}`}>
+                                {/* Mobile-only User Info inside dropdown */}
+                                <div className="md:hidden px-4 py-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50">
+                                    <p className="text-sm font-bold dark:text-white truncate">{currentUser.displayName || t('auth_guest')}</p>
+                                    <p className="text-xs text-slate-500 truncate">{currentUser.email}</p>
+                                </div>
+                                
+                                <button 
+                                    onClick={() => {
+                                        logout();
+                                        setUserMenuOpen(false);
+                                    }} 
+                                    className="w-full text-start px-4 py-3 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2 transition-colors font-medium"
+                                >
+                                    <LogOut size={16} /> {t('auth_logout')}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                  </>
+                ) : (
+                   <Link to="/login" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700 transition-colors">
+                      <LogIn size={16} />
+                      <span className="hidden sm:inline">{t('auth_login')}</span>
+                   </Link>
+                )}
              </div>
           </header>
 
