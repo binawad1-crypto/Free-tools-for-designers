@@ -23,7 +23,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [theme, setTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem('app_theme');
     if (saved) return saved as Theme;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? Theme.DARK : Theme.LIGHT;
+    // Default to DARK mode as requested
+    return Theme.DARK;
   });
 
   // Apply Theme Side Effects

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
-import { TOOLS_DATA, Language } from '../types';
+import { SMART_TOOLS_DATA, Language } from '../types';
 import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, FileStack, LayoutGrid, Hexagon, Megaphone, Swords, Bot, AudioWaveform, ScanEye, Mic2 } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -139,7 +139,7 @@ const DesignerTools = () => {
        </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0">
-        {TOOLS_DATA.map((tool, index) => {
+        {SMART_TOOLS_DATA.map((tool, index) => {
           const style = themeStyles[tool.colorTheme] || themeStyles.blue;
           
           return (

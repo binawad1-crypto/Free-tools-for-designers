@@ -323,7 +323,7 @@ export type TranslationKey =
   | 'auth_forgot_pass';
 
 // CATEGORY A: Smart AI Tools (Powered by Gemini)
-export const TOOLS_DATA: Tool[] = [
+export const SMART_TOOLS_DATA: Tool[] = [
   {
     id: 'chat',
     icon: 'Bot',
