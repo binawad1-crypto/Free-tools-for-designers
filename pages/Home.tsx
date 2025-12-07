@@ -1,10 +1,8 @@
-
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
 import { TOOLS_DATA, Language } from '../types';
-import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, Sparkles } from 'lucide-react';
+import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, Sparkles, Infinity as InfinityIcon } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   QrCode: <QrCode size={28} />,
@@ -112,11 +110,16 @@ const Home: React.FC = () => {
              </div>
           </div>
 
-          {/* Pill Side (Tokens) */}
+          {/* Pill Side (Tokens/Status) */}
           <div className="relative z-10 w-full md:w-auto flex justify-center md:justify-end">
              <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/25 transition-colors cursor-default min-w-[240px] justify-center md:justify-start">
                  <span className="text-purple-100 font-bold text-sm uppercase tracking-wider whitespace-nowrap">{t('tokens_remaining')}:</span>
-                 <span className="text-white font-black text-2xl font-mono tracking-tight">99970</span>
+                 <div className="flex items-center gap-2">
+                   <InfinityIcon size={20} className="text-white" />
+                   <span className="text-white font-black text-xl font-cairo tracking-tight">
+                     {language === Language.EN ? 'Free' : 'مجاني'}
+                   </span>
+                 </div>
              </div>
           </div>
 
