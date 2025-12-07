@@ -1,14 +1,18 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
 import { TOOLS_DATA, Language } from '../types';
-import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Zap, Star, ShieldCheck } from 'lucide-react';
+import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Zap, Star, ShieldCheck, Scaling, Ruler, ScrollText } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   QrCode: <QrCode size={32} />,
   Palette: <Palette size={32} />,
   Type: <Type size={32} />,
   Pipette: <Pipette size={32} />,
+  Scaling: <Scaling size={32} />,
+  Ruler: <Ruler size={32} />,
+  ScrollText: <ScrollText size={32} />,
 };
 
 const Home: React.FC = () => {
@@ -62,7 +66,7 @@ const Home: React.FC = () => {
             className={`group relative overflow-hidden rounded-[2rem] p-8 transition-all duration-300 hover:-translate-y-2
               bg-white/70 dark:bg-[#151925]/60 backdrop-blur-xl border border-white/50 dark:border-white/10
               shadow-xl shadow-slate-200/40 dark:shadow-black/20 hover:shadow-2xl hover:shadow-purple-500/10
-              ${index === 0 || index === 3 ? 'lg:col-span-2' : ''}
+              ${index === 0 || index === 6 ? 'lg:col-span-2' : ''}
             `}
           >
             {/* Background Gradient Blob */}

@@ -46,7 +46,10 @@ export type TranslationKey =
   | 'color_tool'
   | 'text_tool'
   | 'pms_tool'
+  | 'resize_tool'
   | 'contrast_tool'
+  | 'unit_tool'
+  | 'nutri_tool'
   | 'footer_text'
   | 'input_placeholder'
   | 'generate_btn'
@@ -115,7 +118,54 @@ export type TranslationKey =
   | 'pms_find_btn'
   | 'pms_match_title'
   | 'pms_closest_match'
-  | 'pms_cmyk_values';
+  | 'pms_cmyk_values'
+  | 'resize_drop_label'
+  | 'resize_settings_title'
+  | 'resize_width'
+  | 'resize_height'
+  | 'resize_percent'
+  | 'resize_lock_ratio'
+  | 'resize_format'
+  | 'resize_quality'
+  | 'resize_btn'
+  | 'resize_clear_btn'
+  | 'resize_status_pending'
+  | 'resize_status_done'
+  | 'resize_mode_dimensions'
+  | 'resize_mode_percentage'
+  | 'unit_cat_length'
+  | 'unit_cat_typography'
+  | 'unit_cat_digital'
+  | 'unit_cat_mass'
+  | 'unit_label_base'
+  | 'unit_label_from'
+  | 'unit_label_to'
+  | 'unit_base_font_size'
+  | 'nutri_title_facts'
+  | 'nutri_serving_size'
+  | 'nutri_servings_per'
+  | 'nutri_amount_per'
+  | 'nutri_calories'
+  | 'nutri_daily_value'
+  | 'nutri_total_fat'
+  | 'nutri_sat_fat'
+  | 'nutri_trans_fat'
+  | 'nutri_cholesterol'
+  | 'nutri_sodium'
+  | 'nutri_total_carb'
+  | 'nutri_fiber'
+  | 'nutri_sugars'
+  | 'nutri_added_sugars'
+  | 'nutri_protein'
+  | 'nutri_vit_d'
+  | 'nutri_calcium'
+  | 'nutri_iron'
+  | 'nutri_potassium'
+  | 'nutri_footnote'
+  | 'nutri_settings'
+  | 'nutri_label_lang'
+  | 'nutri_input_values'
+  | 'nutri_export_png';
 
 export const TOOLS_DATA: Tool[] = [
   {
@@ -157,5 +207,35 @@ export const TOOLS_DATA: Tool[] = [
     descEn: 'Find the closest matching PMS color for any hex code.',
     descAr: 'احصل على رقم Pantone المطابق لأي لون بدقة عالية.',
     gradient: 'from-orange-500 to-red-500'
+  },
+  {
+    id: 'resize',
+    icon: 'Scaling',
+    path: '/resize',
+    titleEn: 'Image Resizer',
+    titleAr: 'تغيير مقاسات الصور',
+    descEn: 'Resize up to 10 images at once with high quality.',
+    descAr: 'غيّر مقاسات الصور بسهولة (حتى 10 صور) مع الحفاظ على الجودة.',
+    gradient: 'from-indigo-500 to-violet-500'
+  },
+  {
+    id: 'units',
+    icon: 'Ruler',
+    path: '/units',
+    titleEn: 'Unit Converter',
+    titleAr: 'محول المقاسات',
+    descEn: 'Convert between pixels, rem, cm, and more.',
+    descAr: 'حول بين جميع وحدات القياس بسهولة (طول، وزن، حجم، درجة حرارة).',
+    gradient: 'from-rose-500 to-orange-400'
+  },
+  {
+    id: 'nutri',
+    icon: 'ScrollText',
+    path: '/nutrition',
+    titleEn: 'Nutrition Label Maker',
+    titleAr: 'صانع القيم الغذائية',
+    descEn: 'Create professional FDA-style nutrition labels.',
+    descAr: 'صمم ملصق الحقائق الغذائية الاحترافي لمنتجاتك بسهولة.',
+    gradient: 'from-slate-700 to-slate-500'
   }
 ];
