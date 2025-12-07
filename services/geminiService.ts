@@ -311,6 +311,53 @@ export const generateVideo = async (
     }
 };
 
+// New Helper for Image Generation (Text to Image) with Banana Pro
+export const generateImage = async (
+    prompt: string,
+    config: { aspectRatio: '16:9' | '9:16' | '1:1' | '4:3' | '3:4' }
+): Promise<string | null> => {
+    try {
+        // Use Gemini 3 Pro Image (Banana Pro)
+        const model = 'gemini-3-pro-image-preview';
+        const imageAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
+        // Enhanced Prompt for Arabic Text
+        const fullPrompt = `${prompt}
+        
+        IMPORTANT GENERATION GUIDELINES:
+        1. PHOTOREALISTIC & HIGH QUALITY: Ensure the image is highly detailed, 4k resolution style.
+        2. ARABIC TEXT SUPPORT: If the prompt requests text to be written in the image, especially ARABIC text, you MUST render it accurately. 
+           - Arabic letters must be connected correctly.
+           - The calligraphy should be professional and legible.
+           - Do not produce gibberish text.
+        `;
+
+        const response = await imageAi.models.generateContent({
+            model,
+            contents: {
+                parts: [{ text: fullPrompt }],
+            },
+            config: {
+                imageConfig: {
+                    aspectRatio: config.aspectRatio,
+                    imageSize: "1K" // Supported by Pro
+                }
+            }
+        });
+
+        for (const part of response.candidates?.[0]?.content?.parts || []) {
+            if (part.inlineData && part.inlineData.data) {
+                return `data:image/png;base64,${part.inlineData.data}`;
+            }
+        }
+        
+        return null;
+    } catch (error) {
+        console.error("Gemini Image Generation Error:", error);
+        throw error;
+    }
+};
+
 // New Helper for Image Editing (Remove BG, Product Shot, etc.)
 export const editImage = async (
     imageData: string, 

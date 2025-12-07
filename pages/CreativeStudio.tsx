@@ -1,10 +1,12 @@
+
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../contexts/AppContext';
-import { generateVideo, editImage } from '../services/geminiService';
+import { generateVideo, editImage, generateImage } from '../services/geminiService';
 import { 
     Clapperboard, Sparkles, Key, Film, Settings2, Upload, 
     Image as ImageIcon, Mic, User, Eraser, RefreshCcw, ShoppingBag, 
-    ScanFace, Box, ArrowUpCircle, Download, X 
+    ScanFace, Box, ArrowUpCircle, Download, X, Type
 } from 'lucide-react';
 
 interface Project {
@@ -18,6 +20,7 @@ interface Project {
 type StudioTool = 
  | 'upload' 
  | 'img2vid' 
+ | 'txt2img'
  | 'audio' 
  | 'character' 
  | 'remove_bg' 
@@ -42,7 +45,7 @@ const CreativeStudio: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   
   // Config
-  const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16'>('16:9');
+  const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16' | '1:1'>('16:9');
   const [resolution, setResolution] = useState<'720p' | '1080p'>('720p');
   
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -91,7 +94,7 @@ const CreativeStudio: React.FC = () => {
           // --- VIDEO GENERATION (Veo) ---
           if (activeTool === 'img2vid' || activeTool === 'upload') {
               // 'upload' maps to img2vid logic if text prompt is also provided or implied
-              const videoUrl = await generateVideo(prompt, { aspectRatio, resolution }, uploadedImage ? { data: uploadedImage.data, mimeType: uploadedImage.mime } : undefined);
+              const videoUrl = await generateVideo(prompt, { aspectRatio: aspectRatio === '1:1' ? '16:9' : aspectRatio, resolution }, uploadedImage ? { data: uploadedImage.data, mimeType: uploadedImage.mime } : undefined);
               
               if (videoUrl) {
                   setProjects(prev => [{
@@ -103,6 +106,20 @@ const CreativeStudio: React.FC = () => {
                   }, ...prev]);
               }
           } 
+          // --- IMAGE GENERATION (Text to Image - Banana Pro) ---
+          else if (activeTool === 'txt2img') {
+              const imageUrl = await generateImage(prompt, { aspectRatio: aspectRatio as any });
+              
+              if (imageUrl) {
+                   setProjects(prev => [{
+                      id: Date.now().toString(),
+                      type: 'image',
+                      url: imageUrl,
+                      prompt: prompt,
+                      date: new Date()
+                  }, ...prev]);
+              }
+          }
           // --- IMAGE EDITING (Gemini Image) ---
           else {
               let editPrompt = prompt;
@@ -143,6 +160,7 @@ const CreativeStudio: React.FC = () => {
   const tools = [
       { id: 'upload', icon: Upload, label: 'studio_tool_upload' },
       { id: 'img2vid', icon: ImageIcon, label: 'studio_tool_img2vid' },
+      { id: 'txt2img', icon: Type, label: 'studio_tool_txt2img' },
       { id: 'audio', icon: Mic, label: 'studio_tool_audio' },
       { id: 'character', icon: User, label: 'studio_tool_character' },
   ];
@@ -245,7 +263,7 @@ const CreativeStudio: React.FC = () => {
                    
                    {/* Tool Title */}
                    <div className="flex items-center gap-3 mb-6">
-                       <div className={`p-3 rounded-2xl ${['img2vid','upload'].includes(activeTool) ? 'bg-blue-100 text-blue-600' : 'bg-fuchsia-100 text-fuchsia-600'}`}>
+                       <div className={`p-3 rounded-2xl ${['img2vid','upload','txt2img'].includes(activeTool) ? 'bg-blue-100 text-blue-600' : 'bg-fuchsia-100 text-fuchsia-600'}`}>
                            <Settings2 size={24} />
                        </div>
                        <h2 className="text-2xl font-bold dark:text-white">
@@ -254,41 +272,43 @@ const CreativeStudio: React.FC = () => {
                    </div>
 
                    {/* Upload Area */}
-                   <div className="mb-6">
-                       <label className="text-xs font-bold uppercase text-slate-400 mb-3 block">{t('studio_tool_upload')}</label>
-                       <div 
-                           onClick={() => fileInputRef.current?.click()}
-                           className={`border-2 border-dashed rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all ${uploadedImage ? 'border-green-500 bg-green-50 dark:bg-green-900/10' : 'border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
-                       >
-                           <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept="image/*" />
-                           
-                           {uploadedImage ? (
-                               <div className="relative group w-full">
-                                   <img src={uploadedImage.preview} alt="Upload" className="h-48 w-full object-contain rounded-lg" />
-                                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
-                                       <span className="text-white font-bold">Change Image</span>
+                   {activeTool !== 'txt2img' && (
+                       <div className="mb-6">
+                           <label className="text-xs font-bold uppercase text-slate-400 mb-3 block">{t('studio_tool_upload')}</label>
+                           <div 
+                               onClick={() => fileInputRef.current?.click()}
+                               className={`border-2 border-dashed rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all ${uploadedImage ? 'border-green-500 bg-green-50 dark:bg-green-900/10' : 'border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
+                           >
+                               <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept="image/*" />
+                               
+                               {uploadedImage ? (
+                                   <div className="relative group w-full">
+                                       <img src={uploadedImage.preview} alt="Upload" className="h-48 w-full object-contain rounded-lg" />
+                                       <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
+                                           <span className="text-white font-bold">Change Image</span>
+                                       </div>
+                                       <button 
+                                          onClick={(e) => { e.stopPropagation(); setUploadedImage(null); }}
+                                          className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full shadow-lg"
+                                       >
+                                           <X size={16} />
+                                       </button>
                                    </div>
-                                   <button 
-                                      onClick={(e) => { e.stopPropagation(); setUploadedImage(null); }}
-                                      className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full shadow-lg"
-                                   >
-                                       <X size={16} />
-                                   </button>
-                               </div>
-                           ) : (
-                               <>
-                                   <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-3">
-                                       <Upload size={24} className="text-slate-400" />
-                                   </div>
-                                   <p className="font-medium text-slate-600 dark:text-slate-300">{t('studio_drop_image')}</p>
-                               </>
-                           )}
+                               ) : (
+                                   <>
+                                       <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-3">
+                                           <Upload size={24} className="text-slate-400" />
+                                       </div>
+                                       <p className="font-medium text-slate-600 dark:text-slate-300">{t('studio_drop_image')}</p>
+                                   </>
+                               )}
+                           </div>
                        </div>
-                   </div>
+                   )}
 
                    {/* Prompt / Settings */}
                    <div className="space-y-4">
-                       {(activeTool === 'img2vid' || activeTool === 'upload' || activeTool === 'replace_bg' || activeTool === 'product') && (
+                       {(activeTool === 'img2vid' || activeTool === 'upload' || activeTool === 'txt2img' || activeTool === 'replace_bg' || activeTool === 'product') && (
                            <div>
                                <label className="text-xs font-bold uppercase text-slate-400 mb-2 block">
                                    {activeTool === 'replace_bg' ? 'New Background Description' : 'Description / Prompt'}
@@ -296,14 +316,15 @@ const CreativeStudio: React.FC = () => {
                                <textarea
                                    value={prompt}
                                    onChange={(e) => setPrompt(e.target.value)}
-                                   placeholder={activeTool === 'replace_bg' ? "A cozy coffee shop..." : "Describe the motion or effect..."}
+                                   placeholder={activeTool === 'replace_bg' ? "A cozy coffee shop..." : activeTool === 'txt2img' ? "Describe the image you want to create (supports Arabic)..." : "Describe the motion or effect..."}
                                    className="w-full h-24 bg-slate-50 dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 outline-none focus:ring-2 focus:ring-blue-500"
+                                   style={{ direction: isRTL ? 'rtl' : 'ltr' }}
                                />
                            </div>
                        )}
 
-                       {/* Video Specific Settings */}
-                       {(activeTool === 'img2vid' || activeTool === 'upload') && (
+                       {/* Aspect Ratio / Resolution Settings */}
+                       {(activeTool === 'img2vid' || activeTool === 'upload' || activeTool === 'txt2img') && (
                            <div className="grid grid-cols-2 gap-4">
                                <div>
                                    <label className="text-xs font-bold uppercase text-slate-400 mb-2 block">{t('studio_aspect_ratio')}</label>
@@ -314,19 +335,22 @@ const CreativeStudio: React.FC = () => {
                                    >
                                        <option value="16:9">16:9 Landscape</option>
                                        <option value="9:16">9:16 Portrait</option>
+                                       {activeTool === 'txt2img' && <option value="1:1">1:1 Square</option>}
                                    </select>
                                </div>
-                               <div>
-                                   <label className="text-xs font-bold uppercase text-slate-400 mb-2 block">{t('studio_resolution')}</label>
-                                   <select 
-                                      value={resolution} 
-                                      onChange={(e) => setResolution(e.target.value as any)}
-                                      className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 outline-none"
-                                   >
-                                       <option value="720p">720p Fast</option>
-                                       <option value="1080p">1080p HD</option>
-                                   </select>
-                               </div>
+                               {activeTool !== 'txt2img' && (
+                                   <div>
+                                       <label className="text-xs font-bold uppercase text-slate-400 mb-2 block">{t('studio_resolution')}</label>
+                                       <select 
+                                          value={resolution} 
+                                          onChange={(e) => setResolution(e.target.value as any)}
+                                          className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 outline-none"
+                                       >
+                                           <option value="720p">720p Fast</option>
+                                           <option value="1080p">1080p HD</option>
+                                       </select>
+                                   </div>
+                               )}
                            </div>
                        )}
                    </div>
@@ -334,15 +358,15 @@ const CreativeStudio: React.FC = () => {
                    {/* Generate Action */}
                    <button
                        onClick={handleGenerate}
-                       disabled={loading || (!uploadedImage && activeTool !== 'img2vid' && activeTool !== 'upload')} 
+                       disabled={loading || (!uploadedImage && activeTool !== 'img2vid' && activeTool !== 'upload' && activeTool !== 'txt2img')} 
                        className={`w-full mt-8 py-4 rounded-xl text-white font-bold shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
-                           ['img2vid','upload'].includes(activeTool) ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/30' : 'bg-fuchsia-600 hover:bg-fuchsia-700 shadow-fuchsia-500/30'
+                           ['img2vid','upload','txt2img'].includes(activeTool) ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/30' : 'bg-fuchsia-600 hover:bg-fuchsia-700 shadow-fuchsia-500/30'
                        }`}
                    >
                        {loading ? (
                            <>
                               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                              <span>{activeTool === 'img2vid' ? t('studio_generating') : t('studio_processing_image')}</span>
+                              <span>{activeTool === 'img2vid' || activeTool === 'txt2img' ? t('studio_generating') : t('studio_processing_image')}</span>
                            </>
                        ) : (
                            <>

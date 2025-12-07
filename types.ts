@@ -258,6 +258,7 @@ export type TranslationKey =
   | 'studio_resolution'
   | 'studio_tool_upload'
   | 'studio_tool_img2vid'
+  | 'studio_tool_txt2img'
   | 'studio_tool_audio'
   | 'studio_tool_character'
   | 'studio_section_pro'
