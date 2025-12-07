@@ -38,7 +38,7 @@ export interface Tool {
   descEn: string;
   descAr: string;
   gradient: string;
-  colorTheme: 'blue' | 'purple' | 'emerald' | 'orange' | 'indigo' | 'rose' | 'slate' | 'cyan' | 'red' | 'gold';
+  colorTheme: 'blue' | 'purple' | 'emerald' | 'orange' | 'indigo' | 'rose' | 'slate' | 'cyan' | 'red' | 'gold' | 'pink';
 }
 
 export type TranslationKey = 
@@ -58,6 +58,8 @@ export type TranslationKey =
   | 'pdf_tool'
   | 'social_tool'
   | 'logo_tool'
+  | 'marketing_tool'
+  | 'competitor_tool'
   | 'footer_text'
   | 'input_placeholder'
   | 'generate_btn'
@@ -202,6 +204,8 @@ export type TranslationKey =
   | 'social_format_profile'
   | 'social_copy_dims'
   | 'logo_prompt_label'
+  | 'logo_brand_name'
+  | 'logo_brand_placeholder'
   | 'logo_style_label'
   | 'logo_style_minimal'
   | 'logo_style_vintage'
@@ -209,6 +213,24 @@ export type TranslationKey =
   | 'logo_style_abstract'
   | 'logo_style_mascot'
   | 'logo_generated_title'
+  | 'marketing_type_insta'
+  | 'marketing_type_ad'
+  | 'marketing_type_headline'
+  | 'marketing_type_offer'
+  | 'marketing_input_product'
+  | 'marketing_input_audience'
+  | 'marketing_tone_enthusiastic'
+  | 'marketing_tone_professional'
+  | 'marketing_tone_urgent'
+  | 'marketing_tone_friendly'
+  | 'comp_input_url'
+  | 'comp_input_desc'
+  | 'comp_analyze_btn'
+  | 'comp_section_strengths'
+  | 'comp_section_weaknesses'
+  | 'comp_section_marketing'
+  | 'comp_section_audience'
+  | 'comp_section_content'
   | 'nav_dashboard'
   | 'nav_tools'
   | 'nav_studio'
@@ -295,9 +317,33 @@ export type TranslationKey =
   | 'auth_error_generic'
   | 'auth_error_invalid'
   | 'auth_email_in_use'
-  | 'auth_weak_password';
+  | 'auth_weak_password'
+  | 'auth_remember'
+  | 'auth_forgot_pass';
 
 export const TOOLS_DATA: Tool[] = [
+  {
+    id: 'marketing',
+    icon: 'Megaphone',
+    path: '/marketing',
+    titleEn: 'Smart Marketing Creator',
+    titleAr: 'صانع المحتوى التسويقي',
+    descEn: 'Generate ready-to-publish ads, captions, and offers.',
+    descAr: 'أنشئ نصوص إعلانية، بوستات إنستقرام، وعروض جاهزة للنشر.',
+    gradient: 'from-pink-500 to-rose-500',
+    colorTheme: 'pink'
+  },
+  {
+    id: 'competitor',
+    icon: 'Swords',
+    path: '/competitor',
+    titleEn: 'Competitor Analysis',
+    titleAr: 'تحليل المنافسين',
+    descEn: 'Analyze any competitor store or account instantly.',
+    descAr: 'تحليل متكامل لأي متجر أو حساب منافس (نقاط القوة، الضعف، الجمهور).',
+    gradient: 'from-violet-500 to-indigo-500',
+    colorTheme: 'indigo'
+  },
   {
     id: 'logo',
     icon: 'Hexagon',

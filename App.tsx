@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
@@ -14,6 +16,8 @@ import NutritionTool from './pages/NutritionTool';
 import PDFTool from './pages/PDFTool';
 import SocialSizesTool from './pages/SocialSizesTool';
 import LogoMakerTool from './pages/LogoMakerTool';
+import MarketingTool from './pages/MarketingTool';
+import CompetitorTool from './pages/CompetitorTool';
 import CreativeStudio from './pages/CreativeStudio';
 import SpecialToolsHub from './pages/SpecialToolsHub';
 import SmartChatTool from './pages/special/SmartChatTool';
@@ -64,6 +68,8 @@ const App = () => {
               <Route path="/pdf" element={<ProtectedRoute><PDFTool /></ProtectedRoute>} />
               <Route path="/social-sizes" element={<ProtectedRoute><SocialSizesTool /></ProtectedRoute>} />
               <Route path="/logo" element={<ProtectedRoute><LogoMakerTool /></ProtectedRoute>} />
+              <Route path="/marketing" element={<ProtectedRoute><MarketingTool /></ProtectedRoute>} />
+              <Route path="/competitor" element={<ProtectedRoute><CompetitorTool /></ProtectedRoute>} />
               
               <Route path="/studio" element={<ProtectedRoute><CreativeStudio /></ProtectedRoute>} />
 

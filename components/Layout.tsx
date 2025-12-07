@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -33,24 +32,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   if (isAuthPage) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 transition-colors duration-500 font-cairo relative">
-          {/* Simple Theme/Lang Controls for Login Page */}
-          <div className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} z-50 flex gap-3`}>
-               <button 
-                onClick={toggleTheme} 
-                className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-               >
-                  {theme === Theme.LIGHT ? <Moon size={18} /> : <Sun size={18} />}
-               </button>
-               <button 
-                onClick={toggleLanguage} 
-                className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-               >
-                  {language === Language.EN ? 'AR' : 'EN'}
-               </button>
-          </div>
-          
-          <main className="w-full min-h-screen flex items-center justify-center p-4">
+      // Updated background to match requested colors (Deep Dark Purple/Blue Gradient)
+      <div className="min-h-screen bg-gradient-to-br from-[#2E243D] via-[#1E1B2E] to-[#121217] font-cairo text-slate-100">
+          <main className="w-full min-h-screen flex items-center justify-center">
               {children}
           </main>
       </div>

@@ -1,15 +1,36 @@
 
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { generateLogo } from '../services/geminiService';
-import { Hexagon, Sparkles, Download, Wand2, Box, Layers, Palette, CircleDot } from 'lucide-react';
+import { Hexagon, Sparkles, Download, Wand2, Box, Layers, Palette, CircleDot, Type, Key } from 'lucide-react';
 
 const LogoMakerTool: React.FC = () => {
   const { t, isRTL } = useApp();
   const [prompt, setPrompt] = useState('');
+  const [brandName, setBrandName] = useState('');
   const [selectedStyle, setSelectedStyle] = useState('minimal');
   const [loading, setLoading] = useState(false);
   const [logoImage, setLogoImage] = useState<string | null>(null);
+  const [apiKeySelected, setApiKeySelected] = useState(false);
+
+  useEffect(() => {
+    const checkKey = async () => {
+       if ((window as any).aistudio && (window as any).aistudio.hasSelectedApiKey) {
+           const hasKey = await (window as any).aistudio.hasSelectedApiKey();
+           setApiKeySelected(hasKey);
+       }
+    };
+    checkKey();
+  }, []);
+
+  const handleSelectKey = async () => {
+      if ((window as any).aistudio && (window as any).aistudio.openSelectKey) {
+          await (window as any).aistudio.openSelectKey();
+          const hasKey = await (window as any).aistudio.hasSelectedApiKey();
+          setApiKeySelected(hasKey);
+      }
+  };
 
   const styles = [
     { id: 'minimal', icon: Box, label: 'logo_style_minimal' },
@@ -21,10 +42,15 @@ const LogoMakerTool: React.FC = () => {
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
+    if (!apiKeySelected) {
+        await handleSelectKey();
+        return;
+    }
+
     setLoading(true);
     setLogoImage(null);
     try {
-      const imageBase64 = await generateLogo(prompt, t(`logo_style_${selectedStyle}` as any));
+      const imageBase64 = await generateLogo(prompt, t(`logo_style_${selectedStyle}` as any), brandName);
       if (imageBase64) {
           setLogoImage(imageBase64);
       }
@@ -59,6 +85,14 @@ const LogoMakerTool: React.FC = () => {
         <p className="text-slate-500 dark:text-slate-400 max-w-lg mx-auto">
           {t('app_desc')}
         </p>
+        
+        {!apiKeySelected && (
+            <div className="flex justify-center mt-4">
+                 <button onClick={handleSelectKey} className="flex items-center gap-2 px-6 py-2 bg-amber-500 hover:bg-amber-600 rounded-xl font-bold text-white transition-all shadow-lg shadow-amber-500/30 animate-pulse">
+                     <Key size={18} /> {t('studio_select_key')}
+                 </button>
+            </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -67,6 +101,22 @@ const LogoMakerTool: React.FC = () => {
         <div className="lg:col-span-5 space-y-6">
             <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
                 
+                {/* Brand Name Input */}
+                <div className="mb-4">
+                    <label className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 block flex items-center gap-2">
+                        <Type size={16} className="text-amber-500" />
+                        {t('logo_brand_name')}
+                    </label>
+                    <input
+                        type="text"
+                        value={brandName}
+                        onChange={(e) => setBrandName(e.target.value)}
+                        placeholder={t('logo_brand_placeholder')}
+                        className="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/10 outline-none transition-all text-slate-900 dark:text-white"
+                        style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+                    />
+                </div>
+
                 {/* Prompt Input */}
                 <div className="mb-6">
                     <label className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 block">
@@ -77,7 +127,7 @@ const LogoMakerTool: React.FC = () => {
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
                             placeholder="Ex: A futuristic rocket ship logo for a tech startup..."
-                            className="w-full h-32 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/10 outline-none transition-all resize-none"
+                            className="w-full h-32 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/10 outline-none transition-all resize-none text-slate-900 dark:text-white"
                         />
                         <Wand2 className="absolute right-4 bottom-4 text-slate-400" size={20} />
                     </div>
@@ -171,7 +221,7 @@ const LogoMakerTool: React.FC = () => {
                             <Hexagon size={48} className="text-slate-300 dark:text-slate-600" />
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">Ready to Design</h3>
-                        <p className="text-slate-500">Describe your vision and select a style to generate a unique logo in seconds.</p>
+                        <p className="text-slate-500">Describe your vision, enter your brand name (supports Arabic), and generate a unique logo in seconds.</p>
                     </div>
                 )}
 

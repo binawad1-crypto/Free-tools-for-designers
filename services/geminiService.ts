@@ -1,4 +1,5 @@
 
+
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { ColorPalette, PantoneMatch } from "../types";
 
@@ -56,20 +57,32 @@ export const generateDesignCopy = async (prompt: string, options: TextOptions): 
   try {
     const model = 'gemini-2.5-flash';
     
-    let sysPrompt = `You are an expert copywriter and UX writer.`;
+    let sysPrompt = `You are an expert copywriter, marketer, and UX writer.`;
     sysPrompt += ` Target Language: ${options.language === 'ar' ? 'Arabic' : 'English'}.`;
     sysPrompt += ` Tone: ${options.tone}.`;
     sysPrompt += ` Format: ${options.template}.`;
     
-    let contentPrompt = `Generate professional content based on this context: "${prompt}".\n`;
+    let contentPrompt = `Generate professional content based on this context/input: "${prompt}".\n`;
     
+    // Existing Templates
     if (options.template === 'headline') {
       contentPrompt += "Provide 3-5 catchy headline variations.";
     } else if (options.template === 'ux') {
       contentPrompt += "Provide short, clear microcopy for buttons, labels, or empty states related to the context.";
     } else if (options.template === 'product') {
       contentPrompt += "Write a compelling product description highlighting benefits.";
-    } else {
+    } 
+    // Marketing Specific Templates
+    else if (options.template === 'instagram') {
+        contentPrompt += "Write an engaging Instagram caption with emojis and relevant hashtags. Ensure it encourages interaction.";
+    } else if (options.template === 'ad_short') {
+        contentPrompt += "Write a punchy, short ad copy focused on conversion and call to action.";
+    } else if (options.template === 'headlines_catchy') {
+        contentPrompt += "Generate 5 viral-worthy, catchy headlines designed to grab attention immediately.";
+    } else if (options.template === 'offer_discount') {
+        contentPrompt += "Draft a compelling special offer or discount announcement. Create a sense of urgency and value.";
+    }
+    else {
       contentPrompt += "Provide high-quality copy suitable for a design mockup.";
     }
 
@@ -87,6 +100,55 @@ export const generateDesignCopy = async (prompt: string, options: TextOptions): 
     throw error;
   }
 };
+
+// Competitor Analysis with Grounding
+export interface CompetitorAnalysisResult {
+    strengths: string[];
+    weaknesses: string[];
+    marketing_style: string;
+    audience: string;
+    best_content: string;
+}
+
+export const analyzeCompetitor = async (url: string, notes: string, lang: 'ar' | 'en' = 'ar'): Promise<CompetitorAnalysisResult> => {
+    try {
+        const model = 'gemini-2.5-flash'; // Flash supports search grounding
+        const response = await ai.models.generateContent({
+            model,
+            contents: `Analyze the following competitor brand/store/account found at this URL: ${url}. 
+            Additional Context: ${notes}.
+            
+            Use Google Search to find the most recent information, social media presence, and customer reviews about them.
+            
+            Provide a detailed competitive analysis in ${lang === 'ar' ? 'Arabic' : 'English'}.
+            
+            RETURN A RAW JSON OBJECT (do not wrap in markdown code blocks) with the following structure:
+            {
+              "strengths": ["string", "string"],
+              "weaknesses": ["string", "string"],
+              "marketing_style": "string",
+              "audience": "string",
+              "best_content": "string"
+            }`,
+            config: {
+                tools: [{ googleSearch: {} }],
+                // Note: responseMimeType: "application/json" and responseSchema are NOT supported when using tools like googleSearch.
+                // We rely on the prompt to request JSON output.
+            }
+        });
+
+        let text = response.text;
+        if (!text) throw new Error("No analysis generated");
+        
+        // Cleanup potential markdown formatting
+        text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+
+        return JSON.parse(text) as CompetitorAnalysisResult;
+    } catch (error) {
+        console.error("Competitor Analysis Error:", error);
+        throw error;
+    }
+}
 
 // Helper to find Pantone Match
 export const findPantoneMatch = async (hex: string): Promise<PantoneMatch> => {
@@ -122,25 +184,44 @@ export const findPantoneMatch = async (hex: string): Promise<PantoneMatch> => {
 };
 
 // Helper to generate a logo using image generation model
-export const generateLogo = async (prompt: string, style: string): Promise<string | null> => {
+export const generateLogo = async (prompt: string, style: string, brandText: string = ''): Promise<string | null> => {
   try {
-    const model = 'gemini-2.5-flash-image';
+    // Upgraded to Gemini 3 Pro Image (Banana Pro) for best quality
+    const model = 'gemini-3-pro-image-preview';
+    
+    // IMPORTANT: Create a new instance to capture the latest API Key from window.aistudio selection
+    // The guidelines specify users MUST select their own key for this model.
+    const imageAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     // Construct a specific prompt for logo generation
-    const fullPrompt = `Design a professional, high-quality vector-style logo. 
-    Subject: ${prompt}.
-    Style: ${style}. 
-    Requirements: Clean lines, centered, white background, suitable for branding. 
-    Ensure it looks like a finished logo asset.`;
+    let fullPrompt = `Design a high-quality, professional vector-style logo.
+    Subject: ${prompt}
+    Style: ${style}
+    
+    Requirements:
+    - Clean lines, centered, white background.
+    - Professional corporate identity quality.
+    - High contrast and scalable design.
+    `;
 
-    const response = await ai.models.generateContent({
+    if (brandText.trim()) {
+        fullPrompt += `
+        BRAND NAME TEXT INSTRUCTION:
+        - The logo MUST prominently feature the text: "${brandText}".
+        - If the brand name is in Arabic ("${brandText}"), ensure the Arabic calligraphy is correct, legible, and follows standard Arabic writing rules (right-to-left, correct letter connections).
+        - Integrate the text seamlessly into the logo design.
+        `;
+    }
+
+    const response = await imageAi.models.generateContent({
       model,
       contents: {
         parts: [{ text: fullPrompt }],
       },
       config: {
          imageConfig: {
-            aspectRatio: "1:1"
+            aspectRatio: "1:1",
+            imageSize: "1K" // Supported by Pro
          }
       }
     });
