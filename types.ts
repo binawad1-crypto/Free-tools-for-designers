@@ -322,7 +322,19 @@ export type TranslationKey =
   | 'auth_remember'
   | 'auth_forgot_pass';
 
+// CATEGORY A: Smart AI Tools (Powered by Gemini)
 export const TOOLS_DATA: Tool[] = [
+  {
+    id: 'chat',
+    icon: 'Bot',
+    path: '/special/chat',
+    titleEn: 'Super Chat',
+    titleAr: 'الشات الخارق',
+    descEn: 'Access Search, Maps, and Deep Thinking modes.',
+    descAr: 'شات مدعوم ببحث جوجل، الخرائط، والتفكير العميق.',
+    gradient: 'from-blue-600 to-indigo-600',
+    colorTheme: 'indigo'
+  },
   {
     id: 'marketing',
     icon: 'Megaphone',
@@ -333,6 +345,17 @@ export const TOOLS_DATA: Tool[] = [
     descAr: 'أنشئ نصوص إعلانية، بوستات إنستقرام، وعروض جاهزة للنشر.',
     gradient: 'from-pink-500 to-rose-500',
     colorTheme: 'pink'
+  },
+  {
+    id: 'vision',
+    icon: 'ScanEye',
+    path: '/special/vision',
+    titleEn: 'Visual Analyst',
+    titleAr: 'المحلل البصري',
+    descEn: 'Deep understanding of images and videos using Gemini 3 Pro.',
+    descAr: 'فهم وتحليل عميق للصور والفيديوهات.',
+    gradient: 'from-amber-500 to-orange-600',
+    colorTheme: 'gold'
   },
   {
     id: 'competitor',
@@ -346,6 +369,17 @@ export const TOOLS_DATA: Tool[] = [
     colorTheme: 'indigo'
   },
   {
+    id: 'live',
+    icon: 'AudioWaveform',
+    path: '/special/live',
+    titleEn: 'Live Conversation',
+    titleAr: 'المحادثة الحية',
+    descEn: 'Real-time voice interaction with Gemini 2.5.',
+    descAr: 'تحدث مع الذكاء الاصطناعي صوتياً في الوقت الفعلي.',
+    gradient: 'from-red-500 to-rose-600',
+    colorTheme: 'red'
+  },
+  {
     id: 'logo',
     icon: 'Hexagon',
     path: '/logo',
@@ -357,15 +391,15 @@ export const TOOLS_DATA: Tool[] = [
     colorTheme: 'gold'
   },
   {
-    id: 'qr',
-    icon: 'QrCode',
-    path: '/qr',
-    titleEn: 'QR Code Generator',
-    titleAr: 'منشئ الباركود (QR)',
-    descEn: 'Create custom QR codes for your links instantly.',
-    descAr: 'أنشئ رموز استجابة سريعة لروابطك بسهولة.',
-    gradient: 'from-blue-500 to-cyan-500',
-    colorTheme: 'blue'
+    id: 'audio',
+    icon: 'Mic2',
+    path: '/special/audio',
+    titleEn: 'Audio Lab',
+    titleAr: 'مختبر الصوتيات',
+    descEn: 'Professional Text-to-Speech and Audio Transcription.',
+    descAr: 'تحويل النص إلى كلام وتفريغ التسجيلات الصوتية.',
+    gradient: 'from-teal-500 to-emerald-600',
+    colorTheme: 'emerald'
   },
   {
     id: 'color',
@@ -390,17 +424,6 @@ export const TOOLS_DATA: Tool[] = [
     colorTheme: 'emerald'
   },
   {
-    id: 'social',
-    icon: 'LayoutGrid',
-    path: '/social-sizes',
-    titleEn: 'Social Sizes',
-    titleAr: 'مقاسات السوشيال ميديا',
-    descEn: 'Ready-made templates for Instagram, TikTok, and more.',
-    descAr: 'مقاسات جاهزة للتصاميم (Instagram, Story, TikTok).',
-    gradient: 'from-teal-500 to-cyan-500',
-    colorTheme: 'cyan'
-  },
-  {
     id: 'pms',
     icon: 'Pipette',
     path: '/pms',
@@ -410,6 +433,21 @@ export const TOOLS_DATA: Tool[] = [
     descAr: 'احصل على رقم Pantone المطابق لأي لون بدقة عالية.',
     gradient: 'from-orange-500 to-red-500',
     colorTheme: 'orange'
+  }
+];
+
+// CATEGORY B: Special Utility Tools (Powered by Code/Libraries)
+export const SPECIAL_TOOLS_DATA: Tool[] = [
+  {
+    id: 'qr',
+    icon: 'QrCode',
+    path: '/qr',
+    titleEn: 'QR Code Generator',
+    titleAr: 'منشئ الباركود (QR)',
+    descEn: 'Create custom QR codes for your links instantly.',
+    descAr: 'أنشئ رموز استجابة سريعة لروابطك بسهولة.',
+    gradient: 'from-blue-500 to-cyan-500',
+    colorTheme: 'blue'
   },
   {
     id: 'resize',
@@ -434,6 +472,17 @@ export const TOOLS_DATA: Tool[] = [
     colorTheme: 'red'
   },
   {
+    id: 'nutri',
+    icon: 'ScrollText',
+    path: '/nutrition',
+    titleEn: 'Nutrition Label Maker',
+    titleAr: 'صانع القيم الغذائية',
+    descEn: 'Create professional FDA-style nutrition labels.',
+    descAr: 'صمم ملصق الحقائق الغذائية الاحترافي لمنتجاتك بسهولة.',
+    gradient: 'from-slate-600 to-teal-500',
+    colorTheme: 'slate'
+  },
+  {
     id: 'units',
     icon: 'Ruler',
     path: '/units',
@@ -445,61 +494,14 @@ export const TOOLS_DATA: Tool[] = [
     colorTheme: 'rose'
   },
   {
-    id: 'nutri',
-    icon: 'ScrollText',
-    path: '/nutrition',
-    titleEn: 'Nutrition Label Maker',
-    titleAr: 'صانع القيم الغذائية',
-    descEn: 'Create professional FDA-style nutrition labels.',
-    descAr: 'صمم ملصق الحقائق الغذائية الاحترافي لمنتجاتك بسهولة.',
-    gradient: 'from-slate-600 to-teal-500',
-    colorTheme: 'slate'
-  }
-];
-
-export const SPECIAL_TOOLS_DATA: Tool[] = [
-  {
-    id: 'live',
-    icon: 'AudioWaveform',
-    path: '/special/live',
-    titleEn: 'Live Conversation',
-    titleAr: 'المحادثة الحية',
-    descEn: 'Real-time voice interaction with Gemini 2.5.',
-    descAr: 'تحدث مع الذكاء الاصطناعي صوتياً في الوقت الفعلي.',
-    gradient: 'from-red-500 to-rose-600',
-    colorTheme: 'red'
-  },
-  {
-    id: 'chat',
-    icon: 'Bot',
-    path: '/special/chat',
-    titleEn: 'Super Chat',
-    titleAr: 'الشات الخارق',
-    descEn: 'Access Search, Maps, and Deep Thinking modes.',
-    descAr: 'شات مدعوم ببحث جوجل، الخرائط، والتفكير العميق.',
-    gradient: 'from-blue-600 to-indigo-600',
-    colorTheme: 'indigo'
-  },
-  {
-    id: 'vision',
-    icon: 'ScanEye',
-    path: '/special/vision',
-    titleEn: 'Visual Analyst',
-    titleAr: 'المحلل البصري',
-    descEn: 'Deep understanding of images and videos using Gemini 3 Pro.',
-    descAr: 'فهم وتحليل عميق للصور والفيديوهات.',
-    gradient: 'from-amber-500 to-orange-600',
-    colorTheme: 'gold'
-  },
-  {
-    id: 'audio',
-    icon: 'Mic2',
-    path: '/special/audio',
-    titleEn: 'Audio Lab',
-    titleAr: 'مختبر الصوتيات',
-    descEn: 'Professional Text-to-Speech and Audio Transcription.',
-    descAr: 'تحويل النص إلى كلام وتفريغ التسجيلات الصوتية.',
-    gradient: 'from-teal-500 to-emerald-600',
-    colorTheme: 'emerald'
+    id: 'social',
+    icon: 'LayoutGrid',
+    path: '/social-sizes',
+    titleEn: 'Social Sizes',
+    titleAr: 'مقاسات السوشيال ميديا',
+    descEn: 'Ready-made templates for Instagram, TikTok, and more.',
+    descAr: 'مقاسات جاهزة للتصاميم (Instagram, Story, TikTok).',
+    gradient: 'from-teal-500 to-cyan-500',
+    colorTheme: 'cyan'
   }
 ];

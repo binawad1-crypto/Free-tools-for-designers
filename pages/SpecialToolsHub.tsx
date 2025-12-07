@@ -1,15 +1,22 @@
 
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
 import { SPECIAL_TOOLS_DATA, Language } from '../types';
-import { Bot, AudioWaveform, ScanEye, Mic2, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Bot, AudioWaveform, ScanEye, Mic2, ArrowRight, ArrowLeft, QrCode, Scaling, FileStack, Ruler, ScrollText, LayoutGrid } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   Bot: <Bot size={28} />,
   AudioWaveform: <AudioWaveform size={28} />,
   ScanEye: <ScanEye size={28} />,
   Mic2: <Mic2 size={28} />,
+  QrCode: <QrCode size={28} />,
+  Scaling: <Scaling size={28} />,
+  FileStack: <FileStack size={28} />,
+  Ruler: <Ruler size={28} />,
+  ScrollText: <ScrollText size={28} />,
+  LayoutGrid: <LayoutGrid size={28} />,
 };
 
 // Map themes to Tailwind classes
@@ -52,6 +59,38 @@ const themeStyles: Record<string, {
     bgIcon: 'bg-emerald-500',
     text: 'text-emerald-600 dark:text-emerald-400',
     glow: 'from-emerald-500/20 to-green-500/20'
+  },
+  blue: {
+    border: 'border-blue-100 dark:border-blue-900/30',
+    hoverBorder: 'group-hover:border-blue-500/50',
+    shadow: 'shadow-blue-500/5',
+    bgIcon: 'bg-blue-500',
+    text: 'text-blue-600 dark:text-blue-400',
+    glow: 'from-blue-500/20 to-cyan-500/20'
+  },
+  rose: {
+    border: 'border-rose-100 dark:border-rose-900/30',
+    hoverBorder: 'group-hover:border-rose-500/50',
+    shadow: 'shadow-rose-500/5',
+    bgIcon: 'bg-rose-500',
+    text: 'text-rose-600 dark:text-rose-400',
+    glow: 'from-rose-500/20 to-orange-500/20'
+  },
+  slate: {
+    border: 'border-slate-200 dark:border-slate-800',
+    hoverBorder: 'group-hover:border-slate-400',
+    shadow: 'shadow-slate-500/5',
+    bgIcon: 'bg-slate-600',
+    text: 'text-slate-700 dark:text-slate-300',
+    glow: 'from-slate-500/20 to-gray-500/20'
+  },
+  cyan: {
+    border: 'border-cyan-100 dark:border-cyan-900/30',
+    hoverBorder: 'group-hover:border-cyan-500/50',
+    shadow: 'shadow-cyan-500/5',
+    bgIcon: 'bg-cyan-500',
+    text: 'text-cyan-600 dark:text-cyan-400',
+    glow: 'from-cyan-500/20 to-teal-500/20'
   }
 };
 

@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
 import { TOOLS_DATA, Language } from '../types';
-import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, FileStack, LayoutGrid, Hexagon, Megaphone, Swords } from 'lucide-react';
+import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, FileStack, LayoutGrid, Hexagon, Megaphone, Swords, Bot, AudioWaveform, ScanEye, Mic2 } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   QrCode: <QrCode size={28} />,
@@ -19,6 +19,10 @@ const iconMap: Record<string, React.ReactNode> = {
   Hexagon: <Hexagon size={28} />,
   Megaphone: <Megaphone size={28} />,
   Swords: <Swords size={28} />,
+  Bot: <Bot size={28} />,
+  AudioWaveform: <AudioWaveform size={28} />,
+  ScanEye: <ScanEye size={28} />,
+  Mic2: <Mic2 size={28} />,
 };
 
 // Map themes to Tailwind classes
