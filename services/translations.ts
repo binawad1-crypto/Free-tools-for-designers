@@ -1,3 +1,5 @@
+
+
 import { Language, TranslationKey } from '../types';
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
@@ -16,6 +18,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     unit_tool: 'Unit Converter',
     nutri_tool: 'Nutrition Label',
     pdf_tool: 'PDF Manager',
+    social_tool: 'Social Media Sizes',
     footer_text: '© 2024 DesignMate. Built for designers.',
     input_placeholder: 'Enter your prompt or value here...',
     generate_btn: 'Generate',
@@ -143,7 +146,22 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     pdf_btn_split: 'Extract Pages',
     pdf_btn_compress: 'Compress & Optimize',
     pdf_files_count: 'Files Selected',
-    pdf_processing: 'Processing...'
+    pdf_processing: 'Processing...',
+    social_platform_insta: 'Instagram',
+    social_platform_tiktok: 'TikTok',
+    social_platform_twitter: 'Twitter / X',
+    social_platform_fb: 'Facebook',
+    social_platform_yt: 'YouTube',
+    social_platform_linkedin: 'LinkedIn',
+    social_platform_snap: 'Snapchat',
+    social_format_post: 'Post',
+    social_format_story: 'Story',
+    social_format_reel: 'Reel / Short',
+    social_format_cover: 'Cover Photo',
+    social_format_header: 'Header',
+    social_format_thumbnail: 'Thumbnail',
+    social_format_profile: 'Profile Picture',
+    social_copy_dims: 'Copy Dimensions'
   },
   [Language.AR]: {
     app_title: 'رفيق المصمم',
@@ -160,6 +178,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     unit_tool: 'محول المقاسات',
     nutri_tool: 'ملصق غذائي',
     pdf_tool: 'مدير PDF',
+    social_tool: 'مقاسات التصميم',
     footer_text: '© 2024 رفيق المصمم. صنع بحب للمصممين.',
     input_placeholder: 'أدخل النص أو القيمة هنا...',
     generate_btn: 'توليد',
@@ -287,6 +306,21 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     pdf_btn_split: 'استخراج الصفحات',
     pdf_btn_compress: 'ضغط وتحسين الملف',
     pdf_files_count: 'ملفات محددة',
-    pdf_processing: 'جاري المعالجة...'
+    pdf_processing: 'جاري المعالجة...',
+    social_platform_insta: 'انستقرام',
+    social_platform_tiktok: 'تيك توك',
+    social_platform_twitter: 'تويتر / X',
+    social_platform_fb: 'فيسبوك',
+    social_platform_yt: 'يوتيوب',
+    social_platform_linkedin: 'لينكد إن',
+    social_platform_snap: 'سناب شات',
+    social_format_post: 'منشور',
+    social_format_story: 'ستوري / قصة',
+    social_format_reel: 'ريلز / فيديو قصير',
+    social_format_cover: 'غلاف (Cover)',
+    social_format_header: 'ترويسة (Header)',
+    social_format_thumbnail: 'صورة مصغرة',
+    social_format_profile: 'صورة شخصية',
+    social_copy_dims: 'نسخ الأبعاد'
   }
 };

@@ -56,6 +56,7 @@ export type TranslationKey =
   | 'unit_tool'
   | 'nutri_tool'
   | 'pdf_tool'
+  | 'social_tool'
   | 'footer_text'
   | 'input_placeholder'
   | 'generate_btn'
@@ -183,7 +184,22 @@ export type TranslationKey =
   | 'pdf_btn_split'
   | 'pdf_btn_compress'
   | 'pdf_files_count'
-  | 'pdf_processing';
+  | 'pdf_processing'
+  | 'social_platform_insta'
+  | 'social_platform_tiktok'
+  | 'social_platform_twitter'
+  | 'social_platform_fb'
+  | 'social_platform_yt'
+  | 'social_platform_linkedin'
+  | 'social_platform_snap'
+  | 'social_format_post'
+  | 'social_format_story'
+  | 'social_format_reel'
+  | 'social_format_cover'
+  | 'social_format_header'
+  | 'social_format_thumbnail'
+  | 'social_format_profile'
+  | 'social_copy_dims';
 
 export const TOOLS_DATA: Tool[] = [
   {
@@ -218,6 +234,17 @@ export const TOOLS_DATA: Tool[] = [
     descAr: 'أنشئ نصوصاً احترافية للتسويق وواجهات المستخدم.',
     gradient: 'from-emerald-500 to-green-500',
     colorTheme: 'emerald'
+  },
+  {
+    id: 'social',
+    icon: 'LayoutGrid',
+    path: '/social-sizes',
+    titleEn: 'Social Sizes',
+    titleAr: 'مقاسات السوشيال ميديا',
+    descEn: 'Ready-made templates for Instagram, TikTok, and more.',
+    descAr: 'مقاسات جاهزة للتصاميم (Instagram, Story, TikTok).',
+    gradient: 'from-teal-500 to-cyan-500',
+    colorTheme: 'cyan'
   },
   {
     id: 'pms',

@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
@@ -12,6 +13,7 @@ import ResizeTool from './pages/ResizeTool';
 import UnitConverterTool from './pages/UnitConverterTool';
 import NutritionTool from './pages/NutritionTool';
 import PDFTool from './pages/PDFTool';
+import SocialSizesTool from './pages/SocialSizesTool';
 
 const App: React.FC = () => {
   return (
@@ -28,6 +30,7 @@ const App: React.FC = () => {
             <Route path="/units" element={<UnitConverterTool />} />
             <Route path="/nutrition" element={<NutritionTool />} />
             <Route path="/pdf" element={<PDFTool />} />
+            <Route path="/social-sizes" element={<SocialSizesTool />} />
           </Routes>
         </Layout>
       </HashRouter>
