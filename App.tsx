@@ -24,6 +24,11 @@ import SmartChatTool from './pages/special/SmartChatTool';
 import VisionTool from './pages/special/VisionTool';
 import AudioTool from './pages/special/AudioTool';
 import LiveTool from './pages/special/LiveTool';
+import ScreenshotToCodeTool from './pages/smart/ScreenshotToCodeTool';
+import IconGeneratorTool from './pages/smart/IconGeneratorTool';
+import PromptEnhancerTool from './pages/smart/PromptEnhancerTool';
+import FontPairerTool from './pages/smart/FontPairerTool';
+import DesignCritiqueTool from './pages/smart/DesignCritiqueTool';
 import Login from './pages/Login';
 
 // Wrapper to protect routes
@@ -78,6 +83,13 @@ const App = () => {
               <Route path="/special/vision" element={<ProtectedRoute><VisionTool /></ProtectedRoute>} />
               <Route path="/special/audio" element={<ProtectedRoute><AudioTool /></ProtectedRoute>} />
               <Route path="/special/live" element={<ProtectedRoute><LiveTool /></ProtectedRoute>} />
+
+              {/* NEW SMART TOOLS ROUTES */}
+              <Route path="/smart/img2code" element={<ProtectedRoute><ScreenshotToCodeTool /></ProtectedRoute>} />
+              <Route path="/smart/icons" element={<ProtectedRoute><IconGeneratorTool /></ProtectedRoute>} />
+              <Route path="/smart/prompt" element={<ProtectedRoute><PromptEnhancerTool /></ProtectedRoute>} />
+              <Route path="/smart/fonts" element={<ProtectedRoute><FontPairerTool /></ProtectedRoute>} />
+              <Route path="/smart/critique" element={<ProtectedRoute><DesignCritiqueTool /></ProtectedRoute>} />
               
               <Route path="/support" element={<ProtectedRoute><div className="p-10 text-center text-slate-500">Support Center Coming Soon</div></ProtectedRoute>} />
               <Route path="/settings" element={<ProtectedRoute><div className="p-10 text-center text-slate-500">Settings Page Coming Soon</div></ProtectedRoute>} />

@@ -320,7 +320,37 @@ export type TranslationKey =
   | 'auth_email_in_use'
   | 'auth_weak_password'
   | 'auth_remember'
-  | 'auth_forgot_pass';
+  | 'auth_forgot_pass'
+  // NEW KEYS
+  | 'tool_img_code'
+  | 'tool_icon_gen'
+  | 'tool_prompt_enhancer'
+  | 'tool_font_pairer'
+  | 'tool_critique'
+  | 'desc_img_code'
+  | 'desc_icon_gen'
+  | 'desc_prompt_enhancer'
+  | 'desc_font_pairer'
+  | 'desc_critique'
+  | 'code_upload_label'
+  | 'code_generate_btn'
+  | 'code_preview_tab'
+  | 'code_code_tab'
+  | 'icon_prompt_placeholder'
+  | 'icon_style_flat'
+  | 'icon_style_outline'
+  | 'icon_style_filled'
+  | 'icon_style_gradient'
+  | 'icon_generate_btn'
+  | 'prompt_input_label'
+  | 'prompt_enhance_btn'
+  | 'prompt_result_label'
+  | 'font_input_label'
+  | 'font_pair_btn'
+  | 'font_pair_title'
+  | 'critique_upload_label'
+  | 'critique_btn'
+  | 'critique_result_title';
 
 // CATEGORY A: Smart AI Tools (Powered by Gemini)
 export const SMART_TOOLS_DATA: Tool[] = [
@@ -336,15 +366,26 @@ export const SMART_TOOLS_DATA: Tool[] = [
     colorTheme: 'indigo'
   },
   {
-    id: 'marketing',
-    icon: 'Megaphone',
-    path: '/marketing',
-    titleEn: 'Smart Marketing Creator',
-    titleAr: 'صانع المحتوى التسويقي',
-    descEn: 'Generate ready-to-publish ads, captions, and offers.',
-    descAr: 'أنشئ نصوص إعلانية، بوستات إنستقرام، وعروض جاهزة للنشر.',
-    gradient: 'from-pink-500 to-rose-500',
-    colorTheme: 'pink'
+    id: 'img2code',
+    icon: 'Code2',
+    path: '/smart/img2code',
+    titleEn: 'Screenshot to Code',
+    titleAr: 'صورة إلى كود',
+    descEn: 'Convert UI screenshots into clean HTML/Tailwind code.',
+    descAr: 'حول صور التصاميم إلى كود HTML/Tailwind جاهز.',
+    gradient: 'from-blue-500 to-cyan-500',
+    colorTheme: 'cyan'
+  },
+  {
+    id: 'icon_gen',
+    icon: 'Shapes',
+    path: '/smart/icons',
+    titleEn: 'AI Icon Generator',
+    titleAr: 'صانع الأيقونات',
+    descEn: 'Generate custom vector SVG icons from text.',
+    descAr: 'أنشئ أيقونات SVG فيكتور من خلال الوصف النصي.',
+    gradient: 'from-violet-500 to-fuchsia-500',
+    colorTheme: 'purple'
   },
   {
     id: 'vision',
@@ -356,6 +397,28 @@ export const SMART_TOOLS_DATA: Tool[] = [
     descAr: 'فهم وتحليل عميق للصور والفيديوهات.',
     gradient: 'from-amber-500 to-orange-600',
     colorTheme: 'gold'
+  },
+  {
+    id: 'critique',
+    icon: 'Glasses',
+    path: '/smart/critique',
+    titleEn: 'Design Critique',
+    titleAr: 'مقيم التصاميم',
+    descEn: 'Get AI feedback on your designs to improve UI/UX.',
+    descAr: 'احصل على نقد بناء وملاحظات لتصاميمك لتحسينها.',
+    gradient: 'from-red-500 to-rose-600',
+    colorTheme: 'rose'
+  },
+  {
+    id: 'marketing',
+    icon: 'Megaphone',
+    path: '/marketing',
+    titleEn: 'Smart Marketing Creator',
+    titleAr: 'صانع المحتوى التسويقي',
+    descEn: 'Generate ready-to-publish ads, captions, and offers.',
+    descAr: 'أنشئ نصوص إعلانية، بوستات إنستقرام، وعروض جاهزة للنشر.',
+    gradient: 'from-pink-500 to-rose-500',
+    colorTheme: 'pink'
   },
   {
     id: 'competitor',
@@ -389,6 +452,28 @@ export const SMART_TOOLS_DATA: Tool[] = [
     descAr: 'صمم شعارات مميزة واحترافية فوراً باستخدام الذكاء الاصطناعي.',
     gradient: 'from-amber-400 to-yellow-600',
     colorTheme: 'gold'
+  },
+  {
+    id: 'font',
+    icon: 'Type',
+    path: '/smart/fonts',
+    titleEn: 'AI Font Pairer',
+    titleAr: 'منسق الخطوط',
+    descEn: 'Find the perfect Google Fonts combination for your project.',
+    descAr: 'اكتشف أفضل ثنائيات الخطوط لمشروعك مع شرح الاستخدام.',
+    gradient: 'from-emerald-500 to-teal-500',
+    colorTheme: 'emerald'
+  },
+  {
+    id: 'prompt',
+    icon: 'Wand2',
+    path: '/smart/prompt',
+    titleEn: 'Prompt Enhancer',
+    titleAr: 'محسن الأوامر',
+    descEn: 'Turn simple text into professional prompts for Midjourney/DALL-E.',
+    descAr: 'حول وصفك البسيط إلى أوامر احترافية لتوليد الصور.',
+    gradient: 'from-blue-600 to-purple-600',
+    colorTheme: 'purple'
   },
   {
     id: 'audio',

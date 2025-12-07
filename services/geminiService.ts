@@ -518,3 +518,168 @@ export const transcribeAudio = async (audioBase64: string, mimeType: string) => 
         throw error;
     }
 };
+
+// --- NEW AI SERVICE FUNCTIONS ---
+
+export const imageToCode = async (image: string, mimeType: string) => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const model = 'gemini-2.5-flash';
+
+  const prompt = `
+  You are an expert frontend developer.
+  Analyze this screenshot and generate a single HTML file containing the code to replicate this design.
+  Use Tailwind CSS via CDN for styling.
+  
+  Requirements:
+  1. The code should be fully functional in a single file.
+  2. Use Tailwind CSS for all styling.
+  3. Use FontAwesome (CDN) or simple SVG placeholders for icons.
+  4. Ensure the layout is responsive.
+  5. ONLY return the HTML code, no markdown wrapping, no explanations.
+  `;
+
+  try {
+    const response = await ai.models.generateContent({
+      model,
+      contents: {
+        parts: [
+          { inlineData: { data: image, mimeType } },
+          { text: prompt }
+        ]
+      }
+    });
+    // Strip markdown just in case
+    let code = response.text || '';
+    code = code.replace(/```html/g, '').replace(/```/g, '');
+    return code;
+  } catch (error) {
+    console.error("Img2Code Error:", error);
+    throw error;
+  }
+};
+
+export const generateIconSvg = async (prompt: string, style: string) => {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const model = 'gemini-2.5-flash';
+
+    const systemPrompt = `You are an expert SVG icon designer. 
+    Generate a clean, high-quality SVG string based on the user's description.
+    Style: ${style}.
+    Requirements:
+    - Return ONLY the raw SVG code starting with <svg> and ending with </svg>.
+    - Do not include markdown code blocks.
+    - Ensure viewbox is 0 0 24 24 or similar standard.
+    - Use currentColor for stroke/fill where appropriate for flexibility.
+    `;
+
+    try {
+        const response = await ai.models.generateContent({
+            model,
+            contents: prompt,
+            config: { systemInstruction: systemPrompt }
+        });
+        let svg = response.text || '';
+        svg = svg.replace(/```xml/g, '').replace(/```svg/g, '').replace(/```/g, '').trim();
+        return svg;
+    } catch (error) {
+        console.error("Icon Gen Error:", error);
+        throw error;
+    }
+};
+
+export const enhancePrompt = async (prompt: string) => {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const model = 'gemini-2.5-flash';
+
+    try {
+        const response = await ai.models.generateContent({
+            model,
+            contents: `Act as a professional prompt engineer for Midjourney and DALL-E 3.
+            Enhance this simple user prompt into 3 different detailed, high-quality variations:
+            1. Photorealistic/Cinematic
+            2. Artistic/Stylized
+            3. Minimalist/Modern
+            
+            User Prompt: "${prompt}"
+            
+            Return the result as a JSON object with keys: 'cinematic', 'artistic', 'minimal'.
+            `,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: Type.OBJECT,
+                    properties: {
+                        cinematic: { type: Type.STRING },
+                        artistic: { type: Type.STRING },
+                        minimal: { type: Type.STRING }
+                    }
+                }
+            }
+        });
+        return JSON.parse(response.text || '{}');
+    } catch (error) {
+        console.error("Prompt Enhancer Error:", error);
+        throw error;
+    }
+};
+
+export const pairFonts = async (description: string) => {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const model = 'gemini-2.5-flash';
+
+    try {
+        const response = await ai.models.generateContent({
+            model,
+            contents: `Recommend 3 sets of Google Fonts pairings based on this project description: "${description}".
+            For each set, provide a Header Font, a Body Font, and a brief usage reason.
+            Return JSON.
+            `,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: Type.ARRAY,
+                    items: {
+                        type: Type.OBJECT,
+                        properties: {
+                            header: { type: Type.STRING },
+                            body: { type: Type.STRING },
+                            reason: { type: Type.STRING }
+                        }
+                    }
+                }
+            }
+        });
+        return JSON.parse(response.text || '[]');
+    } catch (error) {
+        console.error("Font Pairer Error:", error);
+        throw error;
+    }
+};
+
+export const critiqueDesign = async (image: string, mimeType: string) => {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const model = 'gemini-3-pro-preview'; // Vision model
+
+    try {
+        const response = await ai.models.generateContent({
+            model,
+            contents: {
+                parts: [
+                    { inlineData: { data: image, mimeType } },
+                    { text: `Act as a Senior UI/UX Designer and Art Director.
+                    Critique this design. Provide structured feedback on:
+                    1. Visual Hierarchy & Layout
+                    2. Color & Contrast
+                    3. Typography
+                    4. User Experience (UX) suggestions
+                    
+                    Keep it constructive, professional, and actionable.` }
+                ]
+            }
+        });
+        return response.text;
+    } catch (error) {
+        console.error("Critique Error:", error);
+        throw error;
+    }
+};
