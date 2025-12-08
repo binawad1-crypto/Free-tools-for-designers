@@ -339,6 +339,11 @@ export const translations: Record<Language, Record<TranslationKey | string, stri
     settings_save_btn: 'Save Changes',
     settings_cancel_btn: 'Cancel',
     settings_success_msg: 'Settings saved successfully.',
+    // SYSTEM API
+    settings_api_title: 'System Configuration',
+    settings_api_key: 'Google Gemini API Key',
+    settings_api_desc: 'This key will be used for AI features if users do not provide their own. Keep this secure.',
+    settings_api_save: 'Save API Key',
     // TEMPLATES
     templates_title: 'Ready Templates',
     templates_desc: 'Professional, ready-to-use prompts for every category.',
@@ -689,6 +694,11 @@ export const translations: Record<Language, Record<TranslationKey | string, stri
     settings_save_btn: 'حفظ التغييرات',
     settings_cancel_btn: 'إلغاء',
     settings_success_msg: 'تم حفظ الإعدادات بنجاح.',
+    // SYSTEM API
+    settings_api_title: 'إدارة النظام API',
+    settings_api_key: 'مفتاح Gemini API',
+    settings_api_desc: 'سيتم استخدام هذا المفتاح لتشغيل ميزات الذكاء الاصطناعي إذا لم يوفر المستخدم مفتاحه الخاص. احتفظ به سرياً.',
+    settings_api_save: 'حفظ المفتاح',
     // TEMPLATES
     templates_title: 'قوالب جاهزة',
     templates_desc: 'أوامر احترافية جاهزة للاستخدام في جميع المجالات.',

@@ -377,6 +377,11 @@ export type TranslationKey =
   | 'settings_save_btn'
   | 'settings_cancel_btn'
   | 'settings_success_msg'
+  // SYSTEM API
+  | 'settings_api_title'
+  | 'settings_api_key'
+  | 'settings_api_desc'
+  | 'settings_api_save'
   // TEMPLATES KEYS
   | 'templates_title'
   | 'templates_desc'

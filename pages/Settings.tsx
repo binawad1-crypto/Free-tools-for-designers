@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -9,7 +10,7 @@ import { Theme, Language } from '../types';
 import { 
     User, Settings as SettingsIcon, Shield, CreditCard, 
     Users, Bell, Moon, Sun, Laptop, Lock, Loader2, AlertTriangle,
-    Globe, Check
+    Globe, Check, Key, Eye, EyeOff
 } from 'lucide-react';
 
 type SettingsTab = 'general' | 'account' | 'security' | 'team' | 'billing';
@@ -40,6 +41,11 @@ const Settings: React.FC = () => {
     
     // Password States
     const [newPassword, setNewPassword] = useState('');
+    
+    // API Key State (Admin)
+    const [systemApiKey, setSystemApiKey] = useState('');
+    const [showKey, setShowKey] = useState(false);
+    const [loadingKey, setLoadingKey] = useState(false);
     
     // Team Data States
     const [teamUsers, setTeamUsers] = useState<any[]>([]);
@@ -103,6 +109,27 @@ const Settings: React.FC = () => {
 
         fetchUserData();
     }, [currentUser]);
+
+    // Load System API Key (Admin Only)
+    useEffect(() => {
+        if (isAdmin && activeTab === 'general') {
+            const fetchSystemKey = async () => {
+                setLoadingKey(true);
+                try {
+                    const docRef = doc(db, 'config', 'system');
+                    const snap = await getDoc(docRef);
+                    if (snap.exists()) {
+                        setSystemApiKey(snap.data().apiKey || '');
+                    }
+                } catch (error) {
+                    console.error("Failed to load system key", error);
+                } finally {
+                    setLoadingKey(false);
+                }
+            };
+            fetchSystemKey();
+        }
+    }, [isAdmin, activeTab]);
 
     // Fetch Team Users from Firestore
     useEffect(() => {
@@ -203,6 +230,21 @@ const Settings: React.FC = () => {
         } catch (error: any) {
             console.error("Error saving settings:", error);
             setErrorMsg("Failed to save settings. " + error.message);
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleSaveSystemKey = async () => {
+        if (!isAdmin) return;
+        setSaving(true);
+        try {
+            await setDoc(doc(db, 'config', 'system'), { apiKey: systemApiKey }, { merge: true });
+            setSuccessMsg("System API Key updated successfully.");
+            setTimeout(() => setSuccessMsg(''), 3000);
+        } catch (error: any) {
+            console.error("Error saving system key", error);
+            setErrorMsg("Failed to save API Key. " + error.message);
         } finally {
             setSaving(false);
         }
@@ -434,6 +476,49 @@ const Settings: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* ADMIN: SYSTEM API KEY */}
+                                {isAdmin && (
+                                    <>
+                                        <hr className="border-slate-100 dark:border-slate-800" />
+                                        <div className="bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 rounded-2xl p-6">
+                                            <h2 className="text-xl font-bold dark:text-white mb-2 flex items-center gap-2">
+                                                <Key size={20} className="text-yellow-600 dark:text-yellow-500" />
+                                                {t('settings_api_title')}
+                                            </h2>
+                                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                                                {t('settings_api_desc')}
+                                            </p>
+                                            
+                                            <div className="flex gap-4">
+                                                <div className="relative flex-1">
+                                                    <input 
+                                                        type={showKey ? "text" : "password"}
+                                                        value={systemApiKey}
+                                                        onChange={(e) => setSystemApiKey(e.target.value)}
+                                                        placeholder="AIzaSy..."
+                                                        disabled={loadingKey}
+                                                        className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-yellow-500"
+                                                    />
+                                                    <button 
+                                                        onClick={() => setShowKey(!showKey)}
+                                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rtl:right-auto rtl:left-3"
+                                                    >
+                                                        {showKey ? <EyeOff size={18} /> : <Eye size={18} />}
+                                                    </button>
+                                                </div>
+                                                <button 
+                                                    onClick={handleSaveSystemKey}
+                                                    disabled={saving || loadingKey}
+                                                    className="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-xl shadow-lg flex items-center gap-2 whitespace-nowrap"
+                                                >
+                                                    {saving ? <Loader2 className="animate-spin" size={18} /> : <Check size={18} />}
+                                                    {t('settings_api_save')}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         )}
 

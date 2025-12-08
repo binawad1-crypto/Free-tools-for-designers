@@ -1,8 +1,10 @@
 
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { Mic, MicOff, Volume2, Loader2, Activity } from 'lucide-react';
+import { getApiKey } from '../../services/geminiService';
 
 const LiveTool: React.FC = () => {
   const { t } = useApp();
@@ -45,8 +47,11 @@ const LiveTool: React.FC = () => {
       setError(null);
       
       try {
-          // Initialize AI
-          const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+          // Initialize AI with dynamic key
+          const apiKey = await getApiKey();
+          if (!apiKey) throw new Error("No API Key available");
+          
+          const ai = new GoogleGenAI({ apiKey });
           
           // Audio Context
           audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({sampleRate: 24000});
@@ -133,7 +138,7 @@ const LiveTool: React.FC = () => {
 
       } catch (err) {
           console.error(err);
-          setError("Failed to connect. Ensure microphone access is allowed.");
+          setError("Failed to connect. Check mic access or API Key.");
           setConnected(false);
       }
   };

@@ -1,15 +1,42 @@
+
+
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { ColorPalette, PantoneMatch } from "../types";
+import { db } from './firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
-// Note: For video generation with Veo, we re-instantiate GoogleGenAI 
-// inside the function to pick up the user-selected key from process.env.API_KEY
+// System Key Cache
+let systemKeyCache: string | null = null;
 
-const apiKey = process.env.API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
+export const getApiKey = async (): Promise<string> => {
+  // 1. Prioritize environment/injected key (e.g. from user selection wrapper) if available and looks valid
+  if (process.env.API_KEY && process.env.API_KEY.length > 20) {
+      return process.env.API_KEY;
+  }
+
+  // 2. Check memory cache for database key
+  if (systemKeyCache) return systemKeyCache;
+
+  // 3. Fetch from Firestore (Admin configured system key)
+  try {
+      const docRef = doc(db, 'config', 'system');
+      const snap = await getDoc(docRef);
+      if (snap.exists() && snap.data().apiKey) {
+          systemKeyCache = snap.data().apiKey;
+          return systemKeyCache || '';
+      }
+  } catch (e) {
+      console.warn("Failed to fetch system API key from DB", e);
+  }
+
+  return '';
+};
 
 // Helper to generate color palettes
 export const generateColorPalette = async (mood: string): Promise<ColorPalette[]> => {
   try {
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-2.5-flash';
     const response = await ai.models.generateContent({
       model,
@@ -53,6 +80,8 @@ interface TextOptions {
 // Helper to generate text copy
 export const generateDesignCopy = async (prompt: string, options: TextOptions): Promise<string> => {
   try {
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-2.5-flash';
     
     let sysPrompt = `You are an expert copywriter, marketer, and UX writer.`;
@@ -110,6 +139,8 @@ export interface CompetitorAnalysisResult {
 
 export const analyzeCompetitor = async (url: string, notes: string, lang: 'ar' | 'en' = 'ar'): Promise<CompetitorAnalysisResult> => {
     try {
+        const apiKey = await getApiKey();
+        const ai = new GoogleGenAI({ apiKey });
         const model = 'gemini-2.5-flash'; // Flash supports search grounding
         const response = await ai.models.generateContent({
             model,
@@ -130,8 +161,6 @@ export const analyzeCompetitor = async (url: string, notes: string, lang: 'ar' |
             }`,
             config: {
                 tools: [{ googleSearch: {} }],
-                // Note: responseMimeType: "application/json" and responseSchema are NOT supported when using tools like googleSearch.
-                // We rely on the prompt to request JSON output.
             }
         });
 
@@ -151,6 +180,8 @@ export const analyzeCompetitor = async (url: string, notes: string, lang: 'ar' |
 // Helper to find Pantone Match
 export const findPantoneMatch = async (hex: string): Promise<PantoneMatch> => {
   try {
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-2.5-flash';
     const response = await ai.models.generateContent({
       model,
@@ -187,9 +218,9 @@ export const generateLogo = async (prompt: string, style: string, brandText: str
     // Upgraded to Gemini 3 Pro Image (Banana Pro) for best quality
     const model = 'gemini-3-pro-image-preview';
     
-    // IMPORTANT: Create a new instance to capture the latest API Key from window.aistudio selection
-    // The guidelines specify users MUST select their own key for this model.
-    const imageAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    // IMPORTANT: Create a new instance to capture the latest API Key
+    const apiKey = await getApiKey();
+    const imageAi = new GoogleGenAI({ apiKey });
     
     // Construct a specific prompt for logo generation
     let fullPrompt = `Design a high-quality, professional vector-style logo.
@@ -249,8 +280,9 @@ export const generateVideo = async (
     config: VideoConfig, 
     image?: { data: string, mimeType: string }
 ): Promise<string | null> => {
-    // IMPORTANT: Create a new instance to capture the latest API Key from window.aistudio selection
-    const veoAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    // IMPORTANT: Create a new instance to capture the latest API Key
+    const apiKey = await getApiKey();
+    const veoAi = new GoogleGenAI({ apiKey });
     
     try {
         // Strict validation of config parameters
@@ -307,7 +339,7 @@ export const generateVideo = async (
         const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
         if (!downloadLink) return null;
         
-        const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
+        const response = await fetch(`${downloadLink}&key=${apiKey}`);
         if (!response.ok) throw new Error("Failed to fetch video bytes");
         
         const blob = await response.blob();
@@ -326,7 +358,8 @@ export const generateImage = async (
     try {
         // Use Gemini 3 Pro Image (Banana Pro)
         const model = 'gemini-3-pro-image-preview';
-        const imageAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const apiKey = await getApiKey();
+        const imageAi = new GoogleGenAI({ apiKey });
 
         // Enhanced Prompt for Arabic Text
         const fullPrompt = `${prompt}
@@ -372,6 +405,8 @@ export const editImage = async (
     prompt: string
 ): Promise<string | null> => {
     try {
+        const apiKey = await getApiKey();
+        const ai = new GoogleGenAI({ apiKey });
         const model = 'gemini-2.5-flash-image';
         
         const response = await ai.models.generateContent({
@@ -408,7 +443,8 @@ export interface ChatConfig {
 }
 
 export const sendChatMessage = async (message: string, config: ChatConfig, history: any[] = []) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = await getApiKey();
+  const ai = new GoogleGenAI({ apiKey });
   
   let model = 'gemini-3-pro-preview';
   let requestConfig: any = {};
@@ -456,7 +492,8 @@ export const sendChatMessage = async (message: string, config: ChatConfig, histo
 };
 
 export const analyzeMedia = async (fileBase64: string, mimeType: string, prompt: string, isVideo: boolean) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = await getApiKey();
+  const ai = new GoogleGenAI({ apiKey });
   const model = 'gemini-3-pro-preview'; // Powerful model for vision/video
 
   try {
@@ -483,7 +520,8 @@ export const analyzeMedia = async (fileBase64: string, mimeType: string, prompt:
 
 export const generateSpeech = async (text: string) => {
     // Note: Re-instantiate to ensure key is fresh
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     try {
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash-preview-tts",
@@ -508,7 +546,8 @@ export const generateSpeech = async (text: string) => {
 };
 
 export const transcribeAudio = async (audioBase64: string, mimeType: string) => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     try {
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
@@ -529,7 +568,8 @@ export const transcribeAudio = async (audioBase64: string, mimeType: string) => 
 // --- NEW AI SERVICE FUNCTIONS ---
 
 export const imageToCode = async (image: string, mimeType: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = await getApiKey();
+  const ai = new GoogleGenAI({ apiKey });
   const model = 'gemini-2.5-flash';
 
   const prompt = `
@@ -566,7 +606,8 @@ export const imageToCode = async (image: string, mimeType: string) => {
 };
 
 export const generateIconSvg = async (prompt: string, style: string) => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-2.5-flash';
 
     const systemPrompt = `You are an expert SVG icon designer. 
@@ -595,7 +636,8 @@ export const generateIconSvg = async (prompt: string, style: string) => {
 };
 
 export const enhancePrompt = async (prompt: string) => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-2.5-flash';
 
     try {
@@ -631,7 +673,8 @@ export const enhancePrompt = async (prompt: string) => {
 };
 
 export const pairFonts = async (description: string) => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-2.5-flash';
 
     try {
@@ -664,7 +707,8 @@ export const pairFonts = async (description: string) => {
 };
 
 export const critiqueDesign = async (image: string, mimeType: string) => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = await getApiKey();
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-3-pro-preview'; // Vision model
 
     try {
