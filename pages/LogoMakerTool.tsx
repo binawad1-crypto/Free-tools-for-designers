@@ -1,8 +1,7 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
-import { generateLogo } from '../services/geminiService';
+import { generateLogo, getApiKey } from '../services/geminiService';
 import { Hexagon, Sparkles, Download, Wand2, Box, Layers, Palette, CircleDot, Type, Key } from 'lucide-react';
 
 const LogoMakerTool: React.FC = () => {
@@ -16,6 +15,14 @@ const LogoMakerTool: React.FC = () => {
 
   useEffect(() => {
     const checkKey = async () => {
+       // Check for System Key first
+       const systemKey = await getApiKey();
+       if (systemKey) {
+           setApiKeySelected(true);
+           return;
+       }
+
+       // Then check User Selection
        if ((window as any).aistudio && (window as any).aistudio.hasSelectedApiKey) {
            const hasKey = await (window as any).aistudio.hasSelectedApiKey();
            setApiKeySelected(hasKey);
@@ -88,7 +95,7 @@ const LogoMakerTool: React.FC = () => {
         
         {!apiKeySelected && (
             <div className="flex justify-center mt-4">
-                 <button onClick={handleSelectKey} className="flex items-center gap-2 px-6 py-2 bg-amber-500 hover:bg-amber-600 rounded-xl font-bold text-white transition-all shadow-lg shadow-amber-500/30 animate-pulse">
+                 <button onClick={handleSelectKey} className="flex items-center gap-2 px-6 py-2 bg-amber-500 hover:bg-amber-600 rounded-xl font-bold text-black transition-all shadow-lg shadow-amber-500/30 animate-pulse">
                      <Key size={18} /> {t('studio_select_key')}
                  </button>
             </div>

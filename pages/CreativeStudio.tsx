@@ -1,8 +1,7 @@
 
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../contexts/AppContext';
-import { generateVideo, editImage, generateImage } from '../services/geminiService';
+import { generateVideo, editImage, generateImage, getApiKey } from '../services/geminiService';
 import { 
     Clapperboard, Sparkles, Key, Film, Settings2, Upload, 
     Image as ImageIcon, Mic, User, Eraser, RefreshCcw, ShoppingBag, 
@@ -52,6 +51,14 @@ const CreativeStudio: React.FC = () => {
 
   useEffect(() => {
     const checkKey = async () => {
+       // Check for System Key first
+       const systemKey = await getApiKey();
+       if (systemKey) {
+           setApiKeySelected(true);
+           return;
+       }
+
+       // Then check Veo wrapper key
        if ((window as any).aistudio && (window as any).aistudio.hasSelectedApiKey) {
            const hasKey = await (window as any).aistudio.hasSelectedApiKey();
            setApiKeySelected(hasKey);

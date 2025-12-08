@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { 
   ShoppingBag, Building, Video, Megaphone, 
-  Briefcase, Shirt, User, TrendingUp, Copy, Check, LayoutTemplate 
+  Briefcase, Shirt, User, TrendingUp, Copy, Check, LayoutTemplate, Star 
 } from 'lucide-react';
 
 type Category = 'ecommerce' | 'architecture' | 'ugc' | 'brand' | 'business' | 'fashion' | 'personal' | 'viral';
@@ -33,158 +33,150 @@ const TemplatesGallery: React.FC = () => {
     { id: 'viral', label: 'cat_viral', icon: TrendingUp },
   ];
 
-  // POWERFUL BILINGUAL PROMPTS
+  // POWERFUL BILINGUAL PROMPTS (Optimized for Midjourney/Gemini)
   const templates: Template[] = [
     // --- ECOMMERCE ---
     {
       id: 'ecom-1',
-      titleEn: 'Luxury Product Shot',
-      titleAr: 'تصوير منتج فاخر',
+      titleEn: 'Luxury Perfume Shot',
+      titleAr: 'تصوير عطر فاخر (مود)',
       category: 'ecommerce',
-      promptEn: 'A high-end studio photography shot of [Product Name] centered on a polished marble podium, soft cinematic lighting from the left, neutral beige background, gold accents, 8k resolution, ultra-realistic, sharp focus.',
-      promptAr: 'صورة استوديو احترافية عالية الدقة لمنتج [اسم المنتج] يتوسط منصة رخامية لامعة، إضاءة سينمائية ناعمة من اليسار، خلفية بيج محايدة مع لمسات ذهبية، دقة 8K، واقعية جداً وتركيز حاد.'
+      promptEn: 'Professional product photography of a luxury crystal perfume bottle on a black reflective podium, dramatic rim lighting, gold flakes floating in the air, soft smoke, 8k resolution, macro details, depth of field, cinematic look.',
+      promptAr: 'صورة استوديو احترافية لزجاجة عطر كريستالية فاخرة على منصة سوداء عاكسة، إضاءة حواف درامية (Rim Lighting)، رقائق ذهبية تتطاير في الهواء، دخان ناعم، دقة 8K، تفاصيل ماكرو دقيقة، عزل الخلفية، مظهر سينمائي.'
     },
     {
       id: 'ecom-2',
-      titleEn: 'Arabic Packaging Design',
-      titleAr: 'تغليف بهوية عربية',
+      titleEn: 'Saudi Coffee Packaging',
+      titleAr: 'تغليف قهوة سعودية (هوية)',
       category: 'ecommerce',
-      promptEn: 'Minimalist eco-friendly packaging design for [Product Name] featuring elegant Arabic calligraphy logo, textured cardboard material, soft floating composition, studio lighting, 3d render, award-winning design.',
-      promptAr: 'تصميم تغليف بسيط وصديق للبيئة لمنتج [اسم المنتج] يتميز بشعار خط عربي أنيق، خامة كرتونية ذات ملمس بارز، تكوين عائم ناعم، إضاءة استوديو، ريندر ثلاثي الأبعاد بجودة عالمية.'
+      promptEn: 'Packaging design for premium Saudi Coffee, featuring traditional Sadu pattern elements, gold foil stamping on matte deep green texture, minimalist luxury style, 3d mockup rendering, studio lighting.',
+      promptAr: 'تصميم تغليف لقهوة سعودية فاخرة، يتميز بعناصر نقوش السدو التراثية، طباعة ذهبية بارزة على خامة خضراء داكنة مطفية (Matte)، أسلوب فخم وبسيط، عرض مجسم ثلاثي الأبعاد (Mockup)، إضاءة استوديو.'
     },
     {
       id: 'ecom-3',
-      titleEn: 'Lifestyle Action Shot',
-      titleAr: 'صورة نمط حياة (لايف ستايل)',
+      titleEn: 'Honey Jar Splash',
+      titleAr: 'دعاية عسل (حركة وسوائل)',
       category: 'ecommerce',
-      promptEn: 'A candid lifestyle shot of a happy person using [Product Name] in a sunlit modern living room, authentic emotions, bokeh effect background, high dynamic range, commercial photography style.',
-      promptAr: 'صورة عفوية "لايف ستايل" لشخص سعيد يستخدم [اسم المنتج] في غرفة معيشة عصرية مضاءة بنور الشمس، مشاعر حقيقية، خلفية معزولة (بوكيه)، نطاق ديناميكي عالي، أسلوب تصوير إعلاني.'
+      promptEn: 'Commercial photography of a honey jar, dynamic liquid honey splash, floating honeycomb pieces, warm golden hour backlighting, sun rays, high speed shutter, sharp focus, fresh and organic vibe.',
+      promptAr: 'تصوير تجاري لمرطبان عسل، طرطشة عسل سائلة ديناميكية، قطع شمع العسل تطفو، إضاءة خلفية دافئة (ساعة ذهبية)، أشعة الشمس، غالق سرعة عالية، تركيز حاد، طابع عضوي وطازج.'
     },
 
     // --- ARCHITECTURE ---
     {
       id: 'arch-1',
-      titleEn: 'Modern Islamic Villa',
-      titleAr: 'فيلا عصرية بطابع إسلامي',
+      titleEn: 'Modern Islamic Center',
+      titleAr: 'مركز ثقافي إسلامي حديث',
       category: 'architecture',
-      promptEn: 'A futuristic sustainable villa design fusing modern architecture with traditional Islamic geometric patterns, mashrabiya screens, floor-to-ceiling glass, warm interior lighting, twilight desert atmosphere, photorealistic architectural visualization.',
-      promptAr: 'تصميم فيلا مستقبلية مستدامة تدمج العمارة الحديثة مع الزخارف الهندسية الإسلامية التقليدية، نوافذ مشربية، زجاج من الأرض للسقف، إضاءة داخلية دافئة، أجواء صحراوية وقت الغروب، إظهار معماري واقعي.'
+      promptEn: 'Architectural visualization of a modern Islamic cultural center, white marble facade with intricate geometric parametric openings (Mashrabiya), soft warm interior glow, surrounded by palm trees and reflection pools, dusk lighting, photorealistic.',
+      promptAr: 'تصور معماري لمركز ثقافي إسلامي حديث، واجهة رخامية بيضاء مع فتحات هندسية بارامترية دقيقة (مشربية)، وهج داخلي دافئ، محاط بأشجار النخيل وبرك مياه عاكسة، إضاءة وقت الغسق، واقعية مفرطة.'
     },
     {
       id: 'arch-2',
-      titleEn: 'Luxury Majlis Interior',
-      titleAr: 'تصميم مجلس فاخر',
+      titleEn: 'Luxury Desert Resort',
+      titleAr: 'منتجع صحراوي فاخر (العلا)',
       category: 'architecture',
-      promptEn: 'Luxury minimalist interior design of a modern Majlis, Japandi style mixed with Arabian heritage, low seating furniture, neutral earth tones, large abstract art, indoor palm plants, natural sunlight, 8k render.',
-      promptAr: 'تصميم داخلي فاخر ومينيماليست لمجلس حديث، يمزج بين طراز الجاباندي والتراث العربي، جلسات أرضية منخفضة، ألوان ترابية محايدة، لوحات تجريدية ضخمة، نباتات نخيل داخلية، ضوء شمس طبيعي، ريندر 8K.'
+      promptEn: 'Luxury eco-resort nestled in the rock formations of Al-Ula desert, sandstone textures, infinity pool overlooking the canyon, warm lanterns, starry night sky, seamless integration with nature, 8k render, unreal engine 5.',
+      promptAr: 'منتجع بيئي فاخر مدمج في التكوينات الصخرية لصحراء العلا، ملمس الحجر الرملي، مسبح لا نهائي يطل على الوادي، فوانيس دافئة، سماء ليلية مرصعة بالنجوم، اندماج سلس مع الطبيعة، ريندر 8K.'
+    },
+    {
+      id: 'arch-3',
+      titleEn: 'Neoclassical Interior',
+      titleAr: 'تصميم داخلي نيوكلاسيك',
+      category: 'architecture',
+      promptEn: 'Interior design of a spacious living room, Neoclassical style with modern twist, wall moldings, velvet beige sofas, crystal chandelier, floor-to-ceiling windows with sheer curtains, bright airy atmosphere, interior design magazine style.',
+      promptAr: 'تصميم داخلي لغرفة معيشة واسعة، طراز نيوكلاسيك مع لمسة عصرية، إطارات جدارية (بانوهات)، أرائك مخملية بيج، ثريا كريستال، نوافذ من الأرض للسقف مع ستائر شيفون، جو مشرق وجيد التهوية، أسلوب مجلات التصميم.'
     },
 
     // --- UGC & CONTENT ---
     {
       id: 'ugc-1',
-      titleEn: 'TikTok Hook Script',
-      titleAr: 'جمل افتتاحية قوية (Hooks)',
+      titleEn: 'Viral Hook Script',
+      titleAr: 'جمل افتتاحية فيرال (Hooks)',
       category: 'ugc',
-      promptEn: 'Write 5 viral hooks for a short video about [Topic]. The hooks should be shocking, controversial, or trigger immediate curiosity. Format: "Stop doing [X] if you want [Y]".',
-      promptAr: 'اكتب 5 جمل افتتاحية (Hooks) فيرال لفيديو قصير عن [الموضوع] باللغة العربية. يجب أن تكون الجمل صادمة أو مثيرة للجدل أو تثير الفضول فوراً. على سبيل المثال: "توقف عن فعل [X] إذا كنت تريد [Y]" أو "لن تصدق ما اكتشفته عن...".'
+      promptEn: 'Write 5 viral hooks for a short video about [Topic] in Arabic. Hooks should be shocking, controversial, or trigger curiosity. E.g., "Stop doing [X] if you want [Y]".',
+      promptAr: 'اكتب 5 جمل افتتاحية (Hooks) فيرال لفيديو قصير عن [الموضوع] باللغة العربية. يجب أن تكون الجمل صادمة أو تثير الفضول فوراً. مثال: "توقف عن فعل [X] إذا كنت تريد [Y]" أو "لن تصدق ما اكتشفته عن...".'
     },
     {
       id: 'ugc-2',
-      titleEn: 'Unboxing Script',
-      titleAr: 'سيناريو فتح صندوق (Unboxing)',
+      titleEn: 'Product Review Script',
+      titleAr: 'سيناريو مراجعة منتج (UGC)',
       category: 'ugc',
-      promptEn: 'Write an enthusiastic unboxing video script for [Product]. Include: 1. Visual hook (showing the package). 2. Sensory description (texture, smell, look). 3. Problem/Solution demonstration. 4. Strong Call to Action.',
-      promptAr: 'اكتب سيناريو فيديو "فتح صندوق" حماسي لمنتج [اسم المنتج] باللغة العربية. تضمن: 1. لقطة افتتاحية بصرية (عرض العبوة). 2. وصف حسي (الملمس، الرائحة، الشكل). 3. عرض المشكلة والحل. 4. دعوة قوية لاتخاذ إجراء (CTA) في النهاية.'
+      promptEn: 'Write a 30-second UGC video script reviewing [Product]. Structure: 1. Problem identification. 2. Introducing the product as hero. 3. Demo/Benefit. 4. Strong Call to Action. Tone: Enthusiastic and authentic.',
+      promptAr: 'اكتب سيناريو فيديو UGC مدته 30 ثانية لمراجعة [اسم المنتج]. الهيكل: 1. تحديد المشكلة. 2. تقديم المنتج كحل سحري. 3. تجربة سريعة/فائدة. 4. دعوة قوية للشراء. النبرة: حماسية وعفوية.'
     },
 
     // --- BRANDING ---
     {
       id: 'brand-1',
-      titleEn: 'Slogan Generator',
-      titleAr: 'ابتكار شعارات لفظية (Slogans)',
+      titleEn: 'Brand Identity Prompt',
+      titleAr: 'وصف هوية بصرية كاملة',
       category: 'brand',
-      promptEn: 'Generate 10 catchy, memorable, and short slogans for a new [Brand Type] brand. The tone should be [Tone: e.g., Luxurious, Playful]. Focus on value proposition and rhyme if possible.',
-      promptAr: 'ابتكر 10 شعارات لفظية (Slogans) جذابة وسهلة التذكر وقصيرة لعلامة تجارية جديدة في مجال [نوع العلامة التجارية] باللغة العربية. النبرة يجب أن تكون [النبرة: مثلاً فاخرة، مرحة]. ركز على القيمة المقترحة واستخدم السجع إن أمكن.'
+      promptEn: 'Generate a comprehensive brand visual identity description for a [Industry] company called [Name]. Define: 1. Color Palette (Hex codes). 2. Typography style. 3. Logo concept (Symbolism). 4. Moodboard themes.',
+      promptAr: 'ولد وصفاً شاملاً للهوية البصرية لشركة [المجال] باسم [الاسم]. حدد: 1. لوحة الألوان (أكواد Hex). 2. أسلوب الخطوط (Typography). 3. فكرة الشعار والرمزية. 4. محاور المود بورد (Moodboard).'
     },
     {
       id: 'brand-2',
-      titleEn: 'Brand Story',
-      titleAr: 'قصة العلامة التجارية',
+      titleEn: 'Mission & Vision',
+      titleAr: 'الرؤية والرسالة (شركات)',
       category: 'brand',
-      promptEn: 'Write a compelling "About Us" brand story for [Company Name]. We sell [Product] and our mission is [Mission]. The tone should be inspiring, authentic, and customer-centric.',
-      promptAr: 'اكتب قصة علامة تجارية "من نحن" ملهمة لشركة [اسم الشركة] باللغة العربية. نحن نبيع [المنتج] ومهمتنا هي [المهمة]. النبرة يجب أن تكون ملهمة، صادقة، وتركز على العميل وتشعره بالانتماء.'
+      promptEn: 'Draft a professional Mission and Vision statement for a [Company Type]. Mission should focus on [Core Value]. Vision should be ambitious and future-oriented. Language: Professional Arabic.',
+      promptAr: 'صغ بيان الرؤية والرسالة لشركة [نوع الشركة] بأسلوب احترافي. الرسالة يجب أن تركز على [القيمة الأساسية]. الرؤية يجب أن تكون طموحة ومستقبلية. اللغة: عربية فصحى رسمية.'
     },
 
     // --- BUSINESS ---
     {
       id: 'bus-1',
-      titleEn: 'Professional LinkedIn Post',
-      titleAr: 'منشور احترافي LinkedIn',
+      titleEn: 'Strategic Email',
+      titleAr: 'بريد إلكتروني تفاوضي',
       category: 'business',
-      promptEn: 'Act as a thought leader. Write a LinkedIn post about the future of [Industry]. Use a professional yet engaging tone, include 3 bullet points on upcoming trends, and end with a question to drive comments.',
-      promptAr: 'تقمص دور خبير وقيادي في المجال. اكتب منشوراً لمنصة LinkedIn باللغة العربية حول مستقبل [الصناعة]. استخدم نبرة احترافية وجذابة، وقم بتضمين 3 نقاط رئيسية حول الاتجاهات القادمة، واختتم بسؤال ذكي لتحفيز النقاش في التعليقات.'
+      promptEn: 'Write a negotiation email to a vendor asking for better pricing for [Service]. Use the "Sandwich Method" (Positive feedback, The Ask/Constraint, Hope for partnership). Tone: Professional yet firm.',
+      promptAr: 'اكتب بريداً إلكترونياً للتفاوض مع مورد لطلب سعر أفضل لخدمة [الخدمة]. استخدم أسلوب "الساندويتش" (ثناء إيجابي، الطلب/المحددات المادية، التطلع لشراكة طويلة). النبرة: احترافية وحازمة بلطف.'
     },
     {
       id: 'bus-2',
-      titleEn: 'Cold Email Sales',
-      titleAr: 'رسالة بريد باردة (مبيعات)',
+      titleEn: 'LinkedIn Thought Leadership',
+      titleAr: 'منشور قيادي (LinkedIn)',
       category: 'business',
-      promptEn: 'Draft a short, personalized cold email to a potential client offering [Service]. Focus on their pain points and your unique value proposition. Keep it under 150 words and include a clear meeting request.',
-      promptAr: 'صغ رسالة بريد إلكتروني باردة (Cold Email) قصيرة ومخصصة لعميل محتمل تعرض عليه [الخدمة] باللغة العربية. ركز على نقاط الألم لديهم وقيمتك المقترحة الفريدة. اجعلها أقل من 150 كلمة وتضمن طلباً واضحاً لعقد اجتماع.'
+      promptEn: 'Write a LinkedIn post about the future of [Industry]. Discuss 3 emerging trends. End with an engaging question to drive comments. Tone: Expert, visionary.',
+      promptAr: 'اكتب منشوراً لمنصة LinkedIn حول مستقبل [الصناعة]. ناقش 3 اتجاهات ناشئة. اختتم بسؤال جذاب لتحفيز النقاش. النبرة: خبير، قيادي، وملهم.'
     },
 
     // --- FASHION ---
     {
       id: 'fash-1',
-      titleEn: 'Streetwear Editorial',
-      titleAr: 'جلسة تصوير أزياء الشارع',
+      titleEn: 'Modern Abaya',
+      titleAr: 'عباية عصرية (موديل)',
       category: 'fashion',
-      promptEn: 'Full body shot of a model wearing [Clothing Item], urban street background, neon signs, rainy cyberpunk atmosphere, dramatic lighting, high fashion photography, detailed fabric texture.',
-      promptAr: 'لقطة كاملة لعارض يرتدي [قطعة الملابس]، خلفية شارع حضري، لافتات نيون، أجواء ممطرة بأسلوب السايبر بانك، إضاءة درامية، تصوير أزياء راقي، تفاصيل نسيج دقيقة وواضحة.'
+      promptEn: 'Full body fashion shot of a model wearing a stylish modern black Abaya with gold embroidery, standing in a white minimalist architectural space, natural lighting, high fashion pose, detailed fabric texture, 8k.',
+      promptAr: 'لقطة أزياء كاملة لعارضة ترتدي عباية سوداء عصرية بتطريز ذهبي، تقف في مساحة معمارية بيضاء بسيطة (مينيماليست)، إضاءة طبيعية، وضعية أزياء راقية، تفاصيل نسيج دقيقة، دقة 8K.'
     },
     {
       id: 'fash-2',
-      titleEn: 'Fabric Macro Detail',
-      titleAr: 'تصوير تفاصيل القماش (ماكرو)',
+      titleEn: 'Streetwear Concept',
+      titleAr: 'أزياء الشارع (Streetwear)',
       category: 'fashion',
-      promptEn: 'Extreme close-up macro shot of [Fabric Type] texture, showing intricate weaving details, golden threads, soft folds, luxury quality, warm golden hour lighting.',
-      promptAr: 'لقطة ماكرو قريبة جداً لتفاصيل نسيج [نوع القماش]، تظهر تفاصيل الحياكة الدقيقة، خيوط ذهبية متداخلة، طيات ناعمة، جودة فاخرة، إضاءة الساعة الذهبية الدافئة.'
+      promptEn: 'Streetwear fashion photography, oversized hoodie with holographic print, urban night setting, neon lights reflecting on wet pavement, cyberpunk vibes, cinematic color grading.',
+      promptAr: 'تصوير أزياء "ستريت وير"، هودي واسع (Oversized) بطبعة هولوغرافيك، أجواء ليلية حضرية، أضواء نيون تنعكس على الرصيف المبلل، طابع سايبر بانك، تلوين سينمائي.'
     },
 
     // --- PERSONAL ---
     {
       id: 'pers-1',
-      titleEn: 'CV/Resume Enhancement',
-      titleAr: 'تحسين نقاط السيرة الذاتية',
+      titleEn: 'CV Bullet Points',
+      titleAr: 'نقاط سيرة ذاتية قوية',
       category: 'personal',
-      promptEn: 'Rewrite these resume bullet points to be more impact-driven and results-oriented for a [Job Title] role. Use strong action verbs and quantify results where possible: [Paste Points].',
-      promptAr: 'أعد صياغة نقاط السيرة الذاتية هذه لتكون أكثر تأثيراً وتوجهاً نحو النتائج لوظيفة [المسمى الوظيفي] باللغة العربية. استخدم أفعال قوية (Action Verbs) وقم بإضافة أرقام ونتائج ملموسة حيثما أمكن: [الصق النقاط هنا].'
-    },
-    {
-      id: 'pers-2',
-      titleEn: 'Social Media Bio',
-      titleAr: 'نبذة شخصية احترافية (Bio)',
-      category: 'personal',
-      promptEn: 'Write 3 variations of a creative and professional bio for a [Profession] based on these interests: [Interests]. Suitable for Instagram, Twitter, and LinkedIn.',
-      promptAr: 'اكتب 3 تنويعات لنبذة شخصية (Bio) إبداعية واحترافية لـ [المهنة] بناءً على هذه الاهتمامات: [الاهتمامات]. باللغة العربية، مناسبة لمنصات إنستقرام، تويتر، ولينكد إن.'
+      promptEn: 'Rewrite these resume bullet points for a [Job Role] to be result-oriented using Google\'s "XYZ formula" (Accomplished [X] as measured by [Y], by doing [Z]).',
+      promptAr: 'أعد صياغة نقاط السيرة الذاتية هذه لوظيفة [المسمى الوظيفي] لتكون موجهة نحو النتائج باستخدام معادلة جوجل XYZ (أنجزت [X] مقاساً بـ [Y]، عن طريق فعل [Z]). اللغة: عربية مهنية.'
     },
 
     // --- VIRAL ---
     {
       id: 'vir-1',
-      titleEn: 'Controversial Opinion Post',
-      titleAr: 'منشور رأي جدلي',
+      titleEn: 'YouTube Thumbnail Concept',
+      titleAr: 'فكرة صورة مصغرة (يوتيوب)',
       category: 'viral',
-      promptEn: 'Write a "Hot Take" post about [Topic] that challenges common assumptions. Keep it respectful but provocative to encourage debate and high engagement.',
-      promptAr: 'اكتب منشور "رأي ساخن" (Hot Take) حول [الموضوع] باللغة العربية يتحدى الافتراضات الشائعة. اجعله محترماً ولكن مستفزاً للفكر لتشجيع النقاش والتفاعل العالي.'
-    },
-    {
-      id: 'vir-2',
-      titleEn: 'YouTube Thumbnail Idea',
-      titleAr: 'وصف صورة مصغرة لليوتيوب',
-      category: 'viral',
-      promptEn: 'Describe a high-click-through rate (CTR) YouTube thumbnail for a video about [Topic]. Include facial expression, background color, text overlay, and visual elements that create curiosity.',
-      promptAr: 'صف فكرة صورة مصغرة (Thumbnail) لليوتيوب تضمن معدل نقر عالي (CTR) لفيديو عن [الموضوع]. صف تعبير الوجه، لون الخلفية، النص المكتوب على الصورة، والعناصر البصرية التي تثير الفضول.'
+      promptEn: 'Describe a high-CTR YouTube thumbnail for a video about [Topic]. Detail the facial expression, background color, text overlay (max 3 words), and visual elements that create curiosity and shock.',
+      promptAr: 'صف فكرة صورة مصغرة (Thumbnail) لليوتيوب تضمن معدل نقر عالي (CTR) لفيديو عن [الموضوع]. صف تعبير الوجه، لون الخلفية، النص المكتوب (3 كلمات كحد أقصى)، والعناصر البصرية التي تثير الفضول والصدمة.'
     }
   ];
 
@@ -255,7 +247,7 @@ const TemplatesGallery: React.FC = () => {
                        </span>
                    </div>
                    
-                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 min-h-[3rem]">
+                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 min-h-[3.5rem] leading-tight">
                        {displayTitle}
                    </h3>
                    
