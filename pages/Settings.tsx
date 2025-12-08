@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -116,13 +114,25 @@ const Settings: React.FC = () => {
             const fetchSystemKey = async () => {
                 setLoadingKey(true);
                 try {
+                    // First try local storage to speed up or fallback
+                    const localKey = localStorage.getItem('system_api_key');
+                    if (localKey) setSystemApiKey(localKey);
+
+                    // Then try DB
                     const docRef = doc(db, 'config', 'system');
                     const snap = await getDoc(docRef);
                     if (snap.exists()) {
                         setSystemApiKey(snap.data().apiKey || '');
                     }
-                } catch (error) {
-                    console.error("Failed to load system key", error);
+                } catch (error: any) {
+                    // Suppress permission errors, rely on local storage
+                    if (error.code !== 'permission-denied' && error.code !== 'unavailable') {
+                        console.error("Failed to load system key from DB", error);
+                    }
+                    
+                    // Ensure local key stays if DB fails
+                    const localKey = localStorage.getItem('system_api_key');
+                    if (localKey) setSystemApiKey(localKey);
                 } finally {
                     setLoadingKey(false);
                 }
@@ -243,8 +253,15 @@ const Settings: React.FC = () => {
             setSuccessMsg("System API Key updated successfully.");
             setTimeout(() => setSuccessMsg(''), 3000);
         } catch (error: any) {
-            console.error("Error saving system key", error);
-            setErrorMsg("Failed to save API Key. " + error.message);
+            // Fallback to local storage if permission denied
+            if (error.code === 'permission-denied' || error.code === 'unavailable') {
+                 localStorage.setItem('system_api_key', systemApiKey);
+                 setSuccessMsg("System API Key saved locally (DB Permission denied).");
+                 setTimeout(() => setSuccessMsg(''), 3000);
+            } else {
+                 console.error("Error saving system key", error);
+                 setErrorMsg("Failed to save API Key. " + error.message);
+            }
         } finally {
             setSaving(false);
         }

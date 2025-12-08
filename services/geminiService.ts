@@ -17,7 +17,16 @@ export const getApiKey = async (): Promise<string> => {
   // 2. Check memory cache for database key
   if (systemKeyCache) return systemKeyCache;
 
-  // 3. Fetch from Firestore (Admin configured system key)
+  // 3. Try Local Storage (Fallback for permissions/offline)
+  if (typeof window !== 'undefined') {
+      const localKey = localStorage.getItem('system_api_key');
+      if (localKey && localKey.length > 20) {
+          systemKeyCache = localKey;
+          return localKey;
+      }
+  }
+
+  // 4. Fetch from Firestore (Admin configured system key)
   try {
       const docRef = doc(db, 'config', 'system');
       const snap = await getDoc(docRef);
