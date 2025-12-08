@@ -42,9 +42,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }
 
   const navItems = [
+    { id: 'studio', label: 'nav_studio', icon: Palette, path: '/studio' },
     { id: 'tools', label: 'nav_tools', icon: Wrench, path: '/' },
     { id: 'special', label: 'nav_special', icon: Sparkles, path: '/special' },
-    { id: 'studio', label: 'nav_studio', icon: Palette, path: '/studio' },
     { id: 'support', label: 'nav_support', icon: LifeBuoy, path: '/support' },
     { id: 'settings', label: 'nav_settings', icon: Settings, path: '/settings' },
   ];
@@ -65,7 +65,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         fixed top-0 bottom-0 z-50 w-72 bg-[#151925] text-white transition-transform duration-300 shadow-2xl
         ${isRTL ? 'right-0' : 'left-0'}
         ${sidebarOpen ? 'translate-x-0' : (isRTL ? 'translate-x-full' : '-translate-x-full')}
-        lg:translate-x-0 lg:static lg:shrink-0 flex flex-col
+        lg:translate-x-0 lg:shrink-0 flex flex-col
       `}>
         {/* Logo Area */}
         <div className="h-24 flex items-center gap-3 px-6 border-b border-white/5">
