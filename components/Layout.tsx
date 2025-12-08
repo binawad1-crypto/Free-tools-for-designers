@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -41,12 +42,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     );
   }
 
+  // REORDERED NAV ITEMS AS REQUESTED
   const navItems = [
-    { id: 'studio', label: 'nav_studio', icon: Palette, path: '/studio' },
-    { id: 'tools', label: 'nav_tools', icon: Wrench, path: '/' },
-    { id: 'special', label: 'nav_special', icon: Sparkles, path: '/special' },
-    { id: 'support', label: 'nav_support', icon: LifeBuoy, path: '/support' },
-    { id: 'settings', label: 'nav_settings', icon: Settings, path: '/settings' },
+    { id: 'studio', label: 'nav_studio', icon: Palette, path: '/studio' },     // 1. Creative Studio
+    { id: 'tools', label: 'nav_tools', icon: Wrench, path: '/' },              // 2. AI Tools
+    { id: 'special', label: 'nav_special', icon: Sparkles, path: '/special' }, // 3. Special Utilities
+    { id: 'support', label: 'nav_support', icon: LifeBuoy, path: '/support' }, // 4. Support
+    { id: 'settings', label: 'nav_settings', icon: Settings, path: '/settings' }, // 5. Settings
   ];
 
   return (

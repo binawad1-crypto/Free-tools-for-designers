@@ -29,6 +29,7 @@ import IconGeneratorTool from './pages/smart/IconGeneratorTool';
 import PromptEnhancerTool from './pages/smart/PromptEnhancerTool';
 import FontPairerTool from './pages/smart/FontPairerTool';
 import DesignCritiqueTool from './pages/smart/DesignCritiqueTool';
+import Settings from './pages/Settings';
 import Login from './pages/Login';
 
 // Wrapper to protect routes
@@ -92,7 +93,7 @@ const App = () => {
               <Route path="/smart/critique" element={<ProtectedRoute><DesignCritiqueTool /></ProtectedRoute>} />
               
               <Route path="/support" element={<ProtectedRoute><div className="p-10 text-center text-slate-500">Support Center Coming Soon</div></ProtectedRoute>} />
-              <Route path="/settings" element={<ProtectedRoute><div className="p-10 text-center text-slate-500">Settings Page Coming Soon</div></ProtectedRoute>} />
+              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             </Routes>
           </Layout>
         </HashRouter>

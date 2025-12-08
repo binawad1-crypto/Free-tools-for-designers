@@ -321,7 +321,6 @@ export type TranslationKey =
   | 'auth_weak_password'
   | 'auth_remember'
   | 'auth_forgot_pass'
-  // NEW KEYS
   | 'tool_img_code'
   | 'tool_icon_gen'
   | 'tool_prompt_enhancer'
@@ -350,7 +349,33 @@ export type TranslationKey =
   | 'font_pair_title'
   | 'critique_upload_label'
   | 'critique_btn'
-  | 'critique_result_title';
+  | 'critique_result_title'
+  // SETTINGS KEYS
+  | 'settings_page_title'
+  | 'settings_tab_general'
+  | 'settings_tab_account'
+  | 'settings_tab_security'
+  | 'settings_tab_team'
+  | 'settings_tab_billing'
+  | 'settings_general_theme'
+  | 'settings_general_lang'
+  | 'settings_general_notifications'
+  | 'settings_profile_header'
+  | 'settings_profile_name'
+  | 'settings_profile_email'
+  | 'settings_profile_bio'
+  | 'settings_security_password'
+  | 'settings_security_2fa'
+  | 'settings_security_sessions'
+  | 'settings_team_header'
+  | 'settings_team_invite'
+  | 'settings_team_role'
+  | 'settings_team_status'
+  | 'settings_billing_plan'
+  | 'settings_billing_usage'
+  | 'settings_save_btn'
+  | 'settings_cancel_btn'
+  | 'settings_success_msg';
 
 // CATEGORY A: Smart AI Tools (Powered by Gemini)
 export const SMART_TOOLS_DATA: Tool[] = [
