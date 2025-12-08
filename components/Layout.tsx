@@ -1,8 +1,9 @@
 
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { useAuth } from '../contexts/AuthContext';
-import { Moon, Sun, Languages, Command, Wrench, Palette, Settings, LifeBuoy, Menu, X, ChevronRight, ChevronLeft, Crown, Sparkles, LogOut, LogIn } from 'lucide-react';
+import { Moon, Sun, Languages, Command, Wrench, Palette, Settings, LifeBuoy, Menu, X, ChevronRight, ChevronLeft, Crown, Sparkles, LogOut, LogIn, LayoutTemplate } from 'lucide-react';
 import { Theme, Language } from '../types';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -46,9 +47,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navItems = [
     { id: 'studio', label: 'nav_studio', icon: Palette, path: '/studio' },     // 1. Creative Studio
     { id: 'tools', label: 'nav_tools', icon: Wrench, path: '/' },              // 2. AI Tools
-    { id: 'special', label: 'nav_special', icon: Sparkles, path: '/special' }, // 3. Special Utilities
-    { id: 'support', label: 'nav_support', icon: LifeBuoy, path: '/support' }, // 4. Support
-    { id: 'settings', label: 'nav_settings', icon: Settings, path: '/settings' }, // 5. Settings
+    { id: 'templates', label: 'nav_templates', icon: LayoutTemplate, path: '/templates' }, // 3. Ready Templates (NEW)
+    { id: 'special', label: 'nav_special', icon: Sparkles, path: '/special' }, // 4. Special Utilities
+    { id: 'support', label: 'nav_support', icon: LifeBuoy, path: '/support' }, // 5. Support
+    { id: 'settings', label: 'nav_settings', icon: Settings, path: '/settings' }, // 6. Settings
   ];
 
   return (

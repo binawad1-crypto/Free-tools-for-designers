@@ -234,6 +234,7 @@ export type TranslationKey =
   | 'nav_dashboard'
   | 'nav_tools'
   | 'nav_studio'
+  | 'nav_templates'
   | 'nav_settings'
   | 'nav_support'
   | 'dash_welcome'
@@ -375,7 +376,20 @@ export type TranslationKey =
   | 'settings_billing_usage'
   | 'settings_save_btn'
   | 'settings_cancel_btn'
-  | 'settings_success_msg';
+  | 'settings_success_msg'
+  // TEMPLATES KEYS
+  | 'templates_title'
+  | 'templates_desc'
+  | 'cat_ecommerce'
+  | 'cat_architecture'
+  | 'cat_ugc'
+  | 'cat_brand'
+  | 'cat_business'
+  | 'cat_fashion'
+  | 'cat_personal'
+  | 'cat_viral'
+  | 'tpl_btn_copy'
+  | 'tpl_btn_copied';
 
 // CATEGORY A: Smart AI Tools (Powered by Gemini)
 export const SMART_TOOLS_DATA: Tool[] = [

@@ -196,6 +196,7 @@ export const translations: Record<Language, Record<TranslationKey | string, stri
     nav_dashboard: 'Dashboard',
     nav_tools: 'AI Tools',
     nav_studio: 'Creative Studio',
+    nav_templates: 'Ready Templates',
     nav_settings: 'Settings',
     nav_support: 'Support',
     dash_welcome: 'Welcome back, Designer',
@@ -337,7 +338,20 @@ export const translations: Record<Language, Record<TranslationKey | string, stri
     settings_billing_usage: 'Usage Overview',
     settings_save_btn: 'Save Changes',
     settings_cancel_btn: 'Cancel',
-    settings_success_msg: 'Settings saved successfully.'
+    settings_success_msg: 'Settings saved successfully.',
+    // TEMPLATES
+    templates_title: 'Ready Templates',
+    templates_desc: 'Professional, ready-to-use prompts for every category.',
+    cat_ecommerce: 'Ecommerce',
+    cat_architecture: 'Architecture',
+    cat_ugc: 'UGC Content',
+    cat_brand: 'Branding',
+    cat_business: 'Business',
+    cat_fashion: 'Fashion',
+    cat_personal: 'Personal',
+    cat_viral: 'Viral',
+    tpl_btn_copy: 'Copy Prompt',
+    tpl_btn_copied: 'Copied!'
   },
   [Language.AR]: {
     app_title: 'زمام',
@@ -532,6 +546,7 @@ export const translations: Record<Language, Record<TranslationKey | string, stri
     nav_dashboard: 'لوحة التحكم',
     nav_tools: 'الأدوات الذكية',
     nav_studio: 'الاستوديو الإبداعي',
+    nav_templates: 'قوالب جاهزة',
     nav_settings: 'الإعدادات',
     nav_support: 'الدعم الفني',
     dash_welcome: 'مساء الخير، مبدع',
@@ -673,6 +688,19 @@ export const translations: Record<Language, Record<TranslationKey | string, stri
     settings_billing_usage: 'نظرة عامة على الاستخدام',
     settings_save_btn: 'حفظ التغييرات',
     settings_cancel_btn: 'إلغاء',
-    settings_success_msg: 'تم حفظ الإعدادات بنجاح.'
+    settings_success_msg: 'تم حفظ الإعدادات بنجاح.',
+    // TEMPLATES
+    templates_title: 'قوالب جاهزة',
+    templates_desc: 'أوامر احترافية جاهزة للاستخدام في جميع المجالات.',
+    cat_ecommerce: 'تجارة إلكترونية',
+    cat_architecture: 'هندسة معمارية',
+    cat_ugc: 'محتوى UGC',
+    cat_brand: 'هوية تجارية',
+    cat_business: 'أعمال',
+    cat_fashion: 'أزياء',
+    cat_personal: 'شخصي',
+    cat_viral: 'فيروسي',
+    tpl_btn_copy: 'نسخ الأمر',
+    tpl_btn_copied: 'تم النسخ!'
   }
 };

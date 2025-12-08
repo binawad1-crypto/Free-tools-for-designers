@@ -31,6 +31,7 @@ import FontPairerTool from './pages/smart/FontPairerTool';
 import DesignCritiqueTool from './pages/smart/DesignCritiqueTool';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
+import TemplatesGallery from './pages/TemplatesGallery';
 
 // Wrapper to protect routes
 const ProtectedRoute = ({ children }: React.PropsWithChildren<{}>) => {
@@ -78,6 +79,7 @@ const App = () => {
               <Route path="/competitor" element={<ProtectedRoute><CompetitorTool /></ProtectedRoute>} />
               
               <Route path="/studio" element={<ProtectedRoute><CreativeStudio /></ProtectedRoute>} />
+              <Route path="/templates" element={<ProtectedRoute><TemplatesGallery /></ProtectedRoute>} />
 
               <Route path="/special" element={<ProtectedRoute><SpecialToolsHub /></ProtectedRoute>} />
               <Route path="/special/chat" element={<ProtectedRoute><SmartChatTool /></ProtectedRoute>} />

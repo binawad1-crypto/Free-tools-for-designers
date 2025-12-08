@@ -1,5 +1,3 @@
-
-
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { ColorPalette, PantoneMatch } from "../types";
 
@@ -255,23 +253,37 @@ export const generateVideo = async (
     const veoAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     try {
-        // Prepare request parameters with strict validation
+        // Strict validation of config parameters
+        const validRatios = ['16:9', '9:16'];
+        const validResolutions = ['720p', '1080p'];
+        
+        const safeAspectRatio = validRatios.includes(config.aspectRatio) ? config.aspectRatio : '16:9';
+        const safeResolution = validResolutions.includes(config.resolution) ? config.resolution : '720p';
+
+        // Handle prompt: It is required for text-to-video, and strongly recommended/required for image-to-video
+        let finalPrompt = prompt && prompt.trim().length > 0 ? prompt.trim() : null;
+
+        // If user provided no prompt with the image, use a generic descriptive prompt to satisfy API requirements
+        if (image && !finalPrompt) {
+            finalPrompt = "High quality cinematic video, realistic movement, 4k detail";
+        }
+
+        if (!finalPrompt) {
+            throw new Error("A text prompt is required for video generation.");
+        }
+
+        // Construct parameters cleanly
         const params: any = {
             model: 'veo-3.1-fast-generate-preview',
+            prompt: finalPrompt, // Prompt is a top-level property in generateVideos
             config: {
                 numberOfVideos: 1,
-                // Ensure defaults to valid enum values if undefined
-                resolution: config.resolution || '720p',
-                aspectRatio: config.aspectRatio || '16:9'
+                resolution: safeResolution,
+                aspectRatio: safeAspectRatio
             }
         };
 
-        // If prompt is provided and valid, add it
-        if (prompt && prompt.trim().length > 0) {
-            params.prompt = prompt.trim();
-        }
-
-        // If image is provided, add it (Image-to-Video)
+        // If image is provided (Image-to-Video)
         if (image) {
             params.image = {
                 imageBytes: image.data,
@@ -279,15 +291,10 @@ export const generateVideo = async (
             };
         }
 
-        // Veo requires at least a prompt OR an image.
-        if (image && !params.prompt) {
-            params.prompt = "Animate this image";
-        }
-        
-        // Final check
-        if (!params.image && !params.prompt) {
-            throw new Error("A text prompt is required for video generation when no image is uploaded.");
-        }
+        console.debug("Generating video with params:", JSON.stringify({ 
+            ...params, 
+            image: params.image ? 'Image Data Present' : 'No Image' 
+        }));
 
         let operation = await veoAi.models.generateVideos(params);
 
