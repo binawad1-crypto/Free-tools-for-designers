@@ -1,25 +1,33 @@
-
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
-import { SPECIAL_TOOLS_DATA, Language } from '../types';
-import { Bot, AudioWaveform, ScanEye, Mic2, ArrowRight, ArrowLeft, QrCode, Scaling, FileStack, Ruler, ScrollText, LayoutGrid } from 'lucide-react';
+import { Tool, Language } from '../types';
+import { Bot, AudioWaveform, ScanEye, Mic2, ArrowRight, ArrowLeft, QrCode, Scaling, FileStack, Ruler, ScrollText, LayoutGrid, Sparkles, Code2, Shapes, Wand2, Glasses } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   Bot: <Bot size={28} />,
   AudioWaveform: <AudioWaveform size={28} />,
   ScanEye: <ScanEye size={28} />,
   Mic2: <Mic2 size={28} />,
-  QrCode: <QrCode size={28} />,
-  Scaling: <Scaling size={28} />,
-  FileStack: <FileStack size={28} />,
-  Ruler: <Ruler size={28} />,
-  ScrollText: <ScrollText size={28} />,
-  LayoutGrid: <LayoutGrid size={28} />,
+  Code2: <Code2 size={28} />,
+  Shapes: <Shapes size={28} />,
+  Wand2: <Wand2 size={28} />,
+  Glasses: <Glasses size={28} />,
 };
 
-// Map themes to Tailwind classes
+const SPECIAL_TOOLS_DATA: Tool[] = [
+  { id: 'smart-chat', icon: 'Bot', path: '/special/chat', titleEn: 'Smart Chat', titleAr: 'محادثة ذكية', descEn: 'Advanced chat with grounding', descAr: 'محادثة متقدمة مع مصادر', gradient: 'from-indigo-500 to-purple-500', colorTheme: 'indigo' },
+  { id: 'vision', icon: 'ScanEye', path: '/special/vision', titleEn: 'Vision Analysis', titleAr: 'تحليل بصري', descEn: 'Analyze images and videos', descAr: 'تحليل الصور والفيديو', gradient: 'from-amber-500 to-orange-500', colorTheme: 'gold' },
+  { id: 'audio', icon: 'Mic2', path: '/special/audio', titleEn: 'Audio Tools', titleAr: 'أدوات الصوت', descEn: 'TTS and Transcription', descAr: 'تحويل النص لكلام وتفريغ', gradient: 'from-teal-500 to-emerald-500', colorTheme: 'emerald' },
+  { id: 'live', icon: 'AudioWaveform', path: '/special/live', titleEn: 'Live Session', titleAr: 'جلسة حية', descEn: 'Real-time voice conversation', descAr: 'محادثة صوتية حية', gradient: 'from-red-500 to-pink-500', colorTheme: 'red' },
+  { id: 'img2code', icon: 'Code2', path: '/smart/img2code', titleEn: 'Screenshot to Code', titleAr: 'صورة إلى كود', descEn: 'Convert UI images to HTML code', descAr: 'تحويل صور الواجهات إلى كود', gradient: 'from-cyan-500 to-blue-500', colorTheme: 'cyan' },
+  { id: 'icon-gen', icon: 'Shapes', path: '/smart/icons', titleEn: 'Icon Generator', titleAr: 'مولد الأيقونات', descEn: 'Generate SVG icons from text', descAr: 'توليد أيقونات SVG من النص', gradient: 'from-purple-500 to-indigo-500', colorTheme: 'purple' },
+  { id: 'prompt-enhancer', icon: 'Wand2', path: '/smart/prompt', titleEn: 'Prompt Enhancer', titleAr: 'محسن الأوامر', descEn: 'Improve AI prompts for better results', descAr: 'تحسين أوامر الذكاء الاصطناعي', gradient: 'from-blue-500 to-indigo-500', colorTheme: 'blue' },
+  { id: 'font-pairer', icon: 'Wand2', path: '/smart/fonts', titleEn: 'Font Pairer', titleAr: 'تنسيق الخطوط', descEn: 'AI suggested font combinations', descAr: 'اقتراحات ذكية لتنسيق الخطوط', gradient: 'from-emerald-500 to-green-500', colorTheme: 'emerald' },
+  { id: 'critique', icon: 'Glasses', path: '/smart/critique', titleEn: 'Design Critique', titleAr: 'نقد التصميم', descEn: 'Get feedback on your designs', descAr: 'احصل على ملاحظات لتصاميمك', gradient: 'from-rose-500 to-red-500', colorTheme: 'rose' },
+  { id: 'tweet', icon: 'Bot', path: '/smart/tweets', titleEn: 'Social Post Maker', titleAr: 'صانع المنشورات', descEn: 'Generate posts with images', descAr: 'إنشاء منشورات مع صور', gradient: 'from-violet-500 to-purple-500', colorTheme: 'purple' },
+];
+
 const themeStyles: Record<string, {
   border: string;
   shadow: string;
@@ -91,6 +99,14 @@ const themeStyles: Record<string, {
     bgIcon: 'bg-cyan-500',
     text: 'text-cyan-600 dark:text-cyan-400',
     glow: 'from-cyan-500/20 to-teal-500/20'
+  },
+  purple: {
+    border: 'border-purple-100 dark:border-purple-900/30',
+    hoverBorder: 'group-hover:border-purple-500/50',
+    shadow: 'shadow-purple-500/5',
+    bgIcon: 'bg-purple-500',
+    text: 'text-purple-600 dark:text-purple-400',
+    glow: 'from-purple-500/20 to-pink-500/20'
   }
 };
 
@@ -99,13 +115,29 @@ const SpecialToolsHub: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-12">
-       <div className="flex flex-col gap-4 items-center text-center py-4">
-            <h1 className="text-4xl font-black dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-                {t('special_hub_title')}
-            </h1>
-            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl font-medium">
-                {t('special_hub_desc')}
-            </p>
+       
+       <div className="relative w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 rounded-[2.5rem] p-10 overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+             <div className="flex flex-col items-center md:items-start text-center md:text-start flex-1">
+                 <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-white/20 text-white shadow-sm">
+                     <Sparkles size={16} />
+                     <span>Utilities</span>
+                 </div>
+                 <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+                     {t('special_hub_title')}
+                 </h1>
+                 <p className="text-indigo-100 text-lg font-medium max-w-xl leading-relaxed opacity-90">
+                     {t('special_hub_desc')}
+                 </p>
+             </div>
+             
+             <div className="hidden md:flex w-24 h-24 bg-white/10 backdrop-blur-md rounded-3xl items-center justify-center text-white border border-white/20 shadow-inner">
+                 <Sparkles size={48} />
+             </div>
+          </div>
        </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 md:px-0">

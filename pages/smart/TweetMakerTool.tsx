@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { generateSocialPost, generateImage, getApiKey } from '../../services/geminiService';
@@ -116,32 +115,45 @@ const TweetMakerTool: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-12">
-        {/* Header Banner - Purple Theme */}
-        <div className="mb-8 flex flex-col md:flex-row items-center justify-between gap-6 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-[2rem] p-8 text-white shadow-2xl relative overflow-hidden">
-            <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs font-bold mb-4 border border-white/30 text-white">
-                    <Share2 size={14} />
-                    <span>Social Media AI</span>
-                </div>
-                <h1 className="text-3xl font-bold mb-2">{t('tool_tweet_maker')}</h1>
-                <p className="text-purple-100 max-w-xl">{t('desc_tweet_maker')}</p>
-            </div>
+        {/* Unified Header Banner - Purple Theme */}
+        <div className="relative w-full bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-[2.5rem] p-10 overflow-hidden shadow-2xl">
+            {/* Decorative Background Elements */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
             
-            <div className="relative z-10">
-                {!apiKeySelected ? (
-                    <button onClick={handleSelectKey} className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-100 rounded-xl font-bold text-purple-600 transition-all shadow-lg animate-pulse">
-                        <Key size={18} /> {t('studio_select_key')}
-                    </button>
-                ) : (
-                    <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-white backdrop-blur-sm">
-                        <Share2 size={32} />
-                    </div>
-                )}
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+               
+               {/* Right Side (Content) - Order dependent on Flex direction, but visually content first usually */}
+               <div className="flex flex-col items-center md:items-start text-center md:text-start order-2 md:order-1 flex-1">
+                   <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-white/20 text-white shadow-sm">
+                       <Share2 size={16} />
+                       <span>Social Media AI</span>
+                   </div>
+                   <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+                       {t('tool_tweet_maker')}
+                   </h1>
+                   <p className="text-indigo-100 text-lg font-medium max-w-xl leading-relaxed opacity-90">
+                       {t('desc_tweet_maker')}
+                   </p>
+               </div>
+
+               {/* Left Side (Action) - Button */}
+               <div className="order-1 md:order-2 shrink-0">
+                   {!apiKeySelected ? (
+                       <button 
+                           onClick={handleSelectKey} 
+                           className="flex items-center gap-3 px-8 py-4 bg-white/90 hover:bg-white text-purple-700 rounded-2xl font-bold text-lg shadow-xl shadow-purple-900/20 transition-all hover:scale-105 active:scale-95 animate-pulse"
+                       >
+                           <Key size={20} /> 
+                           <span>{t('studio_select_key')}</span>
+                       </button>
+                   ) : (
+                       <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center text-white border border-white/20 shadow-inner">
+                           <Share2 size={40} />
+                       </div>
+                   )}
+               </div>
             </div>
-            
-            {/* Decor */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

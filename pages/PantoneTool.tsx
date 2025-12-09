@@ -25,17 +25,34 @@ const PantoneTool: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="text-center space-y-2 mb-10">
-        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-red-600">
-          {t('pms_tool')}
-        </h1>
-        <p className="text-slate-500 dark:text-slate-400 max-w-lg mx-auto">
-          {isRTL 
-            ? 'احصل على مطابقة بانتون الدقيقة لأي لون رقمي باستخدام الذكاء الاصطناعي.' 
-            : 'Get accurate Pantone matching for any digital color using AI.'}
-        </p>
+    <div className="max-w-5xl mx-auto space-y-8 pb-12">
+      
+      {/* Unified Banner - Orange/Red */}
+      <div className="relative w-full bg-gradient-to-r from-orange-500 via-red-500 to-rose-600 rounded-[2.5rem] p-10 overflow-hidden shadow-2xl mb-8">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+             <div className="flex flex-col items-center md:items-start text-center md:text-start flex-1">
+                 <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-white/20 text-white shadow-sm">
+                     <Pipette size={16} />
+                     <span>Color Match</span>
+                 </div>
+                 <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+                     {t('pms_tool')}
+                 </h1>
+                 <p className="text-orange-100 text-lg font-medium max-w-xl leading-relaxed opacity-95">
+                     {isRTL 
+                        ? 'احصل على مطابقة بانتون الدقيقة لأي لون رقمي باستخدام الذكاء الاصطناعي.' 
+                        : 'Get accurate Pantone matching for any digital color using AI.'}
+                 </p>
+             </div>
+             
+             {/* Decorative Icon */}
+             <div className="hidden md:flex w-24 h-24 bg-white/10 backdrop-blur-md rounded-3xl items-center justify-center text-white border border-white/20 shadow-inner">
+                 <Pipette size={48} />
+             </div>
+          </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">

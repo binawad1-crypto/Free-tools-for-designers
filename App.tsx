@@ -1,11 +1,20 @@
-
-
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
+
+// Page Imports
+import Home from './pages/Home'; // Or DesignerTools if that's the main page
 import DesignerTools from './pages/DesignerTools';
+import Login from './pages/Login';
+import Settings from './pages/Settings';
+import Support from './pages/Support';
+import TemplatesGallery from './pages/TemplatesGallery';
+import CreativeStudio from './pages/CreativeStudio';
+import SpecialToolsHub from './pages/SpecialToolsHub';
+
+// Standard Tools
 import QRCodeTool from './pages/QRCodeTool';
 import ColorTool from './pages/ColorTool';
 import TextTool from './pages/TextTool';
@@ -18,38 +27,23 @@ import SocialSizesTool from './pages/SocialSizesTool';
 import LogoMakerTool from './pages/LogoMakerTool';
 import MarketingTool from './pages/MarketingTool';
 import CompetitorTool from './pages/CompetitorTool';
-import CreativeStudio from './pages/CreativeStudio';
-import SpecialToolsHub from './pages/SpecialToolsHub';
-import SmartChatTool from './pages/special/SmartChatTool';
-import VisionTool from './pages/special/VisionTool';
-import AudioTool from './pages/special/AudioTool';
-import LiveTool from './pages/special/LiveTool';
+
+// Special/Smart Tools
 import ScreenshotToCodeTool from './pages/smart/ScreenshotToCodeTool';
 import IconGeneratorTool from './pages/smart/IconGeneratorTool';
 import PromptEnhancerTool from './pages/smart/PromptEnhancerTool';
 import FontPairerTool from './pages/smart/FontPairerTool';
 import DesignCritiqueTool from './pages/smart/DesignCritiqueTool';
 import TweetMakerTool from './pages/smart/TweetMakerTool';
-import Settings from './pages/Settings';
-import Login from './pages/Login';
-import TemplatesGallery from './pages/TemplatesGallery';
+import SmartChatTool from './pages/special/SmartChatTool';
+import VisionTool from './pages/special/VisionTool';
+import AudioTool from './pages/special/AudioTool';
+import LiveTool from './pages/special/LiveTool';
 
-// Wrapper to protect routes
-const ProtectedRoute = ({ children }: React.PropsWithChildren<{}>) => {
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser, loading } = useAuth();
-  
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0B0F19]">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 dark:border-slate-800 dark:border-t-white rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-  
-  if (!currentUser) {
-    return <Navigate to="/login" replace />;
-  }
-
+  if (loading) return null; // Or a loading spinner
+  if (!currentUser) return <Navigate to="/login" replace />;
   return <>{children}</>;
 };
 
@@ -58,48 +52,45 @@ const App = () => {
     <AppProvider>
       <AuthProvider>
         <HashRouter>
-          <Layout>
-            <Routes>
-              {/* Login Route (Public) */}
-              <Route path="/login" element={<Login />} />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            
+            <Route path="/" element={<Layout><ProtectedRoute><DesignerTools /></ProtectedRoute></Layout>} />
+            <Route path="/studio" element={<Layout><ProtectedRoute><CreativeStudio /></ProtectedRoute></Layout>} />
+            <Route path="/templates" element={<Layout><ProtectedRoute><TemplatesGallery /></ProtectedRoute></Layout>} />
+            <Route path="/special" element={<Layout><ProtectedRoute><SpecialToolsHub /></ProtectedRoute></Layout>} />
+            <Route path="/support" element={<Layout><ProtectedRoute><Support /></ProtectedRoute></Layout>} />
+            <Route path="/settings" element={<Layout><ProtectedRoute><Settings /></ProtectedRoute></Layout>} />
 
-              {/* Protected Routes - All other routes require login */}
-              <Route path="/" element={<ProtectedRoute><DesignerTools /></ProtectedRoute>} />
-              
-              <Route path="/qr" element={<ProtectedRoute><QRCodeTool /></ProtectedRoute>} />
-              <Route path="/color" element={<ProtectedRoute><ColorTool /></ProtectedRoute>} />
-              <Route path="/text" element={<ProtectedRoute><TextTool /></ProtectedRoute>} />
-              <Route path="/pms" element={<ProtectedRoute><PantoneTool /></ProtectedRoute>} />
-              <Route path="/resize" element={<ProtectedRoute><ResizeTool /></ProtectedRoute>} />
-              <Route path="/units" element={<ProtectedRoute><UnitConverterTool /></ProtectedRoute>} />
-              <Route path="/nutrition" element={<ProtectedRoute><NutritionTool /></ProtectedRoute>} />
-              <Route path="/pdf" element={<ProtectedRoute><PDFTool /></ProtectedRoute>} />
-              <Route path="/social-sizes" element={<ProtectedRoute><SocialSizesTool /></ProtectedRoute>} />
-              <Route path="/logo" element={<ProtectedRoute><LogoMakerTool /></ProtectedRoute>} />
-              <Route path="/marketing" element={<ProtectedRoute><MarketingTool /></ProtectedRoute>} />
-              <Route path="/competitor" element={<ProtectedRoute><CompetitorTool /></ProtectedRoute>} />
-              
-              <Route path="/studio" element={<ProtectedRoute><CreativeStudio /></ProtectedRoute>} />
-              <Route path="/templates" element={<ProtectedRoute><TemplatesGallery /></ProtectedRoute>} />
+            {/* Standard Tools Routes */}
+            <Route path="/tools/qr" element={<Layout><ProtectedRoute><QRCodeTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/color" element={<Layout><ProtectedRoute><ColorTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/text" element={<Layout><ProtectedRoute><TextTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/pms" element={<Layout><ProtectedRoute><PantoneTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/resize" element={<Layout><ProtectedRoute><ResizeTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/units" element={<Layout><ProtectedRoute><UnitConverterTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/nutrition" element={<Layout><ProtectedRoute><NutritionTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/pdf" element={<Layout><ProtectedRoute><PDFTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/social" element={<Layout><ProtectedRoute><SocialSizesTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/logo" element={<Layout><ProtectedRoute><LogoMakerTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/marketing" element={<Layout><ProtectedRoute><MarketingTool /></ProtectedRoute></Layout>} />
+            <Route path="/tools/competitor" element={<Layout><ProtectedRoute><CompetitorTool /></ProtectedRoute></Layout>} />
 
-              <Route path="/special" element={<ProtectedRoute><SpecialToolsHub /></ProtectedRoute>} />
-              <Route path="/special/chat" element={<ProtectedRoute><SmartChatTool /></ProtectedRoute>} />
-              <Route path="/special/vision" element={<ProtectedRoute><VisionTool /></ProtectedRoute>} />
-              <Route path="/special/audio" element={<ProtectedRoute><AudioTool /></ProtectedRoute>} />
-              <Route path="/special/live" element={<ProtectedRoute><LiveTool /></ProtectedRoute>} />
+            {/* Special/Smart Tools Routes */}
+            <Route path="/smart/img2code" element={<Layout><ProtectedRoute><ScreenshotToCodeTool /></ProtectedRoute></Layout>} />
+            <Route path="/smart/icons" element={<Layout><ProtectedRoute><IconGeneratorTool /></ProtectedRoute></Layout>} />
+            <Route path="/smart/prompt" element={<Layout><ProtectedRoute><PromptEnhancerTool /></ProtectedRoute></Layout>} />
+            <Route path="/smart/fonts" element={<Layout><ProtectedRoute><FontPairerTool /></ProtectedRoute></Layout>} />
+            <Route path="/smart/critique" element={<Layout><ProtectedRoute><DesignCritiqueTool /></ProtectedRoute></Layout>} />
+            <Route path="/smart/tweets" element={<Layout><ProtectedRoute><TweetMakerTool /></ProtectedRoute></Layout>} />
+            
+            <Route path="/special/chat" element={<Layout><ProtectedRoute><SmartChatTool /></ProtectedRoute></Layout>} />
+            <Route path="/special/vision" element={<Layout><ProtectedRoute><VisionTool /></ProtectedRoute></Layout>} />
+            <Route path="/special/audio" element={<Layout><ProtectedRoute><AudioTool /></ProtectedRoute></Layout>} />
+            <Route path="/special/live" element={<Layout><ProtectedRoute><LiveTool /></ProtectedRoute></Layout>} />
 
-              {/* NEW SMART TOOLS ROUTES */}
-              <Route path="/smart/img2code" element={<ProtectedRoute><ScreenshotToCodeTool /></ProtectedRoute>} />
-              <Route path="/smart/icons" element={<ProtectedRoute><IconGeneratorTool /></ProtectedRoute>} />
-              <Route path="/smart/prompt" element={<ProtectedRoute><PromptEnhancerTool /></ProtectedRoute>} />
-              <Route path="/smart/fonts" element={<ProtectedRoute><FontPairerTool /></ProtectedRoute>} />
-              <Route path="/smart/critique" element={<ProtectedRoute><DesignCritiqueTool /></ProtectedRoute>} />
-              <Route path="/smart/tweets" element={<ProtectedRoute><TweetMakerTool /></ProtectedRoute>} />
-              
-              <Route path="/support" element={<ProtectedRoute><div className="p-10 text-center text-slate-500">Support Center Coming Soon</div></ProtectedRoute>} />
-              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-            </Routes>
-          </Layout>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
         </HashRouter>
       </AuthProvider>
     </AppProvider>

@@ -1,10 +1,8 @@
-
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
-import { SMART_TOOLS_DATA, Language } from '../types';
-import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, FileStack, LayoutGrid, Hexagon, Megaphone, Swords, Bot, AudioWaveform, ScanEye, Mic2, Code2, Shapes, Wand2, Glasses } from 'lucide-react';
+import { Tool, Language } from '../types';
+import { QrCode, Palette, Type, Pipette, ArrowRight, ArrowLeft, Scaling, Ruler, ScrollText, FileStack, LayoutGrid, Hexagon, Megaphone, Swords, Zap } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   QrCode: <QrCode size={28} />,
@@ -19,17 +17,23 @@ const iconMap: Record<string, React.ReactNode> = {
   Hexagon: <Hexagon size={28} />,
   Megaphone: <Megaphone size={28} />,
   Swords: <Swords size={28} />,
-  Bot: <Bot size={28} />,
-  AudioWaveform: <AudioWaveform size={28} />,
-  ScanEye: <ScanEye size={28} />,
-  Mic2: <Mic2 size={28} />,
-  Code2: <Code2 size={28} />,
-  Shapes: <Shapes size={28} />,
-  Wand2: <Wand2 size={28} />,
-  Glasses: <Glasses size={28} />,
 };
 
-// Map themes to Tailwind classes
+const SMART_TOOLS_DATA: Tool[] = [
+  { id: 'qr', icon: 'QrCode', path: '/tools/qr', titleEn: 'QR Generator', titleAr: 'مولد QR', descEn: 'Generate custom QR codes with styles', descAr: 'أنشئ رموز استجابة سريعة مخصصة', gradient: 'from-blue-500 to-cyan-500', colorTheme: 'blue' },
+  { id: 'color', icon: 'Palette', path: '/tools/color', titleEn: 'Color Palette', titleAr: 'لوحات الألوان', descEn: 'AI-powered color scheme generator', descAr: 'مولد لوحات ألوان بالذكاء الاصطناعي', gradient: 'from-purple-500 to-pink-500', colorTheme: 'purple' },
+  { id: 'text', icon: 'Type', path: '/tools/text', titleEn: 'Copywriter', titleAr: 'كتابة المحتوى', descEn: 'Generate marketing copy & text', descAr: 'توليد نصوص إعلانية وتسويقية', gradient: 'from-emerald-500 to-teal-500', colorTheme: 'emerald' },
+  { id: 'pms', icon: 'Pipette', path: '/tools/pms', titleEn: 'Pantone Match', titleAr: 'مطابقة بانتون', descEn: 'Find Pantone equivalents for hex colors', descAr: 'إيجاد ألوان بانتون المقابلة', gradient: 'from-orange-500 to-red-500', colorTheme: 'orange' },
+  { id: 'resize', icon: 'Scaling', path: '/tools/resize', titleEn: 'Image Resizer', titleAr: 'تغيير حجم الصور', descEn: 'Smart resizing and formatting', descAr: 'تغيير حجم وتنسيق الصور بذكاء', gradient: 'from-indigo-500 to-violet-500', colorTheme: 'indigo' },
+  { id: 'unit', icon: 'Ruler', path: '/tools/units', titleEn: 'Unit Converter', titleAr: 'محول الوحدات', descEn: 'Convert pixels, rems, and more', descAr: 'تحويل البيكسل والوحدات الأخرى', gradient: 'from-rose-500 to-pink-500', colorTheme: 'rose' },
+  { id: 'nutri', icon: 'ScrollText', path: '/tools/nutrition', titleEn: 'Nutrition Facts', titleAr: 'حقائق تغذوية', descEn: 'Create FDA style nutrition labels', descAr: 'إنشاء ملصقات حقائق تغذوية', gradient: 'from-slate-500 to-gray-500', colorTheme: 'slate' },
+  { id: 'pdf', icon: 'FileStack', path: '/tools/pdf', titleEn: 'PDF Tools', titleAr: 'أدوات PDF', descEn: 'Merge, split, and compress PDFs', descAr: 'دمج وتقسيم وضغط ملفات PDF', gradient: 'from-red-500 to-rose-500', colorTheme: 'red' },
+  { id: 'social', icon: 'LayoutGrid', path: '/tools/social', titleEn: 'Social Sizes', titleAr: 'مقاسات التواصل', descEn: 'Social media image size guide', descAr: 'دليل مقاسات صور التواصل الاجتماعي', gradient: 'from-cyan-500 to-blue-500', colorTheme: 'cyan' },
+  { id: 'logo', icon: 'Hexagon', path: '/tools/logo', titleEn: 'Logo Maker', titleAr: 'صانع الشعارات', descEn: 'AI logo generation from text', descAr: 'توليد شعارات بالذكاء الاصطناعي', gradient: 'from-amber-500 to-yellow-500', colorTheme: 'gold' },
+  { id: 'marketing', icon: 'Megaphone', path: '/tools/marketing', titleEn: 'Marketing Copy', titleAr: 'نصوص تسويقية', descEn: 'Generate ads and captions', descAr: 'توليد إعلانات وشروحات', gradient: 'from-pink-600 to-rose-500', colorTheme: 'pink' },
+  { id: 'competitor', icon: 'Swords', path: '/tools/competitor', titleEn: 'Competitor Analysis', titleAr: 'تحليل المنافسين', descEn: 'Analyze competitor websites', descAr: 'تحليل مواقع المنافسين', gradient: 'from-indigo-600 to-purple-600', colorTheme: 'indigo' },
+];
+
 const themeStyles: Record<string, {
   border: string;
   shadow: string;
@@ -133,13 +137,28 @@ const DesignerTools = () => {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-12">
-       <div className="flex flex-col gap-4 items-center text-center py-4">
-            <h1 className="text-4xl font-black dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-600 dark:from-white dark:to-slate-400">
-                {t('nav_tools')}
-            </h1>
-            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl font-medium">
-                {t('app_desc')}
-            </p>
+       
+       <div className="relative w-full bg-gradient-to-r from-slate-900 via-slate-800 to-blue-900 rounded-[2.5rem] p-10 overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+             <div className="flex flex-col items-center md:items-start text-center md:text-start flex-1">
+                 <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-white/10 text-slate-200 shadow-sm">
+                     <Zap size={16} />
+                     <span>All Tools</span>
+                 </div>
+                 <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+                     {t('nav_tools')}
+                 </h1>
+                 <p className="text-slate-300 text-lg font-medium max-w-xl leading-relaxed">
+                     {t('app_desc')}
+                 </p>
+             </div>
+             
+             <div className="hidden md:flex w-24 h-24 bg-white/5 backdrop-blur-md rounded-3xl items-center justify-center text-white border border-white/10 shadow-inner">
+                 <Zap size={48} />
+             </div>
+          </div>
        </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0">

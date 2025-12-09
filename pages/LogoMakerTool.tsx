@@ -81,25 +81,41 @@ const LogoMakerTool: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-12">
       
-      {/* Header */}
-      <div className="text-center space-y-4 mb-10">
-        <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400 shadow-lg shadow-amber-500/10">
-           <Hexagon size={32} />
-        </div>
-        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-yellow-500">
-          {t('logo_tool')}
-        </h1>
-        <p className="text-slate-500 dark:text-slate-400 max-w-lg mx-auto">
-          {t('app_desc')}
-        </p>
-        
-        {!apiKeySelected && (
-            <div className="flex justify-center mt-4">
-                 <button onClick={handleSelectKey} className="flex items-center gap-2 px-6 py-2 bg-amber-500 hover:bg-amber-600 rounded-xl font-bold text-black transition-all shadow-lg shadow-amber-500/30 animate-pulse">
-                     <Key size={18} /> {t('studio_select_key')}
-                 </button>
-            </div>
-        )}
+      {/* Unified Header Banner - Amber Theme */}
+      <div className="relative w-full bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 rounded-[2.5rem] p-10 overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+             <div className="flex flex-col items-center md:items-start text-center md:text-start flex-1 order-2 md:order-1">
+                 <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-white/20 text-white shadow-sm">
+                     <Hexagon size={16} />
+                     <span>Branding & Identity</span>
+                 </div>
+                 <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+                     {t('logo_tool')}
+                 </h1>
+                 <p className="text-amber-50 text-lg font-medium max-w-xl leading-relaxed opacity-95">
+                     {t('app_desc')}
+                 </p>
+             </div>
+
+             <div className="order-1 md:order-2 shrink-0">
+                 {!apiKeySelected ? (
+                     <button 
+                         onClick={handleSelectKey} 
+                         className="flex items-center gap-3 px-8 py-4 bg-white/90 hover:bg-white text-amber-700 rounded-2xl font-bold text-lg shadow-xl shadow-amber-900/20 transition-all hover:scale-105 active:scale-95 animate-pulse"
+                     >
+                         <Key size={20} /> 
+                         <span>{t('studio_select_key')}</span>
+                     </button>
+                 ) : (
+                     <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center text-white border border-white/20 shadow-inner">
+                         <Hexagon size={40} />
+                     </div>
+                 )}
+             </div>
+          </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

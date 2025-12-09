@@ -1,5 +1,4 @@
 
-
 import React, { useState } from 'react';
 import { useApp } from '../contexts/AppContext';
 import { generateDesignCopy } from '../services/geminiService';
@@ -66,6 +65,33 @@ const MarketingTool: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto pb-12">
+      
+      {/* Unified Banner - Pink/Rose */}
+      <div className="relative w-full bg-gradient-to-r from-pink-600 via-rose-500 to-red-500 rounded-[2.5rem] p-10 overflow-hidden shadow-2xl mb-8">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+             <div className="flex flex-col items-center md:items-start text-center md:text-start flex-1">
+                 <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-white/20 text-white shadow-sm">
+                     <Megaphone size={16} />
+                     <span>Copywriting</span>
+                 </div>
+                 <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+                     {t('marketing_tool')}
+                 </h1>
+                 <p className="text-pink-100 text-lg font-medium max-w-xl leading-relaxed opacity-95">
+                     {t('app_desc')}
+                 </p>
+             </div>
+             
+             {/* Decorative Icon */}
+             <div className="hidden md:flex w-24 h-24 bg-white/10 backdrop-blur-md rounded-3xl items-center justify-center text-white border border-white/20 shadow-inner">
+                 <Megaphone size={48} />
+             </div>
+          </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full min-h-[600px]">
         
         {/* LEFT SIDEBAR: CONFIGURATION */}

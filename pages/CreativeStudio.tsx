@@ -183,30 +183,46 @@ const CreativeStudio: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-screen-2xl mx-auto pb-12">
+    <div className="max-w-7xl mx-auto pb-12">
       
-      {/* Header Banner */}
-      <div className="mb-8 flex flex-col md:flex-row items-center justify-between gap-6 bg-gradient-to-r from-slate-900 to-slate-800 rounded-[2rem] p-8 text-white shadow-2xl relative overflow-hidden">
-          <div className="relative z-10">
-             <div className="inline-flex items-center gap-2 bg-fuchsia-500/20 backdrop-blur px-3 py-1 rounded-full text-xs font-bold mb-4 border border-fuchsia-500/30 text-fuchsia-300">
-                 <Sparkles size={14} />
-                 <span>AI Creative Suite</span>
-             </div>
-             <h1 className="text-3xl font-bold mb-2">{t('studio_title')}</h1>
-             <p className="text-slate-400 max-w-xl">{t('studio_desc')}</p>
-          </div>
-          {/* API Key Status */}
-           <div className="relative z-10">
-              {!apiKeySelected ? (
-                 <button onClick={handleSelectKey} className="flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 rounded-xl font-bold text-black transition-all">
-                     <Key size={18} /> {t('studio_select_key')}
-                 </button>
-              ) : (
-                 <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 text-green-400 rounded-xl border border-green-500/30 font-bold text-sm">
-                     <Key size={16} /> API Key Connected
+      {/* Unified Header Banner - Midnight Theme */}
+      <div className="relative w-full bg-gradient-to-r from-[#0f172a] via-[#1e1b4b] to-[#172554] rounded-[2.5rem] p-10 overflow-hidden shadow-2xl mb-8">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-fuchsia-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+             {/* Text Content */}
+             <div className="flex flex-col items-center md:items-start text-center md:text-start flex-1 order-2 md:order-1">
+                 <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-white/10 text-fuchsia-200 shadow-sm">
+                     <Sparkles size={16} />
+                     <span>AI Creative Suite</span>
                  </div>
-              )}
-           </div>
+                 <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
+                     {t('studio_title')}
+                 </h1>
+                 <p className="text-slate-300 text-lg font-medium max-w-xl leading-relaxed opacity-90">
+                     {t('studio_desc')}
+                 </p>
+             </div>
+
+             {/* Action Button / Status */}
+             <div className="order-1 md:order-2 shrink-0">
+                 {!apiKeySelected ? (
+                     <button 
+                         onClick={handleSelectKey} 
+                         className="flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-600 text-black rounded-2xl font-bold text-lg shadow-xl shadow-amber-900/20 transition-all hover:scale-105 active:scale-95"
+                     >
+                         <Key size={20} /> 
+                         <span>{t('studio_select_key')}</span>
+                     </button>
+                 ) : (
+                     <div className="flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md text-emerald-400 rounded-2xl border border-white/10 font-bold text-sm shadow-inner">
+                         <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                         <span>API Key Connected</span>
+                     </div>
+                 )}
+             </div>
+          </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
