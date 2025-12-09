@@ -356,7 +356,14 @@ export const translations: Record<Language, Record<TranslationKey | string, stri
     cat_personal: 'Personal',
     cat_viral: 'Viral',
     tpl_btn_copy: 'Copy Prompt',
-    tpl_btn_copied: 'Copied!'
+    tpl_btn_copied: 'Copied!',
+    // TWEET MAKER
+    tool_tweet_maker: 'Social Post Maker',
+    desc_tweet_maker: 'Generate tweets, posts, and images for all platforms.',
+    tweet_input_title: 'Title / Topic',
+    tweet_input_details: 'Key Details / Explanation',
+    tweet_platform_select: 'Select Platform',
+    tweet_btn_generate: 'Generate Post'
   },
   [Language.AR]: {
     app_title: 'زمام',
@@ -711,6 +718,13 @@ export const translations: Record<Language, Record<TranslationKey | string, stri
     cat_personal: 'شخصي',
     cat_viral: 'فيروسي',
     tpl_btn_copy: 'نسخ الأمر',
-    tpl_btn_copied: 'تم النسخ!'
+    tpl_btn_copied: 'تم النسخ!',
+    // TWEET MAKER
+    tool_tweet_maker: 'صانع التغريدات',
+    desc_tweet_maker: 'ولد تغريدات ومنشورات جذابة مع صور تعبيرية لجميع المنصات.',
+    tweet_input_title: 'العنوان / الموضوع',
+    tweet_input_details: 'تفاصيل رئيسية / شرح',
+    tweet_platform_select: 'اختر المنصة',
+    tweet_btn_generate: 'توليد المنشور'
   }
 };

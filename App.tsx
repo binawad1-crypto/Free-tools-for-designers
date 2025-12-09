@@ -29,6 +29,7 @@ import IconGeneratorTool from './pages/smart/IconGeneratorTool';
 import PromptEnhancerTool from './pages/smart/PromptEnhancerTool';
 import FontPairerTool from './pages/smart/FontPairerTool';
 import DesignCritiqueTool from './pages/smart/DesignCritiqueTool';
+import TweetMakerTool from './pages/smart/TweetMakerTool';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import TemplatesGallery from './pages/TemplatesGallery';
@@ -93,6 +94,7 @@ const App = () => {
               <Route path="/smart/prompt" element={<ProtectedRoute><PromptEnhancerTool /></ProtectedRoute>} />
               <Route path="/smart/fonts" element={<ProtectedRoute><FontPairerTool /></ProtectedRoute>} />
               <Route path="/smart/critique" element={<ProtectedRoute><DesignCritiqueTool /></ProtectedRoute>} />
+              <Route path="/smart/tweets" element={<ProtectedRoute><TweetMakerTool /></ProtectedRoute>} />
               
               <Route path="/support" element={<ProtectedRoute><div className="p-10 text-center text-slate-500">Support Center Coming Soon</div></ProtectedRoute>} />
               <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />

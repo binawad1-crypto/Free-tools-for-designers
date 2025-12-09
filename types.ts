@@ -394,10 +394,28 @@ export type TranslationKey =
   | 'cat_personal'
   | 'cat_viral'
   | 'tpl_btn_copy'
-  | 'tpl_btn_copied';
+  | 'tpl_btn_copied'
+  // TWEET MAKER KEYS
+  | 'tool_tweet_maker'
+  | 'desc_tweet_maker'
+  | 'tweet_input_title'
+  | 'tweet_input_details'
+  | 'tweet_platform_select'
+  | 'tweet_btn_generate';
 
 // CATEGORY A: Smart AI Tools (Powered by Gemini)
 export const SMART_TOOLS_DATA: Tool[] = [
+  {
+    id: 'tweet_maker',
+    icon: 'Share2',
+    path: '/smart/tweets',
+    titleEn: 'Social Post Maker',
+    titleAr: 'صانع التغريدات والمنشورات',
+    descEn: 'Generate platform-optimized posts with hashtags and AI images.',
+    descAr: 'ولد تغريدات ومنشورات احترافية مع صور تعبيرية لكل المنصات.',
+    gradient: 'from-blue-400 to-indigo-500',
+    colorTheme: 'blue'
+  },
   {
     id: 'chat',
     icon: 'Bot',

@@ -137,6 +137,40 @@ export const generateDesignCopy = async (prompt: string, options: TextOptions): 
   }
 };
 
+// Generate Social Post (Tweet Maker)
+export const generateSocialPost = async (title: string, details: string, platform: string, lang: 'ar' | 'en' = 'ar'): Promise<string> => {
+    try {
+        const apiKey = await getApiKey();
+        const ai = new GoogleGenAI({ apiKey });
+        const model = 'gemini-2.5-flash';
+
+        const systemPrompt = `You are an expert social media manager specializing in ${platform}.
+        Language: ${lang === 'ar' ? 'Arabic' : 'English'}.
+        Task: Create a highly engaging, optimized post/script based on the user's title and details.
+        
+        Platform Rules:
+        - Twitter (X): Short, punchy, under 280 chars, use threads logic if content is long (indicate [Thread]), 2-3 relevant hashtags.
+        - LinkedIn: Professional tone, structured with bullet points if needed, inspiring or educational, 3-5 professional hashtags.
+        - Instagram: Visual description logic (but output text caption), engaging hook, emojis, clean structure, 10+ relevant hashtags block at bottom.
+        - Facebook: Conversational, community-focused, engaging question at end.
+        - TikTok: Output a VIDEO SCRIPT format. [Scene] [Action] [Dialogue]. Engaging hook in first 3 seconds. Trending style.
+        - YouTube: Output a Video Title, SEO Description, and a short content outline/script. Engaging and informative.
+        
+        Output ONLY the content.`;
+
+        const response = await ai.models.generateContent({
+            model,
+            contents: `Title: ${title}\nDetails: ${details}`,
+            config: { systemInstruction: systemPrompt }
+        });
+
+        return response.text || '';
+    } catch (error) {
+        console.error("Social Post Gen Error:", error);
+        throw error;
+    }
+};
+
 // Competitor Analysis with Grounding
 export interface CompetitorAnalysisResult {
     strengths: string[];
